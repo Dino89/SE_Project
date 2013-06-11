@@ -1,6 +1,7 @@
 package de.mensch.onlineservice;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -10,6 +11,7 @@ import javax.jws.WebService;
 
 import de.mensch.dto.DiceResponse;
 import de.mensch.dto.DiceTO;
+import de.mensch.dto.GameListResponse;
 import de.mensch.dto.ReturncodeResponse;
 import de.mensch.dto.UserLoginResponse;
 import de.mensch.dto.UserRegisterResponse;
@@ -17,6 +19,7 @@ import de.mensch.util.DtoAssembler;
 import de.mensch.dao.MenschDAO;
 import de.mensch.dao.MenschDAOLocal;
 import de.mensch.entities.Customer;
+import de.mensch.entities.Game;
 import de.mensch.entities.MenschSession;
 //import de.xbank.dao.XbankDAOLocal;
 //import de.xbank.entities.Customer;
@@ -57,7 +60,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	private MenschSession getSession(int sessionId) throws NoSessionException {
 		MenschSession session = dao.findSessionById(sessionId);
 		if (session==null)
-			throw new NoSessionException("Bitte zunächst ein Login durchführen.");
+			throw new NoSessionException("Bitte zunaechst ein Login durchfuehren.");
 		else
 			return session;
 	}
@@ -109,6 +112,15 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		System.out.println("dice number angefragt");
 		System.out.println(response);
 		System.out.println(response.getDiceNumber());
+		return response;
+	}
+
+	@Override
+	public GameListResponse getGames() {
+		GameListResponse response = new GameListResponse();
+		ArrayList <Game> games = this.dao.getGameList();
+		response.setGameList(games);
+		
 		return response;
 	}
 

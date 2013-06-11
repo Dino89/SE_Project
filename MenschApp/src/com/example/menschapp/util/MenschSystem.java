@@ -1,6 +1,7 @@
 package com.example.menschapp.util;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -34,6 +35,9 @@ public interface MenschSystem {
 
 
 	public Kunde login(String username, String password);
+
+
+	ArrayList<Games> getGames();
 
 	
 	/**

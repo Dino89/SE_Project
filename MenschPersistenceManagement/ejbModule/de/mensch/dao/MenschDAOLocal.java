@@ -1,9 +1,13 @@
 package de.mensch.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Local;
 
 import de.mensch.entities.Account;
 import de.mensch.entities.Customer;
+import de.mensch.entities.Game;
 import de.mensch.entities.MenschSession;
 
 @Local
@@ -20,5 +24,7 @@ public interface MenschDAOLocal {
 	public void closeSession(int id);
 	
 	public Customer registerCustomer(String username, String password);
+
+	public ArrayList<Game> getGameList();
 		
 }

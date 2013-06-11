@@ -1,6 +1,7 @@
 package com.example.menschapp.util;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -221,4 +222,23 @@ public class MenschSystemStub implements MenschSystem {
 		result = new Kunde(username, password);
 		return result;
 	}	
+	
+	@Override
+	public ArrayList<Games> getGames() {
+		Log.d(TAG,"getGames called.");		
+		ArrayList<Games> result = new ArrayList<Games>();
+		String METHOD_NAME = "getGames";
+		SoapObject response = executeSoapAction(METHOD_NAME);
+		Log.d(TAG, METHOD_NAME);
+		Log.d(TAG, response.toString());
+		//Eigene Konten einlesen:
+		for (int i=1; i<response.getPropertyCount(); i++) {
+			SoapObject soapGameEntry = (SoapObject) response.getProperty(i);
+			SoapPrimitive soapGameId = (SoapPrimitive) soapGameEntry.getProperty("id");
+			Games game = new Games();
+			game.setGameId(Integer.valueOf(soapGameId.toString()));
+			result.add(game);
+		}
+		return result;
+	}
 }
