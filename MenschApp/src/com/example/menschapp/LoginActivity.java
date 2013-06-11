@@ -281,7 +281,7 @@ public class LoginActivity extends Activity {
 	        String register = LoginActivity.this.obsApp.getObsStub().register(username, password);
 	        try {
 				// Simulate network access.
-				Thread.sleep(1000);
+				Thread.sleep(250);
 			} catch (InterruptedException e) {
 				return false;
 			}
@@ -342,7 +342,7 @@ public class LoginActivity extends Activity {
 	
 				try {
 					// Simulate network access.
-					Thread.sleep(1000);
+					Thread.sleep(250);
 				} catch (InterruptedException e) {
 					return false;
 				}

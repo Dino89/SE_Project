@@ -33,7 +33,7 @@ public class MenschSystemStub implements MenschSystem {
 	 * the web service is hosted on the localhost server. Specify hostname as the IP address of the 
 	 * server hosting the web service (or "10.0.2.2 instead of 'localhost' when running in the emulator). 
 	 */
-    private static final String URL = "http://10.0.2.2:8081/MenschServer/MenschOnlineIntegrationImpl";
+    private static final String URL = "http://10.0.2.2:8080/MenschServer/MenschOnlineIntegrationImpl";
 
     /**
 	 * TAG contains the class name and is used for logging.
