@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 
 import de.mensch.entities.Account;
 import de.mensch.entities.Customer;
+import de.mensch.entities.Game;
 
 /**
  * Klasse KontoRegistry als Singleton. Alle vorhandenen Konto-Objekte sollen hier registriert werden, damit die KontoRegistry
@@ -26,7 +27,13 @@ public class DataBuilder {
 
 	@PostConstruct
 	private void init() {
-
+		
+		Customer customer1 = new Customer(username1, password1);
+		em.persist(customer1);
+		System.out.println("customer angelegt");
+		Game game1 = new Game();
+		em.persist(game1);
+		
 		//erzeuge ein paar Beispieldaten zu Kunden und Konten, falls sie noch nicht in der DB vorhanden sind.
 //		Customer customer1 = em.find(Customer.class, username1);
 //		if (customer1 == null) {

@@ -231,7 +231,7 @@ public class MenschSystemStub implements MenschSystem {
 		SoapObject response = executeSoapAction(METHOD_NAME);
 		Log.d(TAG, METHOD_NAME);
 		Log.d(TAG, response.toString());
-		//Eigene Konten einlesen:
+
 		for (int i=1; i<response.getPropertyCount(); i++) {
 			SoapObject soapGameEntry = (SoapObject) response.getProperty(i);
 			SoapPrimitive soapGameId = (SoapPrimitive) soapGameEntry.getProperty("id");

@@ -120,7 +120,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		GameListResponse response = new GameListResponse();
 		ArrayList <Game> games = this.dao.getGameList();
 		response.setGameList(games);
-		
+		System.out.println(response);
 		return response;
 	}
 

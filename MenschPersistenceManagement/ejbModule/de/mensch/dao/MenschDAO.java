@@ -62,20 +62,27 @@ public class MenschDAO implements MenschDAOLocal {
 //	                .createEntityManagerFactory("persistenceUnitName");
 //	        em = factory.createEntityManager();
 		
-	        em.getTransaction().begin();
-	        ArrayList<Game> response;	        
-	        response = (ArrayList<Game>) em.createQuery(
-	                "SELECT id FROM Games").getResultList();
-//	        em.getTransaction().commit();
-//	        em.close();
-//	        factory.close();
-	        if (response == null) {
-	            System.out.println("No games found . ");
-	        } else {
-	            for (Game game : response) {
-	            System.out.print("Person name= " + game.getId() + ", gender" + game.getOwner());
-	            }
+//	        em.getTransaction().begin();
+	        ArrayList<Game> response = null;
+	        em.createNamedQuery("SELECT id FROM Customer");
+	        System.out.println(response);
+	        for (Game game : response) {
+//	        	response.add()
 	        }
+//	        response = (ArrayList<Game>) em.createQuery(
+//	                "SELECT id FROM Game").getResultList();
+////	        em.getTransaction().commit();
+////	        em.close();
+////	        factory.close();
+//	        System.out.println(response);
+//	        if (response == null) {
+//	        	Game g = new Game();
+//	            response.add(g);
+//	        } else {
+//	            for (Game game : response) {
+//	            System.out.println("Person name= " + game.getId() + ", gender" + game.getOwner());
+//	            }
+//	        }
 	 return response;
 	 }
 }

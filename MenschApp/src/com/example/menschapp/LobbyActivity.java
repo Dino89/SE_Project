@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.example.menschapp.LoginActivity.UserLoginTask;
 import com.example.menschapp.util.Games;
 import com.example.menschapp.util.MenschSystemStub;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -25,6 +27,8 @@ public class LobbyActivity extends Activity {
     private ListView monthsListView;
     private ArrayAdapter arrayAdapter;
 	List valueList = new ArrayList<String>();
+	private GameListTask listTask = null;
+	
 	private SharedPreferences prefs;
 	private MenschApplication obsApp;
 	
@@ -38,8 +42,7 @@ public class LobbyActivity extends Activity {
         obsApp.setObsStub(new MenschSystemStub());
         
 	    // Initialize the array
-	    ArrayList<Games> gamesArray = null;
-	    gamesArray = LobbyActivity.this.obsApp.getObsStub().getGames();
+
 	    // Declare the UI components
 	
 	        // Initialize the UI components
@@ -56,6 +59,9 @@ public class LobbyActivity extends Activity {
 	 
 	        // By using setAdapter method, you plugged the ListView with adapter
 //	    monthsListView.setAdapter(arrayAdapter);
+	    
+		listTask = new GameListTask(); 
+		listTask.execute();
 	 }
 	
 	
@@ -66,4 +72,32 @@ public class LobbyActivity extends Activity {
 		return true;
 	}
 
+	public class GameListTask extends AsyncTask<String, Void, Boolean> {
+				
+	    @Override
+		protected Boolean doInBackground(String... params) {
+			// TODO: attempt authentication against a network service.
+			
+		    String diceNumber = LobbyActivity.this.obsApp.getObsStub().diceNumber();
+		    ArrayList<Games> gamesArray = LobbyActivity.this.obsApp.getObsStub().getGames();
+		    
+	        try {
+				// Simulate network access.
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+				return false;
+			}
+			return true;
+		}
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+
+		}
+
+		@Override
+		protected void onCancelled() {
+
+		}
+	}
 }

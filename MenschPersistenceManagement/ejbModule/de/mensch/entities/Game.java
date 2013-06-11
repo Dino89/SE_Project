@@ -61,4 +61,7 @@ public class Game implements Serializable {
 		this.owner = owner;
 	}
 	
+	public int getGameList() {
+		return id;
+	}
 }
