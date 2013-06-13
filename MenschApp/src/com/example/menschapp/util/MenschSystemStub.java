@@ -266,11 +266,15 @@ public class MenschSystemStub implements MenschSystem {
 		for (int i=1; i<response.getPropertyCount(); i++) {
 			SoapObject soapGameEntry = (SoapObject) response.getProperty(i);
 			SoapPrimitive soapGameNr = (SoapPrimitive) soapGameEntry.getProperty("id");
+			SoapPrimitive soapSlots = (SoapPrimitive) soapGameEntry.getProperty("slots");
+			SoapPrimitive soapOwnerId = (SoapPrimitive) soapGameEntry.getProperty("ownerId");
 			
 //			SoapObject soapGameNr = (SoapObject) response.getProperty(i);
 			Games game = new Games();
 			game.setId(Integer.valueOf(soapGameNr.toString()));
-
+			game.setSlots(Integer.valueOf(soapSlots.toString()));
+			game.setOwnerId(Integer.valueOf(soapOwnerId.toString()));
+			
 			result.add(game);
 		}
 		return result;

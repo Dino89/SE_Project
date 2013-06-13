@@ -34,6 +34,11 @@
 		         <env-entry-type>java.lang.String</env-entry-type>
 		         <env-entry-value>krimi</env-entry-value>
 		   </env-entry>
+		   <env-entry>
+		         <env-entry-name>de.mensch.dao.DataBuilder/slots</env-entry-name>
+		         <env-entry-type>java.lang.Integer</env-entry-type>
+		         <env-entry-value></env-entry-value>
+		   </env-entry>
       </session>
    </enterprise-beans>      
 </ejb-jar>

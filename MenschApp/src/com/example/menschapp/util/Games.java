@@ -32,8 +32,20 @@ public class Games implements Serializable {
 		this.id = id;
 	}
 
-//	public void setGameId(Integer valueOf) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	public int getSlots() {
+		return slots;
+	}
+
+	public void setSlots(int slots) {
+		this.slots = slots;
+	}
+
+	public int getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
+
 }
