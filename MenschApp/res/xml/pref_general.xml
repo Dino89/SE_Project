@@ -1,5 +1,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <EditTextPreference
+        android:title="@string/pref_user_name"
+        android:summary="@string/pref_user_name_summary"
+        android:key="prefUsername"/>
+
+    <EditTextPreference
+            android:title="@string/pref_user_password"
+            android:summary="@string/pref_user_password_summary"
+            android:key="prefPassword"/>
+    
+    
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="example_checkbox"

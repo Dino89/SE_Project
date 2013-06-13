@@ -11,10 +11,11 @@
     <string name="action_forgot_password">Recover lost password</string>
     <string name="login_progress_signing_in">Signing in&#8230;</string>
     <string name="register_progress_signing_in">Register&#8230;</string>
-    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_email">Diese E-Mail Adresse ist ungültig</string>
     <string name="error_invalid_password">Passwort zu kurz</string>
     <string name="error_incorrect_password">Passwort falsch</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="error_field_required">Dieses Feld ist obligatorisch</string>
     <string name="error_register">Benutzername bereits vergeben</string>
+    <string name="action_store_login_credentials">Login Daten speichern</string>
 
 </resources>

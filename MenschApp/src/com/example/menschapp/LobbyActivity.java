@@ -71,9 +71,9 @@ public class LobbyActivity extends Activity {
 	
 	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+    public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.lobby, menu);
+		//You must return true for the menu to be displayed; if you return false it will not be shown.
 		return true;
 	}
 

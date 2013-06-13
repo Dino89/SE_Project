@@ -4,7 +4,12 @@
 
     <!-- Strings related to Settings -->
 
-
+	<!--  LOGIN STRINGS -->
+    <string name="pref_user_name">Benutzername</string>
+    <string name="pref_user_name_summary">Benutzername speichern</string>
+    <string name="pref_user_password">Passwort</string>
+    <string name="pref_user_password_summary">Passwort speichern</string>
+    
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
     <string name="pref_title_social_recommendations">Enable social recommendations</string>

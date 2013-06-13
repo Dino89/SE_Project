@@ -11,10 +11,12 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -54,45 +56,40 @@ public class LoginActivity extends Activity {
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
 	
-	private SharedPreferences prefs;
+	private SharedPreferences sharedPrefs;
 	private MenschApplication obsApp;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         /* Initialisiere den Stub zum OnlineBankingServer */
         obsApp = (MenschApplication) this.getApplication();
         obsApp.setObsStub(new MenschSystemStub());
-		
-//        new UserLoginTask().execute();
-        
         
 		setContentView(R.layout.activity_login1);
 
 		// Set up the login form.
-		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mEmailView = (EditText) findViewById(R.id.email);
-		mEmailView.setText(mEmail);
-
 		mPasswordView = (EditText) findViewById(R.id.password);
-		mPasswordView
-				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-					@Override
-					public boolean onEditorAction(TextView textView, int id,
-							KeyEvent keyEvent) {
-						if (id == R.id.login || id == EditorInfo.IME_NULL) {
-							attemptLogin();
-							return true;
-						}
-						return false;
-					}
-				});
+//		mPasswordView
+//				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//					@Override
+//					public boolean onEditorAction(TextView textView, int id,
+//							KeyEvent keyEvent) {
+//						if (id == R.id.login || id == EditorInfo.IME_NULL) {
+//							attemptLogin();
+//							return true;
+//						}
+//						return false;
+//					}
+//				});
 
 		mLoginFormView = findViewById(R.id.login_form);
 		mLoginStatusView = findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
-
+		existingData();
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
@@ -108,8 +105,22 @@ public class LoginActivity extends Activity {
 						attemptRegister();
 					}
 				});
+		
+        
+        
 	}
 	
+	public void existingData() {
+		
+		String prefUsername = sharedPrefs.getString("prefUsername", "");
+		String prefPassword = sharedPrefs.getString("prefPassword", "");
+		
+		if(prefUsername.length() !=0 || prefPassword.length() !=0 ) {
+			mEmailView.setText(prefUsername);
+			mPasswordView.setText(prefPassword);				
+		}
+	}
+
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.login, menu);
@@ -117,6 +128,20 @@ public class LoginActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * Diese Methode wird vom Container aufgerufen, wenn ein Menue-Eintrag ausgewaehlt wird.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.itemPrefs :
+				startActivity(new Intent(this, SettingsActivity.class));
+				break;
+		}
+			
+		return true;
+	}
+	
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
 	 * If there are form errors (invalid email, missing fields, etc.), the
@@ -277,6 +302,8 @@ public class LoginActivity extends Activity {
 		
 		@Override
 		protected Boolean doInBackground(String... params) {
+			Log.d("", ""+username);
+			Log.d("", ""+password);
 			// TODO: attempt authentication against a network service.
 	        String register = LoginActivity.this.obsApp.getObsStub().register(username, password);
 	        try {
@@ -337,10 +364,10 @@ public class LoginActivity extends Activity {
 			protected Boolean doInBackground(String... params) {
 				String username = mEmail;
 				String password = mPassword;
-				// TODO: attempt authentication against a network service.
+
 				Kunde login = LoginActivity.this.obsApp.getObsStub().login(username, password);
-	
-				try {
+				// TODO: attempt authentication against a network service.
+			try {
 					// Simulate network access.
 					Thread.sleep(50);
 				} catch (InterruptedException e) {
