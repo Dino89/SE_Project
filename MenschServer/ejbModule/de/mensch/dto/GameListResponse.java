@@ -9,17 +9,17 @@ public class GameListResponse extends ReturncodeResponse {
 
 	private static final long serialVersionUID = -3173158310918408228L;
 
-	private ArrayList<Game> gameList;
+	private ArrayList<GameTO> gameList;
 	
 	public GameListResponse() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ArrayList<Game> getGameList() {
+	public ArrayList<GameTO> getGameList() {
 		return gameList;
 	}
 
-	public void setGameList(ArrayList<Game> games) {
+	public void setGameList(ArrayList<GameTO> games) {
 		this.gameList = games;
 	}
 }

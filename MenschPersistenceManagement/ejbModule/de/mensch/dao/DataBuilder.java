@@ -23,16 +23,29 @@ public class DataBuilder {
 	EntityManager em;
 	
 	@Resource
-	private String username1, password1, username2, password2;
+	private String username1, password1, username2, password2, owner1, owner2;
+	private int id, id2;
 
 	@PostConstruct
 	private void init() {
 		
 		Customer customer1 = new Customer(username1, password1);
 		em.persist(customer1);
-		System.out.println("customer angelegt");
+
 		Game game1 = new Game();
+		game1.setId(id);
+		game1.setOwner(customer1);
 		em.persist(game1);
+		
+		Customer customer2 = new Customer(username2, password2);
+		em.persist(customer2);
+
+
+		Game game2 = new Game();
+		game2.setId(id2);
+		game2.setOwner(customer2);
+		em.persist(game2);
+		System.out.println("game + customer angelegt");
 		
 		//erzeuge ein paar Beispieldaten zu Kunden und Konten, falls sie noch nicht in der DB vorhanden sind.
 //		Customer customer1 = em.find(Customer.class, username1);

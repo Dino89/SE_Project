@@ -118,8 +118,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	@Override
 	public GameListResponse getGames() {
 		GameListResponse response = new GameListResponse();
-		ArrayList <Game> games = this.dao.getGameList();
-		response.setGameList(games);
+		ArrayList<Game> gameList = this.dao.getGameList();
+		response.setGameList(dtoAssembler.makeDTO(gameList));
 		System.out.println(response);
 		return response;
 	}

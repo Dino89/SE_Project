@@ -13,6 +13,7 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+
 import android.util.Log;
 
 /** 
@@ -226,17 +227,50 @@ public class MenschSystemStub implements MenschSystem {
 	@Override
 	public ArrayList<Games> getGames() {
 		Log.d(TAG,"getGames called.");		
+		
+		
 		ArrayList<Games> result = new ArrayList<Games>();
+		
 		String METHOD_NAME = "getGames";
 		SoapObject response = executeSoapAction(METHOD_NAME);
+
 		Log.d(TAG, METHOD_NAME);
 		Log.d(TAG, response.toString());
-
+		
+//		
+//		ArrayList list = new ArrayList();
+//
+//		for (int i = 0; i < response.getPropertyCount(); i++) {
+//		    Object property = response.getProperty(i);
+//		    if (property instanceof SoapObject) {
+//		        SoapObject gameObj = (SoapObject) property;
+//		        String gameName = gameObj.getProperty(i).toString();
+//		        list.add(gameName);
+//		    }
+//		}
+//		
+//		
+//		
+////		for (int i=1; i<response.getPropertyCount(); i++) {
+////			SoapObject soapGameEntry = (SoapObject) response.getProperty(i);
+////			SoapPrimitive soapGameId = (SoapPrimitive) soapGameEntry.getProperty("id");
+////			Games game = new Games();
+////			game.setGameId(Integer.valueOf(soapGameId.toString()));
+////			result.add(game);
+////		}
+//		for(int x = 0; x<list.size(); x++) {
+//			Log.d("liste" + list.get(x), "liste" + list.get(x));
+//		}
+//		return response;
+		
 		for (int i=1; i<response.getPropertyCount(); i++) {
 			SoapObject soapGameEntry = (SoapObject) response.getProperty(i);
-			SoapPrimitive soapGameId = (SoapPrimitive) soapGameEntry.getProperty("id");
+			SoapPrimitive soapGameNr = (SoapPrimitive) soapGameEntry.getProperty("id");
+			
+//			SoapObject soapGameNr = (SoapObject) response.getProperty(i);
 			Games game = new Games();
-			game.setGameId(Integer.valueOf(soapGameId.toString()));
+			game.setId(Integer.valueOf(soapGameNr.toString()));
+
 			result.add(game);
 		}
 		return result;

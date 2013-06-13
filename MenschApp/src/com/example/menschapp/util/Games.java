@@ -7,48 +7,33 @@ public class Games implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Integer kontoNr;
-	private BigDecimal betrag;
+	private int id;
+	private int slots;
+	private int ownerId;
+	private boolean started;
 	
 	public Games() {
 		super();
 	}
 	
-	public Games(Integer kontoNr) {
-		this.betrag = BigDecimal.ZERO;
-		this.kontoNr = kontoNr;
+	public Games(int id) {
+		this.id = id;
 	}
 	
-	public Integer getKontoNr() {
-		return kontoNr;
+	public Integer getId() {
+		return id;
 	}
-	
-	public BigDecimal getBetrag() {
-		return betrag;
-	}
-	
-	public void increase(BigDecimal amount) {
-		this.betrag = this.betrag.add(amount);
-	}
-	
-	public void decrease(BigDecimal amount) {
-		this.betrag = this.betrag.subtract(amount);
-	}
-	
-	public String toString() {
-		return "Konto " + this.kontoNr + " (Saldo=" + this.betrag + ")";
-	}
-
-	public void setKontoNr(Integer kontoNr) {
-		this.kontoNr = kontoNr;
-	}
-
-	public void setBetrag(BigDecimal betrag) {
-		this.betrag = betrag;
-	}
-
-	public void setGameId(Integer valueOf) {
-		// TODO Auto-generated method stub
 		
+	public String toString() {
+		return "game id " + id + "; slots " + slots + "; owner " + ownerId + "; started " + started;
 	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+//	public void setGameId(Integer valueOf) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 }

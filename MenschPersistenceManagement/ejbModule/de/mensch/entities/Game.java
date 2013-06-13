@@ -7,15 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 @Entity
+@NamedQuery( name = "Game.gameList", query = "SELECT id FROM Game")
 public class Game implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue
 	private int id;
+	
+	private int slots = 3;
+	boolean started = false;
 	@OneToOne
 	private Customer owner;
 
@@ -33,6 +38,14 @@ public class Game implements Serializable {
 		return id;
 	}
 		
+	public int getSlots() {
+		return slots;
+	}
+	
+	public void setSlots(int slots) {
+		this.slots = slots;
+	}
+	
 	public Customer getOwner() {
 		return owner;
 	}
@@ -64,4 +77,11 @@ public class Game implements Serializable {
 	public int getGameList() {
 		return id;
 	}
+	public boolean isStarted() {
+		return started;
+	}
+	public void setStarted(boolean started) {
+		this.started = started;
+	}
+
 }

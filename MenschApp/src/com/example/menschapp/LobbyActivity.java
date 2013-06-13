@@ -11,6 +11,7 @@ import com.example.menschapp.util.MenschSystemStub;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
@@ -24,10 +25,13 @@ import android.widget.ListView;
 public class LobbyActivity extends Activity {
 	
 	
-    private ListView monthsListView;
-    private ArrayAdapter arrayAdapter;
-	List valueList = new ArrayList<String>();
+    ListView gameListView;
+    ArrayAdapter arrayAdapter;
+	String[] valueList;
 	private GameListTask listTask = null;
+	ArrayList<Games> gamesArray = new ArrayList<Games>();
+	ArrayList<String> games = new ArrayList<String>();
+	
 	
 	private SharedPreferences prefs;
 	private MenschApplication obsApp;
@@ -46,7 +50,7 @@ public class LobbyActivity extends Activity {
 	    // Declare the UI components
 	
 	        // Initialize the UI components
-	    monthsListView = (ListView) findViewById(R.id.lobbylist);
+        gameListView = (ListView) findViewById(R.id.lobbylist);
 	        // For this moment, you have ListView where you can display a list.
 	        // But how can we put this data set to the list?
 	        // This is where you need an Adapter
@@ -55,11 +59,12 @@ public class LobbyActivity extends Activity {
 	        // resource - The resource ID for a layout file containing a layout 
 	                // to use when instantiating views.
 	        // From the third parameter, you plugged the data set to adapter
-//	    arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, gamesArray);
-	 
-	        // By using setAdapter method, you plugged the ListView with adapter
-//	    monthsListView.setAdapter(arrayAdapter);
-	    
+
+	    arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, games);
+//	 
+//	        // By using setAdapter method, you plugged the ListView with adapter
+	    gameListView.setAdapter(arrayAdapter);
+//	    
 		listTask = new GameListTask(); 
 		listTask.execute();
 	 }
@@ -78,9 +83,10 @@ public class LobbyActivity extends Activity {
 		protected Boolean doInBackground(String... params) {
 			// TODO: attempt authentication against a network service.
 			
-		    String diceNumber = LobbyActivity.this.obsApp.getObsStub().diceNumber();
-		    ArrayList<Games> gamesArray = LobbyActivity.this.obsApp.getObsStub().getGames();
-		    
+		    gamesArray = LobbyActivity.this.obsApp.getObsStub().getGames();
+
+		    Log.d("GAME LISTE", ""+gamesArray);
+		    Log.d("", ""+ gamesArray);
 	        try {
 				// Simulate network access.
 				Thread.sleep(250);
@@ -92,7 +98,27 @@ public class LobbyActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
+			
+			
+			//TODO: Spieleliste in ListView reinkriegen!
+//			int i = 0;
+//			for(Games s : gamesArray) {
+//				valueList[i] = String.valueOf(s.getId());
+//			}
+			
+//			ArrayList<String> strings = new ArrayList<String>();
+//			
+//			for (Object object : gamesArray) {
+//			    strings.add(object != null ? object.toString() : null);
+//			}
+			
 
+			
+			for(int i = 0; i < gamesArray.size(); i++) {
+				games.add(gamesArray.get(i).toString());
+			}
+		    
+			arrayAdapter.notifyDataSetChanged();
 		}
 
 		@Override

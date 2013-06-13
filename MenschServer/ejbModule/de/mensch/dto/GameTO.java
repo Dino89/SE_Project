@@ -8,14 +8,14 @@ public class GameTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
-	private BigDecimal slots;
+	private int slots;
 	private int ownerId;
 	
 	
 	public GameTO() {
 	}
 
-	public GameTO(int id, BigDecimal slots, int ownerId) {
+	public GameTO(int id, int slots, int ownerId) {
 		super();
 		this.id = id;
 		this.slots = slots;
@@ -38,13 +38,13 @@ public class GameTO implements Serializable {
 	}
 
 
-	public BigDecimal getSlots() {
+	public int getSlots() {
 		return slots;
 	}
 
 
-	public void setSlots(BigDecimal slots) {
-		this.slots = slots;
+	public void setSlots(int i) {
+		this.slots = i;
 	}
 
 

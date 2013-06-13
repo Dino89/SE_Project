@@ -8,22 +8,32 @@
 		         <env-entry-name>de.mensch.dao.DataBuilder/username1</env-entry-name>
 		         <env-entry-type>java.lang.String</env-entry-type>
 		         <env-entry-value>joe</env-entry-value>
-		      </env-entry>
-		      <env-entry>
-		         <env-entry-name>de.mensch.dao.DataBuilder/password1</env-entry-name>
-		         <env-entry-type>java.lang.String</env-entry-type>
-		         <env-entry-value>joe1</env-entry-value>
-		      </env-entry>
-		      <env-entry>
+		   </env-entry>
+		         <env-entry>
 		         <env-entry-name>de.mensch.dao.DataBuilder/username2</env-entry-name>
 		         <env-entry-type>java.lang.String</env-entry-type>
-		         <env-entry-value>emma</env-entry-value>
-		      </env-entry>
-		      <env-entry>
-		         <env-entry-name>de.mensch.dao.DataBuilder/password2</env-entry-name>
+		         <env-entry-value>krimi</env-entry-value>
+		   </env-entry>
+		          <env-entry>
+		         <env-entry-name>de.mensch.dao.DataBuilder/id1</env-entry-name>
+		         <env-entry-type>java.lang.Integer</env-entry-type>
+		         <env-entry-value>1</env-entry-value>
+		   </env-entry>
+		          <env-entry>
+		         <env-entry-name>de.mensch.dao.DataBuilder/id2</env-entry-name>
+		         <env-entry-type>java.lang.Integer</env-entry-type>
+		         <env-entry-value>2</env-entry-value>
+		   </env-entry>
+		   <env-entry>
+		         <env-entry-name>de.mensch.dao.DataBuilder/owner1</env-entry-name>
 		         <env-entry-type>java.lang.String</env-entry-type>
-		         <env-entry-value>emma1</env-entry-value>
-		      </env-entry>
+		         <env-entry-value>joe</env-entry-value>
+		   </env-entry>
+		  <env-entry>
+		         <env-entry-name>de.mensch.dao.DataBuilder/owner2</env-entry-name>
+		         <env-entry-type>java.lang.String</env-entry-type>
+		         <env-entry-value>krimi</env-entry-value>
+		   </env-entry>
       </session>
    </enterprise-beans>      
 </ejb-jar>

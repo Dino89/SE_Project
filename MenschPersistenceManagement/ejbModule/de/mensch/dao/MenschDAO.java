@@ -1,6 +1,7 @@
 package de.mensch.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -8,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import de.mensch.entities.Account;
 import de.mensch.entities.Customer;
@@ -63,12 +65,12 @@ public class MenschDAO implements MenschDAOLocal {
 //	        em = factory.createEntityManager();
 		
 //	        em.getTransaction().begin();
-	        ArrayList<Game> response = null;
-	        em.createNamedQuery("SELECT id FROM Customer");
-	        System.out.println(response);
-	        for (Game game : response) {
+//	        ArrayList<Game> response = null;
+//
+//	        System.out.println(response);
+//	        for (Game game : response) {
 //	        	response.add()
-	        }
+//	        }
 //	        response = (ArrayList<Game>) em.createQuery(
 //	                "SELECT id FROM Game").getResultList();
 ////	        em.getTransaction().commit();
@@ -83,7 +85,19 @@ public class MenschDAO implements MenschDAOLocal {
 //	            System.out.println("Person name= " + game.getId() + ", gender" + game.getOwner());
 //	            }
 //	        }
-	 return response;
+//	 return response;
+//		ArrayList<Game> response = null;
+//		List games = em.createNamedQuery("Game.gameList").getResultList();
+//		System.out.println(games);
+//		return (ArrayList<Game>) games;
+//        System.out.println(customers);
+//        for (Game game : customers) {
+//        	response.add(game);
+//        }
+//		return response;
+		
+		Query query = em.createQuery("SELECT e FROM Game e");
+		return (ArrayList<Game>) query.getResultList();
 	 }
 }
 
