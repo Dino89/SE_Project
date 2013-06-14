@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -40,6 +41,20 @@ public class GameDetailActivity extends Activity {
 		return true;
 	}
 	
+	/**
+	 * Diese Methode wird vom Container aufgerufen, wenn ein Menue-Eintrag ausgewaehlt wird.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.itemPrefs :
+				startActivity(new Intent(this, SettingsActivity.class));
+				break;
+		}
+			
+		return true;
+	}
+
 	public class GameDetailTask extends AsyncTask<String, Void, Boolean> {
 		
 	    @Override

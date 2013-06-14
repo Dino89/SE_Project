@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -87,6 +88,20 @@ public class LobbyActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.lobby, menu);
 		//You must return true for the menu to be displayed; if you return false it will not be shown.
+		return true;
+	}
+
+	/**
+	 * Diese Methode wird vom Container aufgerufen, wenn ein Menue-Eintrag ausgewaehlt wird.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.itemPrefs :
+				startActivity(new Intent(this, SettingsActivity.class));
+				break;
+		}
+			
 		return true;
 	}
 

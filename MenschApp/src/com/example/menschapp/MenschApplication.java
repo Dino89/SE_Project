@@ -16,9 +16,9 @@ public class MenschApplication extends Application {
 //		this.angemeldeterKunde = angemeldeterKunde;
 //	}
 	
-	public Dice getDiceNumber() {
-		return diceNumber;
-	}
+//	public Dice getDiceNumber() {
+//		return diceNumber;
+//	}
 	public MenschSystem getObsStub() {
 		return obsStub;
 	}
