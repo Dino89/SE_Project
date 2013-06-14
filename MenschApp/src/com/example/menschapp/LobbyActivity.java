@@ -35,8 +35,6 @@ public class LobbyActivity extends Activity {
 	ArrayList<Games> gamesArray = new ArrayList<Games>();
 	ArrayList<String> games = new ArrayList<String>();
 	
-	Games gameDetail = new Games();
-	
 	private SharedPreferences prefs;
 	private MenschApplication obsApp;
 	
@@ -102,10 +100,7 @@ public class LobbyActivity extends Activity {
 
 		    Log.d("GAME LISTE", ""+gamesArray);
 		    Log.d("", ""+ gamesArray);
-		    
-		    int id = 1;
-		    gameDetail = LobbyActivity.this.obsApp.getObsStub().getGameDetails(id);
-		    
+    
 	        try {
 				// Simulate network access.
 				Thread.sleep(250);

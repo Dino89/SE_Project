@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="spielleiter">Spielleiter</string>
+    <string name="zuschauer">Zuschauer</string>
+     <string name="spieler">Spieler</string>
+
+</resources>

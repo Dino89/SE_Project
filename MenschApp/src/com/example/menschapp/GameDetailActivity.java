@@ -1,15 +1,36 @@
 package com.example.menschapp;
 
+import com.example.menschapp.util.Games;
+
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
 
 public class GameDetailActivity extends Activity {
 
+	private int gameid;
+	private TextView TextView03;
+	Games gameDetail = new Games();
+	private MenschApplication obsApp;
+	
+	private GameDetailTask gameTask = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_game_detail);
+		gameTask = new GameDetailTask();
+		gameTask.execute();
 	}
 
 	@Override
@@ -18,5 +39,37 @@ public class GameDetailActivity extends Activity {
 		getMenuInflater().inflate(R.menu.game_detail, menu);
 		return true;
 	}
+	
+	public class GameDetailTask extends AsyncTask<String, Void, Boolean> {
+		
+	    @Override
+		protected Boolean doInBackground(String... params) {
+			// TODO: attempt authentication against a network service.
+			Intent myIntent = getIntent();
+			gameid = myIntent.getExtras().getInt("gameid");
+			Log.d("", ""+gameid);
+			Log.d("", "Bis hierhin...");
+		    gameDetail = GameDetailActivity.this.obsApp.getObsStub().getGameDetails(gameid);
+			Log.d("", "...und nicht weiter!");
+	        try {
+				// Simulate network access.
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+				return false;
+			}
+			return true;
+		}
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			TextView03.setText(gameid);
+		}
 
+		@Override
+		protected void onCancelled() {
+
+		}
+	}
+	
+	
 }
