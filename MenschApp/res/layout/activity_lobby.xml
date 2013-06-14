@@ -34,7 +34,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/settings"
         android:layout_below="@+id/settings"
-        android:layout_marginTop="29dp" >
+        android:layout_marginTop="29dp"
+        android:clickable="true" >
+
     </ListView>
 
 </RelativeLayout>

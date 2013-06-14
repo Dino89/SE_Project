@@ -13,10 +13,13 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -68,6 +71,17 @@ public class LobbyActivity extends Activity {
 //	    
 		listTask = new GameListTask(); 
 		listTask.execute();
+		
+		gameListView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+	          public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
+	              //String selectedFromList = (lv.getItemAtPosition(myItemInt).toString());
+				Intent myIntent = new Intent(gameListView.getContext(), GameDetailActivity.class);
+				myIntent.putExtra("gameid", myItemInt+1);
+				Log.d("intent", ""+myIntent.getIntExtra("gameid", myItemInt));
+	            startActivityForResult(myIntent, 0);
+	          }
+		});
+		
 	 }
 	
 	
