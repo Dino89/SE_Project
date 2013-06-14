@@ -236,46 +236,45 @@ public class MenschSystemStub implements MenschSystem {
 
 		Log.d(TAG, METHOD_NAME);
 		Log.d(TAG, response.toString());
-		
-//		
-//		ArrayList list = new ArrayList();
-//
-//		for (int i = 0; i < response.getPropertyCount(); i++) {
-//		    Object property = response.getProperty(i);
-//		    if (property instanceof SoapObject) {
-//		        SoapObject gameObj = (SoapObject) property;
-//		        String gameName = gameObj.getProperty(i).toString();
-//		        list.add(gameName);
-//		    }
-//		}
-//		
-//		
-//		
-////		for (int i=1; i<response.getPropertyCount(); i++) {
-////			SoapObject soapGameEntry = (SoapObject) response.getProperty(i);
-////			SoapPrimitive soapGameId = (SoapPrimitive) soapGameEntry.getProperty("id");
-////			Games game = new Games();
-////			game.setGameId(Integer.valueOf(soapGameId.toString()));
-////			result.add(game);
-////		}
-//		for(int x = 0; x<list.size(); x++) {
-//			Log.d("liste" + list.get(x), "liste" + list.get(x));
-//		}
-//		return response;
-		
+
 		for (int i=1; i<response.getPropertyCount(); i++) {
 			SoapObject soapGameEntry = (SoapObject) response.getProperty(i);
 			SoapPrimitive soapGameNr = (SoapPrimitive) soapGameEntry.getProperty("id");
 			SoapPrimitive soapSlots = (SoapPrimitive) soapGameEntry.getProperty("slots");
 			SoapPrimitive soapOwnerId = (SoapPrimitive) soapGameEntry.getProperty("ownerId");
 			
-//			SoapObject soapGameNr = (SoapObject) response.getProperty(i);
 			Games game = new Games();
 			game.setId(Integer.valueOf(soapGameNr.toString()));
 			game.setSlots(Integer.valueOf(soapSlots.toString()));
 			game.setOwnerId(Integer.valueOf(soapOwnerId.toString()));
 			
 			result.add(game);
+		}
+		return result;
+	}
+	
+	@Override
+	public Games getGameDetails(int id) {
+		Log.d(TAG,"getGameDetails called.");		
+		
+		
+		Games result = new Games();
+		
+		String METHOD_NAME = "getGameDetails";
+		SoapObject response = executeSoapAction(METHOD_NAME, id);
+
+		Log.d(TAG, METHOD_NAME);
+		Log.d(TAG, response.toString());
+
+		for (int i=1; i<response.getPropertyCount(); i++) {
+			SoapObject soapGameEntry = (SoapObject) response.getProperty(i);
+			SoapPrimitive soapGameNr = (SoapPrimitive) soapGameEntry.getProperty("id");
+			SoapPrimitive soapSlots = (SoapPrimitive) soapGameEntry.getProperty("slots");
+			SoapPrimitive soapOwnerId = (SoapPrimitive) soapGameEntry.getProperty("ownerId");
+			
+			Games game = new Games();
+			game.setId(Integer.valueOf(soapGameNr.toString()));
+//			game.setSpieler1(soapGamePlayer1.toString());
 		}
 		return result;
 	}

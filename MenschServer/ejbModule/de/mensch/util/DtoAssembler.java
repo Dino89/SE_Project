@@ -20,6 +20,10 @@ public class DtoAssembler {
 	  dto.setId(game.getId());
 	  dto.setOwnerId(game.getId());
 	  dto.setSlots(game.getSlots());
+	  dto.setSpieler1(game.getSpieler1());
+	  dto.setSpieler2(game.getSpieler2());
+	  dto.setSpieler3(game.getSpieler3());
+	  dto.setSpieler4(game.getSpieler4());
 	  return dto;
   }
   

@@ -5,12 +5,6 @@
     <!-- Durch "java:jboss/datasources/ExampleDS" wird JBoss angewiesen, die integrierte HSQLDB,
          die als "Example Datasource" eingebunden ist, für die Persistenz der Applikation zu verwenden -->
     <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
-    <class>de.mensch.dao.MenschDAO</class>
-    <class>de.mensch.dao.MenschDAOLocal</class>
-    <class>de.mensch.entities.Account</class>
-    <class>de.mensch.entities.Customer</class>
-    <class>de.mensch.entities.Game</class>
-    <class>de.mensch.entities.MenschSession</class>
     <properties>
         <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
         <!--Die Eigenschaft "hibernate.hbm2ddl.auto" legt fest, wie mit bereits 

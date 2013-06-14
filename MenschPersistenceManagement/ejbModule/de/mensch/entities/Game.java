@@ -8,10 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-@NamedQuery( name = "Game.gameList", query = "SELECT id FROM Game")
 public class Game implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -23,7 +23,17 @@ public class Game implements Serializable {
 	boolean started = false;
 	@OneToOne
 	private Customer owner;
-
+	@OneToOne
+	private Customer spieler1;
+	@OneToOne
+	private Customer spieler2;
+	@OneToOne
+	private Customer spieler3;
+	@OneToOne
+	private Customer spieler4;
+	@ManyToOne
+	private Customer zuschauer;
+	
 	public Game() {
 		super();
 	}
@@ -34,6 +44,39 @@ public class Game implements Serializable {
 //		this.owner.addNewAccount(this);
 //	}
 //	
+	
+	public Customer getSpieler1() {
+		return spieler1;
+	}
+	
+	public void setSpieler1(Customer spieler1) {
+		this.spieler1 = spieler1;
+	}
+	
+	public Customer getSpieler2() {
+		return spieler2;
+	}
+	
+	public void setSpieler2(Customer spieler2) {
+		this.spieler2 = spieler2;
+	}
+	
+	public Customer getSpieler3() {
+		return spieler3;
+	}
+	
+	public void setSpieler3(Customer spieler3) {
+		this.spieler3 = spieler3;
+	}
+	
+	public Customer getSpieler4() {
+		return spieler4;
+	}
+	
+	public void setSpieler4(Customer spieler4) {
+		this.spieler4 = spieler4;
+	}
+	
 	public int getId() {
 		return id;
 	}

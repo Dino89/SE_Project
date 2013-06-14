@@ -15,7 +15,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
-@NamedQuery( name = "Customer.customerList", query = "SELECT id FROM Customer")
 public class Customer implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

@@ -57,47 +57,14 @@ public class MenschDAO implements MenschDAOLocal {
 	}
 
 	@Override
-	public ArrayList<Game> getGameList() {
-//		return em.find(Games.class, id);
-//	    public List<Person> findAllPersons(String Id) {
-//	        EntityManagerFactory factory = Persistence
-//	                .createEntityManagerFactory("persistenceUnitName");
-//	        em = factory.createEntityManager();
-		
-//	        em.getTransaction().begin();
-//	        ArrayList<Game> response = null;
-//
-//	        System.out.println(response);
-//	        for (Game game : response) {
-//	        	response.add()
-//	        }
-//	        response = (ArrayList<Game>) em.createQuery(
-//	                "SELECT id FROM Game").getResultList();
-////	        em.getTransaction().commit();
-////	        em.close();
-////	        factory.close();
-//	        System.out.println(response);
-//	        if (response == null) {
-//	        	Game g = new Game();
-//	            response.add(g);
-//	        } else {
-//	            for (Game game : response) {
-//	            System.out.println("Person name= " + game.getId() + ", gender" + game.getOwner());
-//	            }
-//	        }
-//	 return response;
-//		ArrayList<Game> response = null;
-//		List games = em.createNamedQuery("Game.gameList").getResultList();
-//		System.out.println(games);
-//		return (ArrayList<Game>) games;
-//        System.out.println(customers);
-//        for (Game game : customers) {
-//        	response.add(game);
-//        }
-//		return response;
-		
+	public ArrayList<Game> getGameList() {		
 		Query query = em.createQuery("SELECT e FROM Game e");
 		return (ArrayList<Game>) query.getResultList();
 	 }
+
+	@Override
+	public Game getGameDetails(int id) {
+		return em.find(Game.class, id);
+	}
 }
 

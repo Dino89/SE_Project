@@ -39,6 +39,9 @@ public interface MenschSystem {
 
 	ArrayList<Games> getGames();
 
+
+	Games getGameDetails(int id);
+
 	
 	/**
 	 * Operation zum Auslesen aller eigenen Konten

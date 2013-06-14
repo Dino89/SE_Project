@@ -26,5 +26,7 @@ public interface MenschDAOLocal {
 	public Customer registerCustomer(String username, String password);
 
 	public ArrayList<Game> getGameList();
+
+	public Game getGameDetails(int id);
 		
 }

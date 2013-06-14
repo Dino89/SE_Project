@@ -11,6 +11,7 @@ import javax.jws.WebService;
 
 import de.mensch.dto.DiceResponse;
 import de.mensch.dto.DiceTO;
+import de.mensch.dto.GameDetailResponse;
 import de.mensch.dto.GameListResponse;
 import de.mensch.dto.ReturncodeResponse;
 import de.mensch.dto.UserLoginResponse;
@@ -121,6 +122,15 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		ArrayList<Game> gameList = this.dao.getGameList();
 		response.setGameList(dtoAssembler.makeDTO(gameList));
 		System.out.println(response);
+		return response;
+	}
+	
+	@Override
+	public GameDetailResponse getGameDetails(int id) {
+		System.out.println("game detail id: " + id);
+		GameDetailResponse response = new GameDetailResponse();
+		Game gameDetail = this.dao.getGameDetails(id);
+		response.setGameDetails(dtoAssembler.makeDTO(gameDetail));
 		return response;
 	}
 
