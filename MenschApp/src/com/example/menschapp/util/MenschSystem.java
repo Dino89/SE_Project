@@ -37,10 +37,10 @@ public interface MenschSystem {
 	public Kunde login(String username, String password);
 
 
-	ArrayList<Games> getGames();
+	public ArrayList<Games> getGames();
 
 
-	Games getGameDetails(int id);
+	public Games getGameDetails(int id);
 
 	
 	/**

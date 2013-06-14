@@ -364,7 +364,7 @@ public class LoginActivity extends Activity {
 			protected Boolean doInBackground(String... params) {
 				String username = mEmail;
 				String password = mPassword;
-
+				
 				Kunde login = LoginActivity.this.obsApp.getObsStub().login(username, password);
 				// TODO: attempt authentication against a network service.
 			try {

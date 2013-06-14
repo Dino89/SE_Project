@@ -18,7 +18,7 @@ public class DtoAssembler {
   public GameTO makeDTO(Game game) {
 	  GameTO dto = new GameTO();
 	  dto.setId(game.getId());
-	  dto.setOwnerId(game.getId());
+	  dto.setOwner(game.getOwner());
 	  dto.setSlots(game.getSlots());
 	  dto.setSpieler1(game.getSpieler1());
 	  dto.setSpieler2(game.getSpieler2());

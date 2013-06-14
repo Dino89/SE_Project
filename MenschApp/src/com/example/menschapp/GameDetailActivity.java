@@ -1,6 +1,7 @@
 package com.example.menschapp;
 
 import com.example.menschapp.util.Games;
+import com.example.menschapp.util.MenschSystemStub;
 
 import android.os.AsyncTask;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +22,8 @@ public class GameDetailActivity extends Activity {
 
 	private int gameid;
 	private TextView TextView03;
-	Games gameDetail = new Games();
+	
+	private SharedPreferences prefs;
 	private MenschApplication obsApp;
 	
 	private GameDetailTask gameTask = null;
@@ -28,8 +31,16 @@ public class GameDetailActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
+        /* Initialisiere den Stub zum GameServer */
+        obsApp = (MenschApplication) this.getApplication();
+        obsApp.setObsStub(new MenschSystemStub());
+        
 		setContentView(R.layout.activity_game_detail);
+		
+		TextView03 = (TextView) findViewById(R.id.TextView03);
+		
+		
 		gameTask = new GameDetailTask();
 		gameTask.execute();
 	}
@@ -62,22 +73,22 @@ public class GameDetailActivity extends Activity {
 			// TODO: attempt authentication against a network service.
 			Intent myIntent = getIntent();
 			gameid = myIntent.getExtras().getInt("gameid");
-			Log.d("", ""+gameid);
-			Log.d("", "Bis hierhin...");
-		    gameDetail = GameDetailActivity.this.obsApp.getObsStub().getGameDetails(gameid);
-			Log.d("", "...und nicht weiter!");
+
+		    Games gameDetail = GameDetailActivity.this.obsApp.getObsStub().getGameDetails(gameid);
+
 	        try {
 				// Simulate network access.
 				Thread.sleep(250);
 			} catch (InterruptedException e) {
 				return false;
 			}
+
 			return true;
 		}
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
-			TextView03.setText(gameid);
+	        TextView03.setText(Integer.toString(gameid));
 		}
 
 		@Override

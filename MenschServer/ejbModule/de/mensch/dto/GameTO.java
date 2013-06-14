@@ -11,8 +11,9 @@ public class GameTO implements Serializable {
 	
 	private int id;
 	private int slots;
-	private int ownerId;
+//	private int ownerId;
 	
+	private Customer owner;
 	private Customer spieler1;
 	private Customer spieler2;
 	private Customer spieler3;
@@ -21,16 +22,16 @@ public class GameTO implements Serializable {
 	public GameTO() {
 	}
 
-	public GameTO(int id, int slots, int ownerId) {
+	public GameTO(int id, int slots, Customer owner) {
 		super();
 		this.id = id;
 		this.slots = slots;
-		this.ownerId = ownerId;
+		this.owner = owner;
 	}
 
 
 	public String toString() {
-		return "Game " + this.id + " (Slots=" + this.slots + ", Owner=" + this.getOwnerId() + ")";
+		return "Game " + this.id + " (Slots=" + this.slots + ", Owner=" + this.getOwner() + ")";
 	}
 
 
@@ -51,16 +52,6 @@ public class GameTO implements Serializable {
 
 	public void setSlots(int i) {
 		this.slots = i;
-	}
-
-
-	public int getOwnerId() {
-		return ownerId;
-	}
-
-
-	public void setOwnerId(int ownerId) {
-		this.ownerId = ownerId;
 	}
 
 	public Customer getSpieler1() {
@@ -93,5 +84,13 @@ public class GameTO implements Serializable {
 
 	public void setSpieler4(Customer spieler4) {
 		this.spieler4 = spieler4;
-	}	
+	}
+	
+	public Customer getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Customer owner) {
+		this.owner = owner;
+	}
 }

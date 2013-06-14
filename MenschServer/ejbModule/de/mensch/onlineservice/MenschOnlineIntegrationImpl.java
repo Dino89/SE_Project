@@ -127,7 +127,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	
 	@Override
 	public GameDetailResponse getGameDetails(int id) {
-		System.out.println("game detail id: " + id);
+
 		GameDetailResponse response = new GameDetailResponse();
 		Game gameDetail = this.dao.getGameDetails(id);
 		response.setGameDetails(dtoAssembler.makeDTO(gameDetail));

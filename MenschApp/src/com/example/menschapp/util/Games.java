@@ -9,13 +9,15 @@ public class Games implements Serializable {
 	
 	private int id;
 	private int slots;
-	private int ownerId;
+
 	private boolean started;
 	
 	private String spieler1;
 	private String spieler2;
 	private String spieler3;
 	private String spieler4;
+	
+	private String owner;
 	
 	public Games() {
 		super();
@@ -30,7 +32,7 @@ public class Games implements Serializable {
 	}
 		
 	public String toString() {
-		return "game id " + id + "; slots " + slots + "; owner " + ownerId + "; started " + started;
+		return owner+"'s Spiel. Slots: "+slots+"/4";
 	}
 
 	public void setId(Integer id) {
@@ -43,14 +45,6 @@ public class Games implements Serializable {
 
 	public void setSlots(int slots) {
 		this.slots = slots;
-	}
-
-	public int getOwnerId() {
-		return ownerId;
-	}
-
-	public void setOwnerId(int ownerId) {
-		this.ownerId = ownerId;
 	}
 
 	public String getSpieler1() {
@@ -83,6 +77,14 @@ public class Games implements Serializable {
 
 	public void setSpieler4(String spieler4) {
 		this.spieler4 = spieler4;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 
 }
