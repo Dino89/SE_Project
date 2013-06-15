@@ -345,6 +345,7 @@ public class LoginActivity extends Activity {
 				mEmailView
 						.setError(getString(R.string.error_register));
 				mEmailView.requestFocus();
+				showProgress(false);
 			}
 		}
 

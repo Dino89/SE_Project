@@ -71,5 +71,14 @@ public class MenschDAO implements MenschDAOLocal {
 	public Game getGameFields(int id) {
 		return em.find(Game.class, id);
 	}
+	
+	@Override
+	public Game createGame(Customer owner) {
+		Game game = new Game();
+		game.setOwner(owner);
+		game.setSpieler1(owner);
+		em.persist(game);
+		return game;
+	}
 }
 

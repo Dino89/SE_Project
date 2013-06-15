@@ -28,7 +28,7 @@ public interface MenschSystem {
 	public void logout();
 
 
-	public String diceNumber();
+	public double diceNumber();
 
 
 	public String register(String username, String password);

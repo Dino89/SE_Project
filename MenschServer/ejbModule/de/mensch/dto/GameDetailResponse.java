@@ -7,7 +7,7 @@ import de.mensch.entities.Game;
 
 public class GameDetailResponse extends ReturncodeResponse {
 
-	private static final long serialVersionUID = -3173158310918408228L;
+	private static final long serialVersionUID = -317315831091403428L;
 
 	private GameTO gameDetail;
 	

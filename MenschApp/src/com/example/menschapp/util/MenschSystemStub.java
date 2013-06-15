@@ -177,20 +177,14 @@ public class MenschSystemStub implements MenschSystem {
 	}
 
 	@Override
-	public String diceNumber() {
+	public double diceNumber() {
 		Log.d(TAG,"diceNumber called");
 		String METHOD_NAME = "diceNumber";
 		SoapObject response = executeSoapAction(METHOD_NAME);
 		Log.d(TAG, response.toString());
-		for (int i = 0; i < response.getPropertyCount(); i++) {
-			PropertyInfo pi = new PropertyInfo();
-			response.getPropertyInfo(i, pi);
-			Log.d(TAG, pi.name + " : " + response.getProperty(i).toString());
-		}
-//		Log.d(TAG, (String) response.getProperty(0).toString());
-//		Log.d(TAG, (String) response.getProperty(1).toString());
-		Log.d("arf", "arf");
-		return response.getPrimitivePropertySafelyAsString("diceNumber");
+		String diceString = response.getProperty("diceNumber").toString();
+		double diceNumber=Double.parseDouble(diceString);
+		return diceNumber;
 	}
 
 	@Override

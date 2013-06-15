@@ -4,19 +4,20 @@ public class DiceResponse extends ReturncodeResponse {
 
 	private static final long serialVersionUID = -3173158310918408228L;
 
-	private String diceNumber;
+	private double diceNumber;
 	
 	public DiceResponse() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void setDiceNumber(String diceNumber) {
-		this.diceNumber = diceNumber;
+	public void setDiceNumber(double random) {
+		this.diceNumber = random;
 		
 	}
 	
-	public String getDiceNumber() {
+	public double getDiceNumber() {
 		return diceNumber;
 		
 	}
+
 }

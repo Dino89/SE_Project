@@ -7,18 +7,18 @@ import java.util.Map;
 public class Dice implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private String diceNumber;
+	private double diceNumber;
 	
 	public Dice() {
 		super();
 	}
 	
-	public Dice(String diceNumber) {
+	public Dice(double diceNumber) {
 		this.diceNumber = diceNumber;
 	}
 	
 	public String toString() {
-		return "Kunde: ";
+		return "Dice: " + diceNumber;
 	}
 	
 //	public void setDiceNumber(String diceNumber) {

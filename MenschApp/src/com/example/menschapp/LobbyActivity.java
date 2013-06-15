@@ -114,7 +114,6 @@ public class LobbyActivity extends Activity {
 		    gamesArray = LobbyActivity.this.obsApp.getObsStub().getGames();
 
 		    Log.d("GAME LISTE", ""+gamesArray);
-		    Log.d("", ""+ gamesArray);
     
 	        try {
 				// Simulate network access.

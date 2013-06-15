@@ -43,6 +43,22 @@ public class GameDetailActivity extends Activity {
 		
 		gameTask = new GameDetailTask();
 		gameTask.execute();
+		
+		findViewById(R.id.mitspielen).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+//						mitspielen();
+					}
+				});
+		
+		findViewById(R.id.zuschauen).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+//						zuschauen();
+					}
+				});
 	}
 
 	@Override

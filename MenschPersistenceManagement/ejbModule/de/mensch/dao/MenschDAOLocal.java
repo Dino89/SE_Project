@@ -30,5 +30,7 @@ public interface MenschDAOLocal {
 	public Game getGameDetails(int id);
 
 	public Game getGameFields(int id);
+
+	public Game createGame(Customer owner);
 		
 }

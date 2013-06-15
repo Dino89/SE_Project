@@ -111,10 +111,9 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	@Override
 	public DiceResponse diceNumber() {
 		DiceResponse response = new DiceResponse();
-		response.setDiceNumber("abc");
-		System.out.println("dice number angefragt");
+		double random = Math.round(Math.random()*100%6);
+		response.setDiceNumber(random);
 		System.out.println(response);
-		System.out.println(response.getDiceNumber());
 		return response;
 	}
 
@@ -123,13 +122,13 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		GameListResponse response = new GameListResponse();
 		ArrayList<Game> gameList = this.dao.getGameList();
 		response.setGameList(dtoAssembler.makeDTO(gameList));
-		System.out.println(response);
+
 		return response;
 	}
 	
 	@Override
 	public GameDetailResponse getGameDetails(int id) {
-
+		System.out.println(id);
 		GameDetailResponse response = new GameDetailResponse();
 		Game gameDetail = this.dao.getGameDetails(id);
 		response.setGameDetails(dtoAssembler.makeDTO(gameDetail));
