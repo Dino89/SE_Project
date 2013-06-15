@@ -96,6 +96,9 @@ public class GameField implements Serializable {
 	private int field_39;
 	private int field_40;
 	
+	public GameField() {
+		super();
+	}	
 	
 	public int getId() {
 		return id;

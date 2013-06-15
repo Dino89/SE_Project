@@ -15,8 +15,8 @@ public class GameDetailResponse extends ReturncodeResponse {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void setGameDetails(GameTO games) {
-		this.gameDetail = games;
+	public void setGameDetails(GameTO game) {
+		this.gameDetail = game;
 	}
 	
 	public GameTO getGameDetails(int id) {
