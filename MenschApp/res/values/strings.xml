@@ -8,8 +8,8 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="settings">Einstellungen</string>
-    <string name="highscore">Rangliste</string>
     <string name="title_activity_game_detail">GameDetailActivity</string>
     <string name="labelPrefs">Einstellungen</string>
+    <string name="title_activity_game_field">GameFieldActivity</string>
 
 </resources>

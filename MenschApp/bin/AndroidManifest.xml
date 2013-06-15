@@ -38,6 +38,10 @@
             android:name="com.example.menschapp.GameDetailActivity"
             android:label="@string/title_activity_game_detail" >
         </activity>
+        <activity
+            android:name="com.example.menschapp.GameFieldActivity"
+            android:label="@string/title_activity_game_field" >
+        </activity>
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@ import javax.jws.WebService;
 import de.mensch.dto.DiceResponse;
 import de.mensch.dto.DiceTO;
 import de.mensch.dto.GameDetailResponse;
+import de.mensch.dto.GameFieldResponse;
 import de.mensch.dto.GameListResponse;
 import de.mensch.dto.ReturncodeResponse;
 import de.mensch.dto.UserLoginResponse;
@@ -21,6 +22,7 @@ import de.mensch.dao.MenschDAO;
 import de.mensch.dao.MenschDAOLocal;
 import de.mensch.entities.Customer;
 import de.mensch.entities.Game;
+import de.mensch.entities.GameField;
 import de.mensch.entities.MenschSession;
 //import de.xbank.dao.XbankDAOLocal;
 //import de.xbank.entities.Customer;
@@ -131,6 +133,13 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		GameDetailResponse response = new GameDetailResponse();
 		Game gameDetail = this.dao.getGameDetails(id);
 		response.setGameDetails(dtoAssembler.makeDTO(gameDetail));
+		return response;
+	}
+	
+	@Override
+	public GameFieldResponse getGameFields(int id) {
+		GameFieldResponse response = new GameFieldResponse();
+		Game gameFields = this.dao.getGameFields(id);
 		return response;
 	}
 

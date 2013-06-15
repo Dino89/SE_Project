@@ -1,16 +1,16 @@
 <resources>
 
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login">Einloggen</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in_register"><b>Einloggen</b></string>
-    <string name="action_register"><b>Register</b></string>
+    <string name="action_register"><b>Registrieren</b></string>
     <string name="action_sign_in_short">Einloggen</string>
     <string name="action_forgot_password">Recover lost password</string>
-    <string name="login_progress_signing_in">Signing in&#8230;</string>
-    <string name="register_progress_signing_in">Register&#8230;</string>
+    <string name="login_progress_signing_in">Logge ein&#8230;</string>
+    <string name="register_progress_signing_in">Registriere Account&#8230;</string>
     <string name="error_invalid_email">Diese E-Mail Adresse ist ungültig</string>
     <string name="error_invalid_password">Passwort zu kurz</string>
     <string name="error_incorrect_password">Passwort falsch</string>

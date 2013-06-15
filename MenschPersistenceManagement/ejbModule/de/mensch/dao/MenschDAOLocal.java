@@ -28,5 +28,7 @@ public interface MenschDAOLocal {
 	public ArrayList<Game> getGameList();
 
 	public Game getGameDetails(int id);
+
+	public Game getGameFields(int id);
 		
 }

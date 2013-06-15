@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import de.mensch.dto.DiceResponse;
 import de.mensch.dto.GameDetailResponse;
+import de.mensch.dto.GameFieldResponse;
 import de.mensch.dto.GameListResponse;
 import de.mensch.dto.ReturncodeResponse;
 import de.mensch.dto.UserLoginResponse;
@@ -33,5 +34,7 @@ public interface MenschOnlineIntegration {
 	public GameListResponse getGames();
 	
 	public GameDetailResponse getGameDetails(int id);
+	
+	public GameFieldResponse getGameFields(int id);
 	
 }

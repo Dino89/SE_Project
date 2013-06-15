@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:background="@drawable/field_background"
+     android:columnCount="11"
+     android:rowCount="15" >
+     
+     <Space />
+     
+     <!-- ##########################################
+         fields
+     ########################################### -->
+     
+     <!--  startfield green -->
+     <ImageView
+         android:id="@+id/field_21"
+         android:layout_column="0"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="4"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_green" />
+     
+     <ImageView
+         android:id="@+id/field_22"
+         android:layout_column="1"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="4"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_23"
+         android:layout_column="2"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="4"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_24"
+         android:layout_column="3"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="4"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_25"
+         android:layout_column="4"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="4"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_26"
+         android:layout_column="4"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="3"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_27"
+         android:layout_column="4"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="2"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_28"
+         android:layout_column="4"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="1"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_29"
+         android:layout_column="4"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="0"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_30"
+         android:layout_column="5"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="0"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <!-- startfield yellow -->
+     <ImageView
+         android:id="@+id/field_31"
+         android:layout_column="6"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="0"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_yellow" />
+     
+     <ImageView
+         android:id="@+id/field_32"
+         android:layout_column="6"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="1"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_33"
+         android:layout_column="6"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="2"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_34"
+         android:layout_column="6"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="3"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_35"
+         android:layout_column="6"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="4"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_36"
+         android:layout_column="7"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="4"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_37"
+         android:layout_column="8"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="4"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_38"
+         android:layout_column="9"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="4"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_39"
+         android:layout_column="10"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="4"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_40"
+         android:layout_column="10"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="5"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <!-- startfield blue -->
+
+     <ImageView
+         android:id="@+id/field_1"
+         android:layout_column="10"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="6"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_blue" />
+     
+     <ImageView
+         android:id="@+id/field_2"
+         android:layout_column="9"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="6"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_3"
+         android:layout_column="8"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="6"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_4"
+         android:layout_column="7"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="6"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     <ImageView
+         android:id="@+id/field_5"
+         android:layout_column="6"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="6"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_6"
+         android:layout_column="6"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="7"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_7"
+         android:layout_column="6"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="8"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_8"
+         android:layout_column="6"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="9"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_9"
+         android:layout_column="6"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="10"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_10"
+         android:layout_column="5"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="10"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <!-- startfield red -->
+     <ImageView
+         android:id="@+id/field_11"
+         android:layout_column="4"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="10"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_red" />
+     
+     <ImageView
+         android:id="@+id/field_12"
+         android:layout_column="4"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="9"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_13"
+         android:layout_column="4"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="8"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_14"
+         android:layout_column="4"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="7"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_15"
+         android:layout_column="4"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="6"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_16"
+         android:layout_column="3"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="6"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+     
+     <ImageView
+         android:id="@+id/field_17"
+         android:layout_column="2"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="6"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+      
+     <ImageView
+         android:id="@+id/field_18"
+         android:layout_column="1"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="6"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+       
+     <ImageView
+         android:id="@+id/field_19"
+         android:layout_column="0"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="6"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+        
+     <ImageView
+         android:id="@+id/field_20"
+         android:layout_column="0"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="5"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2" />
+        
+        
+        
+     <!-- ##########################################
+         fields for houses 
+     ########################################### -->
+     
+     <!-- houses for green -->
+
+     <ImageView
+         android:id="@+id/field_green_4"
+         android:layout_column="0"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="0"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_green_filled" />
+     
+     <ImageView
+         android:id="@+id/field_green_1"
+         android:layout_column="1"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="0"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_green_filled" />
+     
+     <ImageView
+         android:id="@+id/field_green_3"
+         android:layout_column="0"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="1"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_green_filled" />
+     
+     <ImageView
+         android:id="@+id/field_green_2"
+         android:layout_column="1"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="1"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_green_filled" />
+     
+     <!-- houses for yellow -->
+
+     <ImageView
+         android:id="@+id/field_yellow_4"
+         android:layout_column="9"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="0"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_yellow_filled" />
+     
+     <ImageView
+         android:id="@+id/field_yellow_1"
+         android:layout_column="10"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="0"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_yellow_filled" />
+     
+     <ImageView
+         android:id="@+id/field_yellow_3"
+         android:layout_column="9"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="1"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_yellow_filled" />
+     
+     <ImageView
+         android:id="@+id/field_yellow_2"
+         android:layout_column="10"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="1"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_yellow_filled" />
+     
+     <!-- houses for blue -->
+
+     <ImageView
+         android:id="@+id/field_blue_4"
+         android:layout_column="9"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="9"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_blue_filled" />
+     
+     <ImageView
+         android:id="@+id/field_blue_1"
+         android:layout_column="10"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="9"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_blue_filled" />
+     
+     <ImageView
+         android:id="@+id/field_blue_3"
+         android:layout_column="9"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="10"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_blue_filled" />
+     
+     <ImageView
+         android:id="@+id/field_blue_2"
+         android:layout_column="10"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="10"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_blue_filled" />
+     
+     <!-- houses for red -->
+
+     <ImageView
+         android:id="@+id/field_red_4"
+         android:layout_column="0"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="9"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_red_filled" />
+     
+     <ImageView
+         android:id="@+id/field_red_1"
+         android:layout_column="1"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="9"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_red_filled" />
+     
+     <ImageView
+         android:id="@+id/field_red_3"
+         android:layout_column="0"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="10"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_red_filled" />
+     
+     <ImageView
+         android:id="@+id/field_red_2"
+         android:layout_column="1"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="10"
+         android:contentDescription="@string/field_h"
+         android:src="@drawable/circle_low2_red_filled" />
+     
+     
+     
+     <!-- ##########################################
+         targetfields
+     ########################################### -->
+     
+     <!-- green -->
+
+     <ImageView
+         android:id="@+id/field_green_house_1"
+         android:layout_column="1"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="5"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_green" />
+     
+     <ImageView
+         android:id="@+id/field_green_house_2"
+         android:layout_column="2"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="5"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_green" />
+     
+     <ImageView
+         android:id="@+id/field_green_house_3"
+         android:layout_column="3"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="5"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_green" />
+     
+     <ImageView
+         android:id="@+id/field_green_house_4"
+         android:layout_column="4"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="5"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_green" />
+     
+     <!-- yellow -->
+
+     <ImageView
+         android:id="@+id/field_yellow_house_1"
+         android:layout_column="5"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="1"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_yellow" />
+     
+     <ImageView
+         android:id="@+id/field_yellow_house_2"
+         android:layout_column="5"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="2"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_yellow" />
+     
+     <ImageView
+         android:id="@+id/field_yellow_house_3"
+         android:layout_column="5"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="3"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_yellow" />
+     
+     <ImageView
+         android:id="@+id/field_yellow_house_4"
+         android:layout_column="5"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="4"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_yellow" />
+     
+     <!-- blue -->
+
+     <ImageView
+         android:id="@+id/field_blue_house_1"
+         android:layout_column="9"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="5"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_blue" />
+     
+     <ImageView
+         android:id="@+id/field_blue_house_2"
+         android:layout_column="8"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="5"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_blue" />
+     
+      <ImageView
+          android:id="@+id/field_blue_house_3"
+          android:layout_column="7"
+          android:layout_gravity="center"
+          android:layout_margin="7dp"
+          android:layout_row="5"
+          android:contentDescription="@string/field_start"
+          android:src="@drawable/circle_low2_blue" />
+     
+     <ImageView
+         android:id="@+id/field_blue_house_4"
+         android:layout_column="6"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="5"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_blue" />
+    
+     <!-- red -->
+
+     <ImageView
+         android:id="@+id/field_red_house_1"
+         android:layout_column="5"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="9"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_red" />
+     
+     <ImageView
+         android:id="@+id/field_red_house_2"
+         android:layout_column="5"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="8"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_red" />
+     
+     <ImageView
+         android:id="@+id/field_red_house_3"
+         android:layout_column="5"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="7"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_red" />
+     
+     <ImageView
+         android:id="@+id/field_red_house_4"
+         android:layout_column="5"
+         android:layout_gravity="center"
+         android:layout_margin="7dp"
+         android:layout_row="6"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/circle_low2_red" />
+     
+     
+     
+     
+     
+        <!-- ##########################################
+         hint direction
+     	########################################### -->
+     	
+        <ImageView
+         android:id="@+id/way_right"
+         android:layout_column="0"
+         android:layout_gravity="center"
+         android:layout_margin="5dp"
+         android:layout_row="3"
+         android:layout_columnSpan="2"
+         android:contentDescription="@string/field_start"
+         android:src="@drawable/way_right" />
+        
+        <ImageView
+            android:id="@+id/way_down"
+            android:layout_column="7"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_row="0"
+            android:layout_rowSpan="2"
+            android:contentDescription="@string/field_start"
+            android:src="@drawable/way_down" />
+        
+        <ImageView
+            android:id="@+id/way_left"
+            android:layout_column="9"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_row="7"
+            android:layout_columnSpan="2"
+            android:contentDescription="@string/field_start"
+            android:src="@drawable/way_left" />
+        
+        <ImageView
+            android:id="@+id/way_up"
+            android:layout_column="3"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_row="9"
+            android:layout_rowSpan="2"
+            android:contentDescription="@string/field_start"
+            android:src="@drawable/way_up" />
+     
+ </GridLayout>

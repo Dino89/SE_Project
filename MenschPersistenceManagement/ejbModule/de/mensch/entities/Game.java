@@ -33,6 +33,8 @@ public class Game implements Serializable {
 	private Customer spieler4;
 	@ManyToOne
 	private Customer zuschauer;
+	@OneToOne
+	private GameField gameField;
 	
 	public Game() {
 		super();
