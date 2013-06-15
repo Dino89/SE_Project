@@ -38,7 +38,7 @@ public class GameDetailActivity extends Activity {
         
 		setContentView(R.layout.activity_game_detail);
 		
-		TextView03 = (TextView) findViewById(R.id.TextView03);
+		TextView03 = (TextView) findViewById(R.id.spielleiter);
 		
 		
 		gameTask = new GameDetailTask();

@@ -133,6 +133,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		GameDetailResponse response = new GameDetailResponse();
 		Game gameDetail = this.dao.getGameDetails(id);
 		response.setGameDetails(dtoAssembler.makeDTO(gameDetail));
+		System.out.println(response.toString());
 		return response;
 	}
 	
@@ -140,6 +141,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	public GameFieldResponse getGameFields(int id) {
 		GameFieldResponse response = new GameFieldResponse();
 		Game gameFields = this.dao.getGameFields(id);
+//		response.setGameFields();
 		return response;
 	}
 

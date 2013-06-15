@@ -11,7 +11,6 @@ public class GameTO implements Serializable {
 	
 	private int id;
 	private int slots;
-//	private int ownerId;
 	
 	private Customer owner;
 	private Customer spieler1;
@@ -31,7 +30,7 @@ public class GameTO implements Serializable {
 
 
 	public String toString() {
-		return "Game " + this.id + " (Slots=" + this.slots + ", Owner=" + this.getOwner() + ")";
+		return "Game " + this.id + " Slots=" + this.slots + ", Owner=" + this.getOwner();
 	}
 
 

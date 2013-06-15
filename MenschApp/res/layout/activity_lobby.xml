@@ -29,21 +29,5 @@
 
     </ListView>
 
-    <Button
-        android:id="@+id/zuschauen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/lobbylist"
-        android:layout_below="@+id/highscore"
-        android:text="@string/zuschauen" />
-
-    <Button
-        android:id="@+id/mitspielen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/highscore"
-        android:layout_alignBottom="@+id/highscore"
-        android:layout_alignRight="@+id/lobbylist"
-        android:text="@string/mitspielen" />
 
 </RelativeLayout>

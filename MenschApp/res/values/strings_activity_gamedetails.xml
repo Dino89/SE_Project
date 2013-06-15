@@ -3,6 +3,10 @@
 
     <string name="spielleiter">Spielleiter</string>
     <string name="zuschauer">Zuschauer</string>
-     <string name="spieler">Spieler</string>
+    <string name="spieler">Spieler</string>
+    <string name="spieler1">Nicht besetzt</string>
+    <string name="spieler2">Nicht besetzt</string>
+    <string name="spieler3">Nicht besetzt</string>
+    <string name="spieler4">Nicht besetzt</string>
 
 </resources>

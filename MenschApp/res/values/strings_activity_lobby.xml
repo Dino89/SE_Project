@@ -2,6 +2,5 @@
 <resources>
 	<string name="zuschauen">zuschauen</string>
 	<string name="mitspielen">mitspielen</string>
-	<string name="highscore">Rangliste</string>
-	
+	<string name="highscore">Rangliste</string>	
 </resources>

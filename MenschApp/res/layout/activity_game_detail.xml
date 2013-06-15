@@ -9,27 +9,27 @@
     tools:context=".GameDetailActivity" >
 
     <TextView
-        android:id="@+id/TextView02"
+        android:id="@+id/zuschauer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/spielleiter"
         android:layout_marginLeft="87dp"
         android:layout_marginTop="30dp"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_toRightOf="@+id/spielleiter"
         android:text="@string/zuschauer" />
 
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextView02"
-        android:layout_alignRight="@+id/TextView02"
-        android:layout_below="@+id/TextView02" >
+        android:layout_alignLeft="@+id/zuschauer"
+        android:layout_alignRight="@+id/zuschauer"
+        android:layout_below="@+id/zuschauer" >
 
     </ListView>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/spielleiter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -39,21 +39,44 @@
         android:text="@string/spielleiter" />
 
     <TextView
-        android:id="@+id/TextView01"
+        android:id="@+id/mitspieler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/TextView02"
-        android:layout_alignBottom="@+id/TextView02"
-        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignBaseline="@+id/zuschauer"
+        android:layout_alignBottom="@+id/zuschauer"
+        android:layout_alignLeft="@+id/spielleiter"
         android:text="@string/spieler" />
 
     <TextView
-        android:id="@+id/TextView03"
+        android:id="@+id/spieler1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/TextView02"
-        android:layout_alignLeft="@+id/TextView02"
+
+        android:layout_alignLeft="@+id/zuschauer"
         android:editable="false"
         android:text="" />
+
+    <TextView
+        android:id="@+id/spieler2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/listView1"
+        android:text="@string/spieler2" />
+
+    <TextView
+        android:id="@+id/spieler3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spieler2"
+        android:layout_below="@+id/spieler2"
+        android:text="@string/spieler3" />
+
+    <TextView
+        android:id="@+id/spieler4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spieler3"
+        android:layout_below="@+id/spieler3"
+        android:text="@string/spieler4" />
 
 </RelativeLayout>

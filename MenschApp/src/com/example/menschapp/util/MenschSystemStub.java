@@ -272,11 +272,11 @@ public class MenschSystemStub implements MenschSystem {
 			SoapPrimitive soapGameNr = (SoapPrimitive) soapGameEntry.getProperty("id");
 			SoapPrimitive soapSlots = (SoapPrimitive) soapGameEntry.getProperty("slots");
 			SoapPrimitive soapOwnerId = (SoapPrimitive) soapGameEntry.getProperty("ownerId");
-			
-			Games game = new Games();
-			game.setId(Integer.valueOf(soapGameNr.toString()));
+
+			result.setId(Integer.valueOf(soapGameNr.toString()));
 //			game.setSpieler1(soapGamePlayer1.toString());
 		}
+		Log.d("", ""+result.toString());
 		return result;
 	}
 }
