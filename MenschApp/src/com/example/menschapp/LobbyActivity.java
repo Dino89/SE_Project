@@ -81,9 +81,32 @@ public class LobbyActivity extends Activity {
 	          }
 		});
 		
+		findViewById(R.id.update_pic).setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+				
+				listTask = new GameListTask(); 
+				listTask.execute();
+				
+			}
+		});
+		
+		findViewById(R.id.create_game).setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+				
+				createGame();
+				
+			}
+		});
 	 }
-	
-	
+//	protected void onResume(){
+//		listTask = new GameListTask(); 
+//		listTask.execute();
+//	}
+	public void createGame(){
+		startActivity(new Intent(this, GameDetailActivity.class));
+	}
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.lobby, menu);
@@ -141,7 +164,7 @@ public class LobbyActivity extends Activity {
 //			}
 			
 
-			
+			games.clear();
 			for(int i = 0; i < gamesArray.size(); i++) {
 				games.add(gamesArray.get(i).toString());
 			}

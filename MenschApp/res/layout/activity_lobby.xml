@@ -8,16 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".LobbyActivity" >
 
-    <Button
-        android:id="@+id/highscore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="14dp"
-        android:text="@string/highscore" />
-
     <ListView
         android:id="@+id/lobbylist"
         android:layout_width="match_parent"
@@ -29,5 +19,29 @@
 
     </ListView>
 
+    <Button
+        android:id="@+id/highscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/highscore" />
+
+    <Button
+        android:id="@+id/create_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lobbylist"
+        android:layout_alignRight="@+id/lobbylist"
+        android:text="@string/create_game" />
+
+    <ImageView
+        android:id="@+id/update_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/highscore"
+        android:layout_toRightOf="@+id/highscore"
+        android:src="@android:drawable/ic_popup_sync" 
+        android:contentDescription="@string/update_gamelist"/>
 
 </RelativeLayout>

@@ -11,5 +11,7 @@
     <string name="title_activity_game_detail">GameDetailActivity</string>
     <string name="labelPrefs">Einstellungen</string>
     <string name="title_activity_game_field">GameFieldActivity</string>
+    <string name="update_gamelist">Spieleliste aktualisieren</string>
+    <string name="create_game">Spiel eröffnen</string>
 
 </resources>
