@@ -30,7 +30,7 @@ public class GameTO implements Serializable {
 
 
 	public String toString() {
-		return "Game " + this.id + " Slots=" + this.slots + ", Owner=" + this.getOwner();
+		return "Game " + this.id + " Slots=" + this.slots + ", Owner=" + this.getOwner().getUserName();
 	}
 
 

@@ -260,6 +260,7 @@ public class MenschSystemStub implements MenschSystem {
 
 		Log.d(TAG, METHOD_NAME);
 		Log.d(TAG, response.toString());
+		Log.d(TAG, ""+response.getPropertyCount());
 
 		for (int i=1; i<response.getPropertyCount(); i++) {
 			SoapObject soapGameEntry = (SoapObject) response.getProperty(i);

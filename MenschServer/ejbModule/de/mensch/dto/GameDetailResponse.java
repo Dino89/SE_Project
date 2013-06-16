@@ -14,12 +14,13 @@ public class GameDetailResponse extends ReturncodeResponse {
 	public GameDetailResponse() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public void setGameDetails(GameTO game) {
-		this.gameDetail = game;
-	}
 	
 	public GameTO getGameDetails(int id) {
 		return gameDetail;
 	}
+	
+	public void setGameDetails(GameTO game) {
+		this.gameDetail = game;
+	}
+
 }

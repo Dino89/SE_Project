@@ -149,20 +149,6 @@ public class LobbyActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
-			
-			
-			//TODO: Spieleliste in ListView reinkriegen!
-//			int i = 0;
-//			for(Games s : gamesArray) {
-//				valueList[i] = String.valueOf(s.getId());
-//			}
-			
-//			ArrayList<String> strings = new ArrayList<String>();
-//			
-//			for (Object object : gamesArray) {
-//			    strings.add(object != null ? object.toString() : null);
-//			}
-			
 
 			games.clear();
 			for(int i = 0; i < gamesArray.size(); i++) {
