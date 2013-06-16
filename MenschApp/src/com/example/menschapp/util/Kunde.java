@@ -10,7 +10,6 @@ public class Kunde implements Serializable {
 	
 	private String userName;
 	private String passwort;
-//	private Map<Integer,Konto> eigeneKonten;
 	
 	public Kunde() {
 		super();

@@ -6,6 +6,7 @@ public class UserLoginResponse extends ReturncodeResponse {
 
 	private int sessionId;
 	private int customerId;
+	private boolean success;
 	
 	public UserLoginResponse() {
 		// TODO Auto-generated constructor stub
@@ -25,6 +26,14 @@ public class UserLoginResponse extends ReturncodeResponse {
 
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
 	}
 
 }

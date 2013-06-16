@@ -17,7 +17,7 @@ import org.ksoap2.transport.HttpTransportSE;
 import android.util.Log;
 
 /** 
- * Diese Klasse Ã¼bernimmt spÃ¤ter einmal die Kommunikation mit dem Server!
+ * Diese Klasse übernimmt später einmal die Kommunikation mit dem Server!
  * @author user
  *
  */
@@ -45,7 +45,7 @@ public class MenschSystemStub implements MenschSystem {
     /**
      * sessionId contains the session id delivered from the server.
      */
-	private int sessionId;
+	public int sessionId;
 
 //	@Override
 //	public Kunde login(String username, String password) {
@@ -212,9 +212,9 @@ public class MenschSystemStub implements MenschSystem {
 			PropertyInfo pi = new PropertyInfo();
 			response.getPropertyInfo(i, pi);
 			Log.d(TAG, pi.name + " : " + response.getProperty(i).toString());
+			sessionId = Integer.parseInt(response.getPropertyAsString(2));
 		}
-		this.sessionId = Integer.parseInt(response.getPrimitivePropertySafelyAsString("sessionId"));
-		result = new Kunde(username, password);
+		result = new Kunde(username, password); 
 		return result;
 	}	
 	
@@ -252,7 +252,6 @@ public class MenschSystemStub implements MenschSystem {
 	public Games getGameDetails(int id) {
 		Log.d(TAG,"getGameDetails called.");		
 		
-		
 		Games result = new Games();
 		
 		String METHOD_NAME = "getGameDetails";
@@ -273,5 +272,21 @@ public class MenschSystemStub implements MenschSystem {
 		}
 		Log.d("", ""+result.toString());
 		return result;
+	}
+
+	@Override
+	public String createGame() {
+		String METHOD_NAME = "createNewGame";	
+		Log.d(TAG,METHOD_NAME+" called.");
+		Log.d(TAG,"session id:"+this.sessionId);
+		//TODO: sessionID ist null?!
+		SoapObject response = executeSoapAction(METHOD_NAME, sessionId);
+		SoapObject success = (SoapObject) response.getProperty(2);
+		SoapPrimitive successStatus = (SoapPrimitive) success.getProperty("success");
+		
+		Log.d(TAG, METHOD_NAME);
+		Log.d(TAG, response.toString());
+		Log.d(TAG, ""+response.getPropertyCount());
+		return successStatus.toString();
 	}
 }

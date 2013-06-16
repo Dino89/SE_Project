@@ -135,7 +135,8 @@ public class LobbyActivity extends Activity {
 			// TODO: attempt authentication against a network service.
 			
 		    gamesArray = LobbyActivity.this.obsApp.getObsStub().getGames();
-
+		    String game = LobbyActivity.this.obsApp.getObsStub().createGame();
+		    
 		    Log.d("GAME LISTE", ""+gamesArray);
     
 	        try {

@@ -9,6 +9,7 @@ import de.mensch.entities.Account;
 import de.mensch.entities.Customer;
 import de.mensch.entities.Game;
 import de.mensch.entities.MenschSession;
+import de.mensch.entities.Request;
 
 @Local
 public interface MenschDAOLocal {
@@ -32,5 +33,9 @@ public interface MenschDAOLocal {
 	public Game getGameFields(int id);
 
 	public Game createGame(Customer owner);
+
+	public Request getRequests(int id);
+
+	public Request createRequest(int id, String username);
 		
 }

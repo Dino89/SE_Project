@@ -15,6 +15,7 @@ import de.mensch.entities.Account;
 import de.mensch.entities.Customer;
 import de.mensch.entities.Game;
 import de.mensch.entities.MenschSession;
+import de.mensch.entities.Request;
 
 /**
  * Session Bean implementation class MenschDAO
@@ -71,7 +72,7 @@ public class MenschDAO implements MenschDAOLocal {
 	public Game getGameFields(int id) {
 		return em.find(Game.class, id);
 	}
-	
+	//TODO: NOT FINISHED
 	@Override
 	public Game createGame(Customer owner) {
 		Game game = new Game();
@@ -79,6 +80,21 @@ public class MenschDAO implements MenschDAOLocal {
 		game.setSpieler1(owner);
 		em.persist(game);
 		return game;
+	}
+	//TODO: NOT FINISHED
+	@Override
+	public Request getRequests(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	//TODO: NOT FINISHED
+	@Override
+	public Request createRequest(int id, String username) {
+		Request request = new Request();
+		request.setUser(username);
+		Game game = em.find(Game.class, id);
+		request.createRequest(game);
+		return null;
 	}
 }
 

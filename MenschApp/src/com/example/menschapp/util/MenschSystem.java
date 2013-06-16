@@ -29,7 +29,7 @@ public interface MenschSystem {
 
 
 	public double diceNumber();
-
+	
 
 	public String register(String username, String password);
 
@@ -41,6 +41,9 @@ public interface MenschSystem {
 
 
 	public Games getGameDetails(int id);
+
+
+	public String createGame();
 
 	
 	/**

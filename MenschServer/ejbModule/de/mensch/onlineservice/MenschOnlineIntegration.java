@@ -9,6 +9,7 @@ import de.mensch.dto.GameDetailResponse;
 import de.mensch.dto.GameFieldResponse;
 import de.mensch.dto.GameListResponse;
 import de.mensch.dto.JoinResponse;
+import de.mensch.dto.RequestResponse;
 import de.mensch.dto.ReturncodeResponse;
 import de.mensch.dto.UserLoginResponse;
 import de.mensch.dto.UserRegisterResponse;
@@ -45,5 +46,7 @@ public interface MenschOnlineIntegration {
 	public JoinResponse joinGameResponse(boolean success);
 
 	public CreateGameResponse createNewGame(int sessionId) throws NoSessionException;
+
+	public RequestResponse getRequests(int id);
 	
 }

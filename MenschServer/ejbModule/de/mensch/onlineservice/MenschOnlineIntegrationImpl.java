@@ -17,6 +17,7 @@ import de.mensch.dto.GameDetailResponse;
 import de.mensch.dto.GameFieldResponse;
 import de.mensch.dto.GameListResponse;
 import de.mensch.dto.JoinResponse;
+import de.mensch.dto.RequestResponse;
 import de.mensch.dto.ReturncodeResponse;
 import de.mensch.dto.UserLoginResponse;
 import de.mensch.dto.UserRegisterResponse;
@@ -27,6 +28,7 @@ import de.mensch.entities.Customer;
 import de.mensch.entities.Game;
 import de.mensch.entities.GameField;
 import de.mensch.entities.MenschSession;
+import de.mensch.entities.Request;
 
 
 /**
@@ -60,22 +62,15 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	@Override
 	public UserLoginResponse login(String username, String password) {
 		UserLoginResponse response = new UserLoginResponse();
-		try {
-			Customer user = this.dao.findCustomerByName(username);		
-			if (user != null && user.getPassword().equals(password)) {
-				int sessionId = dao.createSession(user);
-				System.out.println("Login erfolgreich. Session=" + sessionId);
-				response.setSessionId(sessionId);
-			}
-			else {
-				System.out.println("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
-				throw new InvalidLoginException("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username="+user.getUserName());
-			}
+		Customer user = this.dao.findCustomerByName(username);		
+		if (user != null && user.getPassword().equals(password)) {
+			int sessionId = dao.createSession(user);
+			System.out.println("Login erfolgreich. Session=" + sessionId);
+			response.setSessionId(sessionId);
+			response.setSuccess(true);
 		}
-		catch (MenschException e) {
-			response.setReturnCode(e.getErrorCode());
-			response.setMessage(e.getMessage());
-		}
+		else { response.setSuccess(false); }
+		
 		return response;
 	}
 	
@@ -139,15 +134,17 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	public AttemptToJoinResponse joinGame(int id, int sessionId) throws NoSessionException {
 		AttemptToJoinResponse response = new AttemptToJoinResponse();
 		MenschSession session = getSession(sessionId);
-		Customer user = this.dao.findCustomerByName(session.getUsername());
-		askAdmin(id, user.getUserName());
+		Request request = this.dao.createRequest(id, session.getUsername());
+		response.setSuccess(true);
 		return response;
 	}
-	
+
 	//TODO: Not yet finished method
-	private void askAdmin(int id, String userName) {
-		// TODO Auto-generated method stub
-		
+	@Override
+	public RequestResponse getRequests(int id) {
+		RequestResponse response = new RequestResponse();
+		Request request = this.dao.getRequests(id);
+		return response;
 	}
 	
 	//TODO: Not yet finished method
@@ -165,6 +162,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		MenschSession session = getSession(sessionId);
 		Customer user = this.dao.findCustomerByName(session.getUsername());
 		createGame(user.getUserName());
+		response.setSuccess(true);
 		return response;
 	}
 	//TODO: Not yet finished method	

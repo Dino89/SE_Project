@@ -3,13 +3,17 @@ package de.mensch.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
 
 @Entity
 public class Game implements Serializable {
@@ -35,6 +39,8 @@ public class Game implements Serializable {
 	private Customer zuschauer;
 	@OneToOne
 	private GameField gameField;
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="request") @MapKey
+	private java.util.Map<Integer,Request> requests;
 	
 	public Game() {
 		super();
