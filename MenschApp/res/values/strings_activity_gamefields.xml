@@ -3,4 +3,5 @@
     <string name="field_h">field of a house</string>
     <string name="field">normal field</string>
     <string name="field_start">field where beginn after getting a six</string>
+    <string name="wuerfeln">Würfeln</string>
 </resources>

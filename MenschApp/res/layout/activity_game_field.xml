@@ -739,5 +739,12 @@
             android:layout_rowSpan="2"
             android:contentDescription="@string/field_start"
             android:src="@drawable/way_up" />
+
+        <Button
+            android:id="@+id/wuerfeln"
+            android:layout_column="1"
+            android:layout_gravity="left|center_vertical"
+            android:layout_row="14"
+            android:text="@string/wuerfeln" />
      
  </GridLayout>
