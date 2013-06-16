@@ -2,10 +2,13 @@ package de.mensch.onlineservice;
 
 import java.math.BigDecimal;
 
+import de.mensch.dto.AttemptToJoinResponse;
+import de.mensch.dto.CreateGameResponse;
 import de.mensch.dto.DiceResponse;
 import de.mensch.dto.GameDetailResponse;
 import de.mensch.dto.GameFieldResponse;
 import de.mensch.dto.GameListResponse;
+import de.mensch.dto.JoinResponse;
 import de.mensch.dto.ReturncodeResponse;
 import de.mensch.dto.UserLoginResponse;
 import de.mensch.dto.UserRegisterResponse;
@@ -36,5 +39,11 @@ public interface MenschOnlineIntegration {
 	public GameDetailResponse getGameDetails(int id);
 	
 	public GameFieldResponse getGameFields(int id);
+
+	public AttemptToJoinResponse joinGame(int id, int sessionId) throws NoSessionException;
+	
+	public JoinResponse joinGameResponse(boolean success);
+
+	public CreateGameResponse createNewGame(int sessionId) throws NoSessionException;
 	
 }

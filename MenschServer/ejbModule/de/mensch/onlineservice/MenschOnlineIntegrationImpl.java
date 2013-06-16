@@ -9,11 +9,14 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 
+import de.mensch.dto.AttemptToJoinResponse;
+import de.mensch.dto.CreateGameResponse;
 import de.mensch.dto.DiceResponse;
 import de.mensch.dto.DiceTO;
 import de.mensch.dto.GameDetailResponse;
 import de.mensch.dto.GameFieldResponse;
 import de.mensch.dto.GameListResponse;
+import de.mensch.dto.JoinResponse;
 import de.mensch.dto.ReturncodeResponse;
 import de.mensch.dto.UserLoginResponse;
 import de.mensch.dto.UserRegisterResponse;
@@ -24,17 +27,6 @@ import de.mensch.entities.Customer;
 import de.mensch.entities.Game;
 import de.mensch.entities.GameField;
 import de.mensch.entities.MenschSession;
-//import de.xbank.dao.XbankDAOLocal;
-//import de.xbank.entities.Customer;
-//import de.xbank.onlinebanking.InvalidLoginException;
-//import de.xbank.onlinebanking.XbankException;
-//import de.xbank.entities.XbankSession;
-//import de.xbank.onlinebanking.NoSessionException;
-//import de.xbank.dto.AccountBalanceResponse;
-//import de.xbank.dto.AccountListResponse;
-//import de.xbank.entities.Account;
-//import de.xbank.entities.XbankSession;
-//import de.xbank.onlinebanking.XbankException;
 
 
 /**
@@ -56,10 +48,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 
 	@EJB(beanName = "MenschDAO", beanInterface = de.mensch.dao.MenschDAOLocal.class)
 	private MenschDAOLocal dao;
-	
-//	@EJB(beanName = "XbankDAO", beanInterface = de.xbank.dao.XbankDAOLocal.class)
-//	private XbankDAOLocal dao;
-	
+
 	private MenschSession getSession(int sessionId) throws NoSessionException {
 		MenschSession session = dao.findSessionById(sessionId);
 		if (session==null)
@@ -132,18 +121,57 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		GameDetailResponse response = new GameDetailResponse();
 		Game gameDetail = this.dao.getGameDetails(id);
 		response.setGameDetails(dtoAssembler.makeDTO(gameDetail));
-		System.out.println(response.toString());
+		System.out.println(response.getGameDetails(id));
 		return response;
 	}
 	
+	//TODO: Not yet finished method	
 	@Override
 	public GameFieldResponse getGameFields(int id) {
 		GameFieldResponse response = new GameFieldResponse();
 		Game gameFields = this.dao.getGameFields(id);
-//		response.setGameFields();
+		response.setGameFields(dtoAssembler.makeDTO(gameFields));
 		return response;
 	}
+	
+	//TODO: Not yet finished method
+	@Override
+	public AttemptToJoinResponse joinGame(int id, int sessionId) throws NoSessionException {
+		AttemptToJoinResponse response = new AttemptToJoinResponse();
+		MenschSession session = getSession(sessionId);
+		Customer user = this.dao.findCustomerByName(session.getUsername());
+		askAdmin(id, user.getUserName());
+		return response;
+	}
+	
+	//TODO: Not yet finished method
+	private void askAdmin(int id, String userName) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	//TODO: Not yet finished method
+	@Override
+	public JoinResponse joinGameResponse(boolean success) {
+		JoinResponse joinResponse = new JoinResponse();
+		joinResponse.setSuccess(success);
+		return joinResponse;
+	}
 
+	//TODO: Not yet finished method
+	@Override
+	public CreateGameResponse createNewGame(int sessionId) throws NoSessionException {
+		CreateGameResponse response = new CreateGameResponse();
+		MenschSession session = getSession(sessionId);
+		Customer user = this.dao.findCustomerByName(session.getUsername());
+		createGame(user.getUserName());
+		return response;
+	}
+	//TODO: Not yet finished method	
+	private void createGame(String userName) {
+		// TODO Auto-generated method stub
+		
+	}
 //	@Override
 //	public AccountListResponse getMyAccounts(int sessionId) {
 //		AccountListResponse response = new AccountListResponse();
@@ -180,5 +208,4 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 //		}
 //		return response;
 //	}
-
 }
