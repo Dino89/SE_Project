@@ -25,7 +25,7 @@ public class GameDetailActivity extends Activity {
 	
 	private SharedPreferences prefs;
 	private MenschApplication obsApp;
-	
+	Games gameDetail;
 	private GameDetailTask gameTask = null;
 	
 	@Override
@@ -90,7 +90,7 @@ public class GameDetailActivity extends Activity {
 			Intent myIntent = getIntent();
 			gameid = myIntent.getExtras().getInt("gameid");
 
-		    Games gameDetail = GameDetailActivity.this.obsApp.getObsStub().getGameDetails(gameid);
+		    gameDetail = GameDetailActivity.this.obsApp.getObsStub().getGameDetails(gameid);
 
 	        try {
 				// Simulate network access.
