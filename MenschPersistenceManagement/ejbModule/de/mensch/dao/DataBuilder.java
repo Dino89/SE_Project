@@ -29,20 +29,20 @@ public class DataBuilder {
 	@PostConstruct
 	private void init() {
 		
-		Customer customer1 = new Customer(username1, password1);
+		Customer customer1 = new Customer("username1", "password1");
 		em.persist(customer1);
 
 		Game game1 = new Game();
-		game1.setId(id);
+		//game1.setId(id);
 		game1.setOwner(customer1);
 		em.persist(game1);
 		
-		Customer customer2 = new Customer(username2, password2);
+		Customer customer2 = new Customer("username2", "password2");
 		em.persist(customer2);
 
 
 		Game game2 = new Game();
-		game2.setId(id2);
+		//game2.setId(id2);
 		game2.setOwner(customer2);
 		em.persist(game2);
 		System.out.println("game + customer angelegt");
