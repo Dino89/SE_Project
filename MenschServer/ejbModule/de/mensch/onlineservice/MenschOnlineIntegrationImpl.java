@@ -69,7 +69,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 			}
 			else {
 				System.out.println("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
-				throw new InvalidLoginException("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username="+user.getUserName());
+				throw new InvalidLoginException("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username="+username);
 			}
 		}
 		catch (MenschException e) {
