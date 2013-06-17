@@ -333,7 +333,7 @@ public class LoginActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
-			mAuthTask = null;
+			mRegisterTask = null;
 			showProgress(true);
 
 			if (success) {
@@ -367,6 +367,10 @@ public class LoginActivity extends Activity {
 				String password = mPassword;
 				
 				Kunde login = LoginActivity.this.obsApp.getObsStub().login(username, password);
+				if(login == null)
+					return false;
+
+				
 				// TODO: attempt authentication against a network service.
 			try {
 					// Simulate network access.
@@ -375,15 +379,7 @@ public class LoginActivity extends Activity {
 					return false;
 				}
 
-//				for (String credential : DUMMY_CREDENTIALS) {
-//					String[] pieces = credential.split(":");
-//					if (pieces[0].equals(mEmail)) {
-//						// Account exists, return true if the password matches.
-//						return pieces[1].equals(mPassword);
-//					}
-//				}
 
-				// TODO: register the new account here.
 				return true;
 			}
 			
@@ -396,8 +392,9 @@ public class LoginActivity extends Activity {
 				Intent myIntent = new Intent(mLoginFormView.getContext(), LobbyActivity.class);
                 startActivityForResult(myIntent, 0);
 			} else {
+				mEmailView.setError(getString(R.string.error_invalid_email_or_password));
 				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
+						.setError(getString(R.string.error_invalid_email_or_password));
 				mPasswordView.requestFocus();
 			}
 		}

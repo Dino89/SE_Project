@@ -62,15 +62,22 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	@Override
 	public UserLoginResponse login(String username, String password) {
 		UserLoginResponse response = new UserLoginResponse();
-		Customer user = this.dao.findCustomerByName(username);		
-		if (user != null && user.getPassword().equals(password)) {
-			int sessionId = dao.createSession(user);
-			System.out.println("Login erfolgreich. Session=" + sessionId);
-			response.setSessionId(sessionId);
-			response.setSuccess(true);
+		try {
+			Customer user = this.dao.findCustomerByName(username);		
+			if (user != null && user.getPassword().equals(password)) {
+				int sessionId = dao.createSession(user);
+				System.out.println("Login erfolgreich. Session=" + sessionId);
+				response.setSessionId(sessionId);
+			}
+			else {
+				System.out.println("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
+				throw new InvalidLoginException("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username="+username);
+			}
 		}
-		else { response.setSuccess(false); }
-		
+		catch (MenschException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
 		return response;
 	}
 	

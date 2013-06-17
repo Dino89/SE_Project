@@ -17,5 +17,6 @@
     <string name="error_field_required">Dieses Feld ist obligatorisch</string>
     <string name="error_register">Benutzername bereits vergeben</string>
     <string name="action_store_login_credentials">Login Daten speichern</string>
+    <string name="error_invalid_email_or_password">Falscher Nutzername oder Passwort</string>
 
 </resources>

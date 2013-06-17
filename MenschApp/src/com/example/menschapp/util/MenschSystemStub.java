@@ -208,19 +208,22 @@ public class MenschSystemStub implements MenschSystem {
 		String METHOD_NAME = "login";
 		SoapObject response = executeSoapAction(METHOD_NAME, username, password);
 		Log.d(TAG, response.toString());
+	
+		if( Integer.parseInt(response.getPrimitiveProperty("sessionId").toString()) ==0){
+			Log.d("Falsches PW oder Username","Falsches PW oder Username");
+	
+		 return null;	
+		 
+		}
 		for (int i = 0; i < response.getPropertyCount(); i++) {
 			PropertyInfo pi = new PropertyInfo();
 			response.getPropertyInfo(i, pi);
 			Log.d(TAG, pi.name + " : " + response.getProperty(i).toString());
-		
 		}
-
-		MenschSystemStub.sessionId = Integer.parseInt(response.getProperty(2).toString());
-
-		result = new Kunde(username, password); 
-
+		this.sessionId = Integer.parseInt(response.getPrimitivePropertySafelyAsString("sessionId"));
+		result = new Kunde(username, password);
 		return result;
-	}	
+	}		
 	
 	@Override
 	public ArrayList<Games> getGames() {
