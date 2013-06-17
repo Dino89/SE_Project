@@ -21,6 +21,7 @@ public class Request implements Serializable {
 	@ManyToOne
 	private Game request;
 	
+	boolean success = false;
 	private String user;
 	
 	public Request() {
@@ -42,5 +43,19 @@ public class Request implements Serializable {
 
 	public void setUser(String user) {
 		this.user = user;
+	}
+
+	/**
+	 * @return the success
+	 */
+	public boolean isSuccess() {
+		return success;
+	}
+
+	/**
+	 * @param success the success to set
+	 */
+	public void setSuccess(boolean success) {
+		this.success = success;
 	}
 }

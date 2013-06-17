@@ -305,4 +305,29 @@ public class MenschSystemStub implements MenschSystem {
 		Log.d(TAG, ""+response.getPropertyCount());
 		return game;
 	}
+	/*
+	 * @param id gameid
+	 * @param sessionId sessionId
+	 * @return boolean success
+	 * (non-Javadoc)
+	 * @see com.example.menschapp.util.MenschSystem#joinGame()
+	 */
+	@Override
+	public Request joinGame(int id) {
+		String METHOD_NAME = "joinGame";
+		Log.d(TAG, ""+METHOD_NAME+" called");
+		SoapObject response = executeSoapAction(METHOD_NAME, id, sessionId);
+		Log.d(TAG, response.toString());
+		
+		SoapPrimitive success = (SoapPrimitive) response.getProperty("success");
+				
+		Request request = new Request();
+		request.setSuccess(success);
+		return request;
+	}
+	
+	@Override
+	public Response joinGameResponse() {
+		return null;
+	}
 }

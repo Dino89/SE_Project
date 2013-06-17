@@ -9,6 +9,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 
+import de.mensch.dto.AcceptOrDeclineFellowPlayer;
 import de.mensch.dto.AttemptToJoinResponse;
 import de.mensch.dto.CreateGameResponse;
 import de.mensch.dto.DiceResponse;
@@ -32,7 +33,7 @@ import de.mensch.entities.Request;
 
 
 /**
- * @author 
+ * @author SE_Project
  * Diese Stateless Session Bean implementiert das fuer das Spiel bereitgestellte Interface.
  *
  */
@@ -199,8 +200,9 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	 * @see de.mensch.onlineservice.MenschOnlineIntegration#joinGameResponse(boolean)
 	 */
 	@Override
-	public JoinResponse joinGameResponse(int id, boolean success) {
+	public JoinResponse joinGameResponse(int id) {
 		JoinResponse joinResponse = new JoinResponse();
+		boolean success = this.dao.getRequests(id).isSuccess();
 		joinResponse.setSuccess(success);
 		return joinResponse;
 	}
@@ -211,7 +213,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	 * (non-Javadoc)
 	 * @see de.mensch.onlineservice.MenschOnlineIntegration#createNewGame(int)
 	 */
-	//TODO: Not yet finished method
+	//TODO: Not yet finished method -> sollte jz laufen
 	@Override
 	public CreateGameResponse createNewGame(int sessionId) throws NoSessionException {
 		CreateGameResponse response = new CreateGameResponse();
@@ -226,8 +228,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		response.toString();
 		return response;
 	}
-	
-	//TODO: Not yet finished method	
+		
+	//TODO: Not yet finished method	-> sollte jz laufen
 	/*
 	 * Wird von createNewGame aufgerufen, um eine neue Game Entity anzulegen
 	 */
@@ -236,40 +238,16 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		this.dao.createGame(user);
 		System.out.println("Spiel erzeugt");
 	}
-//	@Override
-//	public AccountListResponse getMyAccounts(int sessionId) {
-//		AccountListResponse response = new AccountListResponse();
-//		try {
-//			XbankSession session = getSession(sessionId);
-//			Customer user = this.dao.findCustomerByName(session.getUsername());
-//			List<Account> accountList = user.getAccounts();
-//			response.setAccountList(dtoAssembler.makeDTO(accountList));
-//			System.out.println("Abfrage eigener Konten liefert: "+accountList);		
-//		}
-//		catch (XbankException e) {
-//			response.setReturnCode(e.getErrorCode());
-//			response.setMessage(e.getMessage());
-//		}
-//		return response;
-//	}
-//
-//	@Override
-//	public AccountBalanceResponse getBalance(int sessionId, int accountId) {
-//		AccountBalanceResponse response = new AccountBalanceResponse();
-//		try {
-//			XbankSession session = getSession(sessionId);
-//			Customer user = this.dao.findCustomerByName(session.getUsername());
-//			Account account = user.getAccountById(accountId);
-//			if (account!=null) {
-//				response.setBalance(account.getBalance());
-//				response.setAccountId(account.getId());
-//				System.out.println("Abfrage Saldo Konto " + account.getId() + " liefert: "+ account.getBalance());
-//			}
-//		}
-//		catch (XbankException e) {
-//			response.setReturnCode(e.getErrorCode());
-//			response.setMessage(e.getMessage());
-//		}
-//		return response;
-//	}
+	
+	//TODO: Not yet finished method
+	/*
+	 * @param sessionId sessionId vom owner um Berechtigung zu prüfen
+	 * @param id gameid (vll auch über owner zu kriegen)
+	 * Sollte success bei joinGameResponse setzen!
+	 */
+	@Override
+	public AcceptOrDeclineFellowPlayer fellowPlayer(int id, int sessionId) {
+		AcceptOrDeclineFellowPlayer response = new AcceptOrDeclineFellowPlayer();
+		return response;
+	}
 }

@@ -31,8 +31,11 @@ public class GameDetailActivity extends Activity {
 	
 	private SharedPreferences prefs;
 	private MenschApplication obsApp;
+	
 	Games gameDetail;
 	private GameDetailTask gameTask = null;
+	private SpectateGameTask specTask = null;
+	private JoinGameTask joinTask = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -119,14 +122,66 @@ public class GameDetailActivity extends Activity {
 		@Override
 		protected void onPostExecute(final Boolean success) {
 			spieler1.setText(gameDetail.getSpieler1());
-			spieler2.setText(gameDetail.getSpieler2());
-			spieler3.setText(gameDetail.getSpieler3());
-			spieler4.setText(gameDetail.getSpieler4());
+			if(gameDetail.getSpieler2()!=null) spieler2.setText(gameDetail.getSpieler2());
+			if(gameDetail.getSpieler3()!=null) spieler3.setText(gameDetail.getSpieler3());
+			if(gameDetail.getSpieler4()!=null) spieler4.setText(gameDetail.getSpieler4());
 		}
 
 		@Override
 		protected void onCancelled() {
 
+		}
+	}
+
+	public class JoinGameTask extends AsyncTask<String, Void, Boolean> {
+			
+		    @Override
+			protected Boolean doInBackground(String... params) {
+
+		        try {
+					// Simulate network access.
+					Thread.sleep(250);
+				} catch (InterruptedException e) {
+					return false;
+				}
+	
+				return true;
+			}
+			
+			@Override
+			protected void onPostExecute(final Boolean success) {
+
+			}
+	
+			@Override
+			protected void onCancelled() {
+	
+			}
+		}
+
+	public class SpectateGameTask extends AsyncTask<String, Void, Boolean> {
+		
+	    @Override
+		protected Boolean doInBackground(String... params) {
+	
+	        try {
+				// Simulate network access.
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+				return false;
+			}
+	
+			return true;
+		}
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+	
+		}
+	
+		@Override
+		protected void onCancelled() {
+	
 		}
 	}
 	
