@@ -91,7 +91,12 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		System.out.println("Logout erfolgreich. Session=" + sessionId);
 		return response;
 	}
-
+	/*
+	 * Erzeugt eine Zufallszahl zwischen 1 und 6
+	 * 
+	 * (non-Javadoc)
+	 * @see de.mensch.onlineservice.MenschOnlineIntegration#diceNumber()
+	 */
 	@Override
 	public DiceResponse diceNumber() {
 		DiceResponse response = new DiceResponse();
@@ -105,11 +110,16 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	public GameListResponse getGames() {
 		GameListResponse response = new GameListResponse();
 		ArrayList<Game> gameList = this.dao.getGameList();
-		response.setGameList(dtoAssembler.makeDTO(gameList));
 
+		response.setGameList(dtoAssembler.makeDTO(gameList));
 		return response;
 	}
-	
+	/*
+	 * Details zu einer @param id gameid anzeigen
+	 * 
+	 * (non-Javadoc)
+	 * @see de.mensch.onlineservice.MenschOnlineIntegration#getGameDetails(int)
+	 */
 	@Override
 	public GameDetailResponse getGameDetails(int id) {
 		System.out.println(id);
@@ -121,6 +131,12 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	}
 	
 	//TODO: Not yet finished method	
+	/*
+	 * Wird vom Client gepollt, um Veränderungen auf dem Spielfeld abzufragen
+	 * 
+	 * (non-Javadoc)
+	 * @see de.mensch.onlineservice.MenschOnlineIntegration#getGameFields(int)
+	 */
 	@Override
 	public GameFieldResponse getGameFields(int id) {
 		GameFieldResponse response = new GameFieldResponse();
@@ -130,6 +146,16 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	}
 	
 	//TODO: Not yet finished method
+	/*
+	 * Erzeugt eine neue Anfrage an den Spielersteller
+	 * 
+	 * (non-Javadoc)
+	 * @see de.mensch.onlineservice.MenschOnlineIntegration#joinGame(int, int)
+	 * @param id id vom game welchem beigetreten werden soll
+	 * @param sessionId session vom user, welcher das spiel eröffnen möchte
+	 * @return statusmeldung, ob dem spiel beigetreten wurde
+	 * 
+	 */
 	@Override
 	public AttemptToJoinResponse joinGame(int id, int sessionId) throws NoSessionException {
 		AttemptToJoinResponse response = new AttemptToJoinResponse();
@@ -140,6 +166,13 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	}
 
 	//TODO: Not yet finished method
+	/*
+	 * Polling vom Spielersteller, ob neue Requests vorliegen
+	 * 
+	 * (non-Javadoc)
+	 * @see de.mensch.onlineservice.MenschOnlineIntegration#getRequests(int)
+	 * @param id gameid, welchem eine beitrittsanfrage gestellt werden soll
+	 */
 	@Override
 	public RequestResponse getRequests(int id) {
 		RequestResponse response = new RequestResponse();
@@ -148,27 +181,52 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	}
 	
 	//TODO: Not yet finished method
+	/*
+	 * Polling vom Client, ob der Anfrage zugestimmt wurde
+	 * 
+	 * @param id gameid
+	 * @return true or false
+	 * 
+	 * (non-Javadoc)
+	 * @see de.mensch.onlineservice.MenschOnlineIntegration#joinGameResponse(boolean)
+	 */
 	@Override
-	public JoinResponse joinGameResponse(boolean success) {
+	public JoinResponse joinGameResponse(int id, boolean success) {
 		JoinResponse joinResponse = new JoinResponse();
 		joinResponse.setSuccess(success);
 		return joinResponse;
 	}
-
+	
+	/*
+	 * Wird vom Client aufgerufen, um ein neues Spiel zu erstellen
+	 * 
+	 * (non-Javadoc)
+	 * @see de.mensch.onlineservice.MenschOnlineIntegration#createNewGame(int)
+	 */
 	//TODO: Not yet finished method
 	@Override
 	public CreateGameResponse createNewGame(int sessionId) throws NoSessionException {
 		CreateGameResponse response = new CreateGameResponse();
 		MenschSession session = getSession(sessionId);
 		Customer user = this.dao.findCustomerByName(session.getUsername());
-		createGame(user.getUserName());
+		createGame(user);
 		response.setSuccess(true);
+		System.out.println("user:" + user);
+		Game foundGame = this.dao.findGameByOwnerUserName(user);
+		System.out.println(foundGame + " ; "+ foundGame.getId() + " ; " +foundGame.getOwner());
+		response.setId(foundGame.getId());
+		response.toString();
 		return response;
 	}
+	
 	//TODO: Not yet finished method	
-	private void createGame(String userName) {
-		// TODO Auto-generated method stub
-		
+	/*
+	 * Wird von createNewGame aufgerufen, um eine neue Game Entity anzulegen
+	 */
+	private void createGame(Customer user) {
+		System.out.println("Erzeuge Spiel...");
+		this.dao.createGame(user);
+		System.out.println("Spiel erzeugt");
 	}
 //	@Override
 //	public AccountListResponse getMyAccounts(int sessionId) {

@@ -43,7 +43,7 @@ public interface MenschOnlineIntegration {
 
 	public AttemptToJoinResponse joinGame(int id, int sessionId) throws NoSessionException;
 	
-	public JoinResponse joinGameResponse(boolean success);
+	public JoinResponse joinGameResponse(int id, boolean success);
 
 	public CreateGameResponse createNewGame(int sessionId) throws NoSessionException;
 

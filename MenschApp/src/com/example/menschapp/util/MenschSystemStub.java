@@ -45,7 +45,7 @@ public class MenschSystemStub implements MenschSystem {
     /**
      * sessionId contains the session id delivered from the server.
      */
-	public int sessionId;
+	private static int sessionId;
 
 //	@Override
 //	public Kunde login(String username, String password) {
@@ -212,9 +212,13 @@ public class MenschSystemStub implements MenschSystem {
 			PropertyInfo pi = new PropertyInfo();
 			response.getPropertyInfo(i, pi);
 			Log.d(TAG, pi.name + " : " + response.getProperty(i).toString());
-			sessionId = Integer.parseInt(response.getPropertyAsString(2));
+		
 		}
+
+		MenschSystemStub.sessionId = Integer.parseInt(response.getProperty(2).toString());
+
 		result = new Kunde(username, password); 
+
 		return result;
 	}	
 	
@@ -275,18 +279,22 @@ public class MenschSystemStub implements MenschSystem {
 	}
 
 	@Override
-	public String createGame() {
+	public Games createGame() {
 		String METHOD_NAME = "createNewGame";	
 		Log.d(TAG,METHOD_NAME+" called.");
-		Log.d(TAG,"session id:"+this.sessionId);
-		//TODO: sessionID ist null?!
+		
 		SoapObject response = executeSoapAction(METHOD_NAME, sessionId);
-		SoapObject success = (SoapObject) response.getProperty(2);
-		SoapPrimitive successStatus = (SoapPrimitive) success.getProperty("success");
+		Log.d(TAG, response.toString());
+		
+		SoapPrimitive successStatus = (SoapPrimitive) response.getProperty("success");
+		Games game = new Games();
+		
+		SoapPrimitive soapGameNr = (SoapPrimitive) response.getProperty("id");
+		game.setId(Integer.valueOf(soapGameNr.toString()));
 		
 		Log.d(TAG, METHOD_NAME);
 		Log.d(TAG, response.toString());
 		Log.d(TAG, ""+response.getPropertyCount());
-		return successStatus.toString();
+		return game;
 	}
 }

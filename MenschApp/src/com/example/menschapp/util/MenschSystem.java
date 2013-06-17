@@ -43,7 +43,7 @@ public interface MenschSystem {
 	public Games getGameDetails(int id);
 
 
-	public String createGame();
+	public Games createGame();
 
 	
 	/**

@@ -9,7 +9,7 @@ public class Games implements Serializable {
 	
 	private int id;
 	private int slots;
-
+	private int success;
 	private boolean started;
 	
 	private String spieler1;
@@ -85,6 +85,14 @@ public class Games implements Serializable {
 
 	public void setOwner(String owner) {
 		this.owner = owner;
+	}
+
+	public int getSuccess() {
+		return success;
+	}
+
+	public void setSuccess(int success) {
+		this.success = success;
 	}
 
 }

@@ -9,7 +9,11 @@ import com.example.menschapp.util.Games;
 import com.example.menschapp.util.MenschSystemStub;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -28,14 +33,15 @@ import android.widget.ListView;
 
 public class LobbyActivity extends Activity {
 	
-	
+	private static int gameid;
     ListView gameListView;
     ArrayAdapter arrayAdapter;
 	String[] valueList;
 	private GameListTask listTask = null;
+	private NewGameTask newGameTask = null;
 	ArrayList<Games> gamesArray = new ArrayList<Games>();
 	ArrayList<String> games = new ArrayList<String>();
-	
+	private TextView GameListStatusView;
 	private SharedPreferences prefs;
 	private MenschApplication obsApp;
 	
@@ -43,7 +49,7 @@ public class LobbyActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lobby);
-		
+		GameListStatusView = (TextView) findViewById(R.id.login_status_message);
         /* Initialisiere den Stub zum GameServer */
         obsApp = (MenschApplication) this.getApplication();
         obsApp.setObsStub(new MenschSystemStub());
@@ -73,18 +79,18 @@ public class LobbyActivity extends Activity {
 		
 		gameListView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
 	          public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
-	              //String selectedFromList = (lv.getItemAtPosition(myItemInt).toString());
+
 				Intent myIntent = new Intent(gameListView.getContext(), GameDetailActivity.class);
 				myIntent.putExtra("gameid", myItemInt+1);
 				Log.d("intent", ""+myIntent.getIntExtra("gameid", myItemInt));
 	            startActivityForResult(myIntent, 0);
 	          }
 		});
-		
+
 		findViewById(R.id.update_pic).setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
-				
+				GameListStatusView.setText(R.string.lobby_progress_gamelist);
 				listTask = new GameListTask(); 
 				listTask.execute();
 				
@@ -94,8 +100,8 @@ public class LobbyActivity extends Activity {
 		findViewById(R.id.create_game).setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
-				
-				createGame();
+				newGameTask = new NewGameTask();
+				newGameTask.execute();
 				
 			}
 		});
@@ -105,7 +111,12 @@ public class LobbyActivity extends Activity {
 //		listTask.execute();
 //	}
 	public void createGame(){
-		startActivity(new Intent(this, GameDetailActivity.class));
+
+		Intent myIntent = new Intent(gameListView.getContext(), GameDetailActivity.class);
+		myIntent.putExtra("gameid", gameid);
+		Log.d("intent", ""+myIntent.getIntExtra("gameid", gameid));
+        startActivityForResult(myIntent, 0);
+
 	}
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -128,20 +139,60 @@ public class LobbyActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * Shows the progress UI and hides the login form.
+	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+	private void showProgress(final boolean show) {
+		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+		// for very easy animations. If available, use these APIs to fade-in
+		// the progress spinner.
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+			int shortAnimTime = getResources().getInteger(
+					android.R.integer.config_shortAnimTime);
+	
+			gameListView.setVisibility(View.VISIBLE);
+			gameListView.animate().setDuration(shortAnimTime)
+					.alpha(show ? 1 : 0)
+					.setListener(new AnimatorListenerAdapter() {
+						@Override
+						public void onAnimationEnd(Animator animation) {
+							gameListView.setVisibility(show ? View.VISIBLE
+									: View.GONE);
+						}
+					});
+	
+			gameListView.setVisibility(View.VISIBLE);
+			gameListView.animate().setDuration(shortAnimTime)
+					.alpha(show ? 0 : 1)
+					.setListener(new AnimatorListenerAdapter() {
+						@Override
+						public void onAnimationEnd(Animator animation) {
+							gameListView.setVisibility(show ? View.GONE
+									: View.VISIBLE);
+						}
+					});
+		} else {
+			// The ViewPropertyAnimator APIs are not available, so simply show
+			// and hide the relevant UI components.
+			gameListView.setVisibility(show ? View.VISIBLE : View.GONE);
+			gameListView.setVisibility(show ? View.GONE : View.VISIBLE);
+		}
+	}
+
 	public class GameListTask extends AsyncTask<String, Void, Boolean> {
 				
 	    @Override
 		protected Boolean doInBackground(String... params) {
 			// TODO: attempt authentication against a network service.
-			
-		    gamesArray = LobbyActivity.this.obsApp.getObsStub().getGames();
-		    String game = LobbyActivity.this.obsApp.getObsStub().createGame();
+			showProgress(true);
+		    gamesArray = LobbyActivity.this.obsApp.getObsStub().getGames();	    
 		    
 		    Log.d("GAME LISTE", ""+gamesArray);
     
 	        try {
 				// Simulate network access.
-				Thread.sleep(250);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				return false;
 			}
@@ -157,11 +208,42 @@ public class LobbyActivity extends Activity {
 			}
 		    
 			arrayAdapter.notifyDataSetChanged();
+			showProgress(false);
 		}
 
 		@Override
 		protected void onCancelled() {
 
+		}
+	}
+
+	public class NewGameTask extends AsyncTask<String, Void, Boolean> {
+				
+	    @Override
+		protected Boolean doInBackground(String... params) {
+			// TODO: attempt authentication against a network service.
+
+		    Games game = LobbyActivity.this.obsApp.getObsStub().createGame();	    
+
+	        gameid = game.getId();
+	        	
+	        try {
+				// Simulate network access.
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				return false;
+			}
+			return true;
+		}
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			createGame();
+		}
+	
+		@Override
+		protected void onCancelled() {
+	
 		}
 	}
 }

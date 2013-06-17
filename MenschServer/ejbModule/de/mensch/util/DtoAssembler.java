@@ -24,6 +24,7 @@ public class DtoAssembler {
 	  dto.setSpieler2(game.getSpieler2());
 	  dto.setSpieler3(game.getSpieler3());
 	  dto.setSpieler4(game.getSpieler4());
+	  dto.getOwner().setPassword(null);
 	  return dto;
   }
   
@@ -38,7 +39,6 @@ public class DtoAssembler {
   public CustomerTO makeDTO(CustomerTO customer) {
 	  CustomerTO dto = new CustomerTO();
 	  dto.setId(customer.getId());
-	  dto.setPassword(customer.getPassword());
 	  dto.setUserName(customer.getUserName());
 	  return dto;
   }

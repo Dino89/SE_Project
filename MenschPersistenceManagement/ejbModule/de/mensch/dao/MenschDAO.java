@@ -96,5 +96,22 @@ public class MenschDAO implements MenschDAOLocal {
 		request.createRequest(game);
 		return null;
 	}
+
+	@Override
+	public Game findGameByOwnerUserName(Customer owner) {
+		Query query = em.createQuery("SELECT e FROM Game e");
+		ArrayList<Game>result = (ArrayList<Game>) query.getResultList();
+		String user1, user2;
+		
+		for(Game respone : result) {
+			user1 = respone.getOwner().getUserName();
+			user2 = owner.getUserName();
+			if(user1.equals(user2)) {
+				return respone;
+			}
+		}
+		return null;
+	}
+	
 }
 

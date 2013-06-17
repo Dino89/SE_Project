@@ -3,4 +3,5 @@
 	<string name="zuschauen">zuschauen</string>
 	<string name="mitspielen">mitspielen</string>
 	<string name="highscore">Rangliste</string>	
+	<string name="lobby_progress_gamelist">Hole Spiele...</string>
 </resources>

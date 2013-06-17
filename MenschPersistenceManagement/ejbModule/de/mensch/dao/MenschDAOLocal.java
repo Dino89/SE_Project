@@ -37,5 +37,8 @@ public interface MenschDAOLocal {
 	public Request getRequests(int id);
 
 	public Request createRequest(int id, String username);
+
+	public Game findGameByOwnerUserName(Customer owner);
+
 		
 }
