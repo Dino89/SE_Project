@@ -2,6 +2,7 @@ package com.example.menschapp.util;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class Games implements Serializable {
 	
@@ -16,6 +17,8 @@ public class Games implements Serializable {
 	private String spieler2;
 	private String spieler3;
 	private String spieler4;
+	private ArrayList<String> zuschauer;
+	
 	
 	private String owner;
 	
@@ -93,6 +96,14 @@ public class Games implements Serializable {
 
 	public void setSuccess(int success) {
 		this.success = success;
+	}
+
+	public ArrayList<String> getZuschauer() {
+		return zuschauer;
+	}
+
+	public void setZuschauer(ArrayList<String> zuschauer) {
+		this.zuschauer = zuschauer;
 	}
 
 }

@@ -9,7 +9,7 @@ public class GameDetailResponse extends ReturncodeResponse {
 
 	private static final long serialVersionUID = -317315831091403428L;
 
-	private GameTO gameDetail;
+	private GameTO gameDetail  = new GameTO();
 	
 	public GameDetailResponse() {
 		// TODO Auto-generated constructor stub

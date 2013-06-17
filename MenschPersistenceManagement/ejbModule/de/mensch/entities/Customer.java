@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -22,6 +23,9 @@ public class Customer implements Serializable {
 	@Id
 	private String userName;
 	private String password;
+	
+	@ManyToOne
+	private Customer zuschauer;
 	
 	/**
 	 * Bidirektionale Eins-zu-Viele Behiehung

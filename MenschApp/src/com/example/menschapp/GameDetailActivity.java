@@ -1,5 +1,7 @@
 package com.example.menschapp;
 
+import java.util.ArrayList;
+
 import com.example.menschapp.util.Games;
 import com.example.menschapp.util.MenschSystemStub;
 
@@ -21,7 +23,11 @@ import android.widget.TextView;
 public class GameDetailActivity extends Activity {
 
 	private int gameid;
-	private TextView TextView03;
+	ArrayList<Games> gamesArray = new ArrayList<Games>();
+	private TextView spieler1;
+	private TextView spieler2;
+	private TextView spieler3;
+	private TextView spieler4;
 	
 	private SharedPreferences prefs;
 	private MenschApplication obsApp;
@@ -38,7 +44,10 @@ public class GameDetailActivity extends Activity {
         
 		setContentView(R.layout.activity_game_detail);
 		
-		TextView03 = (TextView) findViewById(R.id.spielleiter);
+		spieler1 = (TextView) findViewById(R.id.spieler1);
+		spieler2 = (TextView) findViewById(R.id.spieler2);
+		spieler3 = (TextView) findViewById(R.id.spieler3);
+		spieler4 = (TextView) findViewById(R.id.spieler4);
 		
 		
 		gameTask = new GameDetailTask();
@@ -90,8 +99,13 @@ public class GameDetailActivity extends Activity {
 			Intent myIntent = getIntent();
 			gameid = myIntent.getExtras().getInt("gameid");
 
-		    gameDetail = GameDetailActivity.this.obsApp.getObsStub().getGameDetails(gameid);
-
+//		    gameDetail = GameDetailActivity.this.obsApp.getObsStub().getGameDetails(gameid);
+			gamesArray = GameDetailActivity.this.obsApp.getObsStub().getGames();
+			for(Games game : gamesArray) {
+				if(game.getId()==gameid) {
+					gameDetail = game;
+				}
+			}
 	        try {
 				// Simulate network access.
 				Thread.sleep(250);
@@ -104,7 +118,10 @@ public class GameDetailActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
-	        TextView03.setText(Integer.toString(gameid));
+			spieler1.setText(gameDetail.getSpieler1());
+			spieler2.setText(gameDetail.getSpieler2());
+			spieler3.setText(gameDetail.getSpieler3());
+			spieler4.setText(gameDetail.getSpieler4());
 		}
 
 		@Override

@@ -30,15 +30,18 @@ public class Game implements Serializable {
 	@OneToOne
 	private Customer spieler1;
 	@OneToOne
-	private Customer spieler2;
+	private Customer spieler2 = null;
 	@OneToOne
-	private Customer spieler3;
+	private Customer spieler3 = null;
 	@OneToOne
-	private Customer spieler4;
-	@ManyToOne
-	private Customer zuschauer;
+	private Customer spieler4 = null;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="zuschauer") @MapKey
+	private java.util.Map<Integer,Customer> zuschauer;
+	
 	@OneToOne
 	private GameField gameField;
+	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="request") @MapKey
 	private java.util.Map<Integer,Request> requests;
 	

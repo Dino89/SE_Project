@@ -126,7 +126,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		GameDetailResponse response = new GameDetailResponse();
 		Game gameDetail = this.dao.getGameDetails(id);
 		response.setGameDetails(dtoAssembler.makeDTO(gameDetail));
-		System.out.println(response.getGameDetails(id));
+		System.out.println("GameDetailResponse getGameDetails toString: " + response.getGameDetails(id).toString());
+		response.setReturnCode(1);
 		return response;
 	}
 	

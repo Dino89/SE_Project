@@ -243,10 +243,15 @@ public class MenschSystemStub implements MenschSystem {
 			SoapObject soapOwnerObj = (SoapObject) soapGameEntry.getProperty("owner");
 			SoapPrimitive soapOwnerName = (SoapPrimitive) soapOwnerObj.getProperty("userName");
 			Games game = new Games();
+			
 			game.setId(Integer.valueOf(soapGameNr.toString()));
 			game.setSlots(Integer.valueOf(soapSlots.toString()));
 			game.setOwner(soapOwnerName.toString());
-			
+			game.setSpieler1(soapOwnerName.toString());
+			game.setSpieler2(soapOwnerObj.getPropertySafelyAsString("spieler2").toString());
+			game.setSpieler3(soapOwnerObj.getPropertySafelyAsString("spieler3").toString());
+			game.setSpieler4(soapOwnerObj.getPropertySafelyAsString("spieler4").toString());
+//			game.setZuschauer(zuschauer);
 			result.add(game);
 		}
 		return result;
@@ -255,16 +260,16 @@ public class MenschSystemStub implements MenschSystem {
 	@Override
 	public Games getGameDetails(int id) {
 		Log.d(TAG,"getGameDetails called.");		
-		
-		Games result = new Games();
-		
+	
 		String METHOD_NAME = "getGameDetails";
 		SoapObject response = executeSoapAction(METHOD_NAME, id);
 
-		Log.d(TAG, METHOD_NAME);
-		Log.d(TAG, response.toString());
-		Log.d(TAG, ""+response.getPropertyCount());
-
+		Log.d(TAG, "Methode: "+METHOD_NAME);
+		Log.d(TAG, "Response: "+response.toString());
+		Log.d(TAG, "Anzahl: "+response.getPropertyCount());
+		
+		Games result = new Games();
+		
 		for (int i=1; i<response.getPropertyCount(); i++) {
 			SoapObject soapGameEntry = (SoapObject) response.getProperty(i);
 			SoapPrimitive soapGameNr = (SoapPrimitive) soapGameEntry.getProperty("id");

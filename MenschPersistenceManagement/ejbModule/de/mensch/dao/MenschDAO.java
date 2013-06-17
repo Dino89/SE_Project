@@ -65,6 +65,7 @@ public class MenschDAO implements MenschDAOLocal {
 
 	@Override
 	public Game getGameDetails(int id) {
+		System.out.println("HIER"+em.find(Game.class, id).getOwner().getUserName());
 		return em.find(Game.class, id);
 	}
 
