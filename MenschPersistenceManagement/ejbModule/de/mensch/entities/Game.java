@@ -138,4 +138,18 @@ public class Game implements Serializable {
 		this.started = started;
 	}
 
+	/**
+	 * @return the requests
+	 */
+	public java.util.Map<Integer, Request> getRequests() {
+		return requests;
+	}
+
+	/**
+	 * @param requests the requests to set
+	 */
+	public void setRequests(java.util.Map<Integer, Request> requests) {
+		this.requests = requests;
+	}
+
 }

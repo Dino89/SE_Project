@@ -85,7 +85,13 @@ public class MenschDAO implements MenschDAOLocal {
 	//TODO: NOT FINISHED
 	@Override
 	public Request getRequests(int id) {
-		// TODO Auto-generated method stub
+//		ist glaube ich alles mist was ich hier gemacht hab...zu warm
+//		Query query = em.createQuery("SELECT e FROM Request e");
+//		ArrayList<Request> requests = new ArrayList<>();
+//		ArrayList<E> response = new ArrayList<>();
+//		for(Request request : requests) {
+//			if(request.getRequest(id) == id) response.add(request); 
+//		}
 		return null;
 	}
 	//TODO: NOT FINISHED
