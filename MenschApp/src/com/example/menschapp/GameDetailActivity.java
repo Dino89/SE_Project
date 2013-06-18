@@ -31,6 +31,8 @@ public class GameDetailActivity extends Activity {
 	private TextView spieler3;
 	private TextView spieler4;
 	
+	private boolean joined=false;
+	
 	private SharedPreferences prefs;
 	private MenschApplication obsApp;
 	
@@ -38,6 +40,7 @@ public class GameDetailActivity extends Activity {
 	private GameDetailTask gameTask = null;
 	private SpectateGameTask specTask = null;
 	private JoinGameTask joinTask = null;
+	private LeaveGameTask leaveTask = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,8 @@ public class GameDetailActivity extends Activity {
 					@Override
 					public void onClick(View view) {
 //						mitspielen();
+						
+						joined=true;
 					}
 				});
 		
@@ -71,6 +76,7 @@ public class GameDetailActivity extends Activity {
 					@Override
 					public void onClick(View view) {
 //						zuschauen();
+						joined=true;
 					}
 				});
 		
@@ -88,13 +94,24 @@ public class GameDetailActivity extends Activity {
 		    }, delay, period);
 		
 	}
-
+	public void onBackPressed(){
+		
+		if(joined){
+			if(leaveTask==null){
+			leaveTask = new LeaveGameTask();
+			leaveTask.execute();
+			
+			}
+		}
+		this.finish();
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.game_detail, menu);
 		return true;
 	}
+	
 	
 	/**
 	 * Diese Methode wird vom Container aufgerufen, wenn ein Menue-Eintrag ausgewaehlt wird.
@@ -117,7 +134,7 @@ public class GameDetailActivity extends Activity {
 			// TODO: attempt authentication against a network service.
 			Intent myIntent = getIntent();
 			gameid = myIntent.getExtras().getInt("gameid");
-
+			joined = myIntent.getExtras().getBoolean("joined");
 //		    gameDetail = GameDetailActivity.this.obsApp.getObsStub().getGameDetails(gameid);
 			gamesArray = GameDetailActivity.this.obsApp.getObsStub().getGames();
 			for(Games game : gamesArray) {
@@ -199,5 +216,28 @@ public class GameDetailActivity extends Activity {
 		protected void onCancelled() {
 	
 		}
+	}
+	public class LeaveGameTask extends AsyncTask<String, Void, Boolean> {
+		
+	    @Override
+		protected Boolean doInBackground(String... params) {
+	    	
+	    	GameDetailActivity.this.obsApp.getObsStub().leaveGame(gameid);
+	    	
+	        try {
+				// Simulate network access.
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+				return false;
+			}
+	
+			return true;
+		}
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			leaveTask=null;
+		}
+	
 	}
 }

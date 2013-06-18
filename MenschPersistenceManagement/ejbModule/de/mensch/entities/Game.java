@@ -37,7 +37,7 @@ public class Game implements Serializable {
 	private Customer spieler4 = null;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="zuschauer") @MapKey
-	private java.util.Map<Integer,Customer> zuschauer;
+	private java.util.Map<String,Customer> zuschauer;
 	
 	@OneToOne
 	private GameField gameField;
@@ -64,6 +64,14 @@ public class Game implements Serializable {
 		this.spieler1 = spieler1;
 	}
 	
+	public java.util.Map<String, Customer> getZuschauer() {
+		return zuschauer;
+	}
+
+	public void setZuschauer(java.util.Map<String, Customer> zuschauer) {
+		this.zuschauer = zuschauer;
+	}
+
 	public Customer getSpieler2() {
 		return spieler2;
 	}

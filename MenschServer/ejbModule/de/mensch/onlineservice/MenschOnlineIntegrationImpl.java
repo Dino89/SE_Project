@@ -2,7 +2,9 @@ package de.mensch.onlineservice;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
@@ -173,7 +175,37 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		response.setSuccess(true);
 		return response;
 	}
-
+	public void leaveGame(int sessionId, int gameid){
+		Game g = this.dao.getGameDetails(gameid);
+		MenschSession s = this.dao.findSessionById(sessionId);
+		
+		if(g.getOwner().getUserName().equals(s.getUsername())){
+			System.out.println("Spielleiter "+g.getOwner().getUserName()+" schlieﬂt sein Spiel");
+			this.closeGame(gameid);
+		}else{
+			if(g.getSpieler1().getUserName().equals(s.getUsername())){
+				g.setSpieler1(null);
+			}
+			if(g.getSpieler2().getUserName().equals(s.getUsername())){
+				g.setSpieler2(null);
+			}
+			if(g.getSpieler3().getUserName().equals(s.getUsername())){
+				g.setSpieler3(null);
+			}
+			if(g.getSpieler4().getUserName().equals(s.getUsername())){
+				g.setSpieler4(null);
+			}
+			Map<String, Customer> z = g.getZuschauer();
+			z.remove(s.getUsername());
+		}
+	    
+		
+	}
+	
+	private void closeGame(int gameid){
+		this.dao.removeGame(gameid);
+		
+	}
 	//TODO: Not yet finished method
 	/*
 	 * Polling vom Spielersteller, ob neue Requests vorliegen

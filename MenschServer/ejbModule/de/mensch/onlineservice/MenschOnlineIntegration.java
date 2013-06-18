@@ -44,6 +44,8 @@ public interface MenschOnlineIntegration {
 
 	public AttemptToJoinResponse joinGame(int id, int sessionId) throws NoSessionException;
 	
+	public void leaveGame(int sessionId, int gameid);
+	
 	public JoinResponse joinGameResponse(int id);
 
 	public CreateGameResponse createNewGame(int sessionId) throws NoSessionException;

@@ -325,7 +325,19 @@ public class MenschSystemStub implements MenschSystem {
 		request.setSuccess(success);
 		return request;
 	}
-	
+	public Request leaveGame(int id){
+		String METHOD_NAME = "leaveGame";
+		Log.d(TAG, ""+METHOD_NAME+" called");
+		SoapObject response = executeSoapAction(METHOD_NAME, sessionId, id);
+		//Log.d(TAG, response.toString());
+		
+		//SoapPrimitive success = (SoapPrimitive) response.getProperty("success");
+				
+		//Request request = new Request();
+		//request.setSuccess(success);
+		//return request;
+		return null;
+	}
 	@Override
 	public Response joinGameResponse() {
 		return null;

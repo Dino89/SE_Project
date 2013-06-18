@@ -48,6 +48,8 @@ public interface MenschSystem {
 
 
 	public Request joinGame(int id);
+	
+	public Request leaveGame(int id);
 
 	public Response joinGameResponse();
 

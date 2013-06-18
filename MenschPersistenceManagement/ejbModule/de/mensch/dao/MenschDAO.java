@@ -57,6 +57,13 @@ public class MenschDAO implements MenschDAOLocal {
 		return customer;
 	}
 
+	public Game getGame(int gameid){
+		return em.find(Game.class, gameid);
+	}
+	public void removeGame(int gameid){
+		 em.remove(getGame(gameid));
+	}
+	
 	@Override
 	public ArrayList<Game> getGameList() {		
 		Query query = em.createQuery("SELECT e FROM Game e");
