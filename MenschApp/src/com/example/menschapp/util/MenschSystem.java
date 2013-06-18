@@ -50,4 +50,7 @@ public interface MenschSystem {
 	public Request joinGame(int id);
 
 	public Response joinGameResponse();
+
+
+	public void getGameFields(int gameid);
 }

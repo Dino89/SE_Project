@@ -1,6 +1,8 @@
 package com.example.menschapp;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.example.menschapp.util.Games;
 import com.example.menschapp.util.MenschSystemStub;
@@ -71,6 +73,20 @@ public class GameDetailActivity extends Activity {
 //						zuschauen();
 					}
 				});
+		
+		
+		int delay = 1000; // delay for 1 sec. 
+		int period = 10000; // repeat every 1 sec. 
+		Timer timer = new Timer(); 
+		timer.scheduleAtFixedRate(new TimerTask() 
+		    { 
+		        public void run() 
+		        { 
+		        	gameTask = new GameDetailTask();
+		            gameTask.execute();  // display the data
+		        } 
+		    }, delay, period);
+		
 	}
 
 	@Override
@@ -184,6 +200,4 @@ public class GameDetailActivity extends Activity {
 	
 		}
 	}
-	
-	
 }

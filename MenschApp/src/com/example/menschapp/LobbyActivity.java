@@ -3,6 +3,8 @@ package com.example.menschapp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.example.menschapp.LoginActivity.UserLoginTask;
 import com.example.menschapp.util.Games;
@@ -105,7 +107,25 @@ public class LobbyActivity extends Activity {
 				
 			}
 		});
-	 }
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		int delay = 1000; // delay for 1 sec. 
+		int period = 10000; // repeat every 10 sec. 
+		Timer timer = new Timer(); 
+		timer.scheduleAtFixedRate(new TimerTask() 
+		    { 
+		        public void run() 
+		        { 
+		        	listTask = new GameListTask();
+		            listTask.execute();  // display the data
+		        } 
+		    }, delay, period);
+		
+	}
+	
 //	protected void onResume(){
 //		listTask = new GameListTask(); 
 //		listTask.execute();
@@ -139,53 +159,11 @@ public class LobbyActivity extends Activity {
 		return true;
 	}
 
-	/**
-	 * Shows the progress UI and hides the login form.
-	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-	private void showProgress(final boolean show) {
-		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-		// for very easy animations. If available, use these APIs to fade-in
-		// the progress spinner.
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-			int shortAnimTime = getResources().getInteger(
-					android.R.integer.config_shortAnimTime);
-	
-			gameListView.setVisibility(View.VISIBLE);
-			gameListView.animate().setDuration(shortAnimTime)
-					.alpha(show ? 1 : 0)
-					.setListener(new AnimatorListenerAdapter() {
-						@Override
-						public void onAnimationEnd(Animator animation) {
-							gameListView.setVisibility(show ? View.VISIBLE
-									: View.GONE);
-						}
-					});
-	
-			gameListView.setVisibility(View.VISIBLE);
-			gameListView.animate().setDuration(shortAnimTime)
-					.alpha(show ? 0 : 1)
-					.setListener(new AnimatorListenerAdapter() {
-						@Override
-						public void onAnimationEnd(Animator animation) {
-							gameListView.setVisibility(show ? View.GONE
-									: View.VISIBLE);
-						}
-					});
-		} else {
-			// The ViewPropertyAnimator APIs are not available, so simply show
-			// and hide the relevant UI components.
-			gameListView.setVisibility(show ? View.VISIBLE : View.GONE);
-			gameListView.setVisibility(show ? View.GONE : View.VISIBLE);
-		}
-	}
-
 	public class GameListTask extends AsyncTask<String, Void, Boolean> {
 				
 	    @Override
 		protected Boolean doInBackground(String... params) {
 			// TODO: attempt authentication against a network service.
-			showProgress(true);
 		    gamesArray = LobbyActivity.this.obsApp.getObsStub().getGames();	    
 		    
 		    Log.d("GAME LISTE", ""+gamesArray);
@@ -208,7 +186,6 @@ public class LobbyActivity extends Activity {
 			}
 		    
 			arrayAdapter.notifyDataSetChanged();
-			showProgress(false);
 		}
 
 		@Override

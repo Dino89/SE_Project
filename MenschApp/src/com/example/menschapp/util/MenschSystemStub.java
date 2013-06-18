@@ -330,4 +330,20 @@ public class MenschSystemStub implements MenschSystem {
 	public Response joinGameResponse() {
 		return null;
 	}
+
+	@Override
+	public void getGameFields(int gameid) {
+		String METHOD_NAME = "getGameFields";
+		Log.d(TAG, ""+METHOD_NAME+ " called");
+		
+		SoapObject response = executeSoapAction(METHOD_NAME, gameid);
+		
+		GameField gameField = new GameField();
+		
+		for(int i=1;i<73;i++){ 
+			SoapPrimitive valueRe = (SoapPrimitive) response.getProperty(i);
+			int value = Integer.valueOf(valueRe.toString());
+			gameField.setField(i, value); 
+		}
+	}
 }
