@@ -168,11 +168,13 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	 * 
 	 */
 	@Override
-	public AttemptToJoinResponse joinGame(int id, int sessionId) throws NoSessionException {
+	public AttemptToJoinResponse requestJoinGame(int id, int sessionId) throws NoSessionException {
 		AttemptToJoinResponse response = new AttemptToJoinResponse();
 		MenschSession session = getSession(sessionId);
 		Request request = this.dao.createRequest(id, session.getUsername());
+		response.setRequestId(request.getId());
 		response.setSuccess(true);
+		System.out.println("Neuer JoinGameRequest "+request.getId()+" Gameid "+id);
 		return response;
 	}
 	public void leaveGame(int sessionId, int gameid){
@@ -215,10 +217,15 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	 * @param id gameid, welchem eine beitrittsanfrage gestellt werden soll
 	 */
 	@Override
-	public RequestResponse getRequests(int id) {
-		RequestResponse response = new RequestResponse();
-		Request request = this.dao.getRequests(id);
-		return response;
+	public ArrayList<Request> getRequests(int id) {
+		//RequestResponse response = new RequestResponse();
+		System.out.println("Frage ab ob Requests vorliegen für Spiel "+id);
+		ArrayList<Request> requests = this.dao.getRequests(id);
+		System.out.println(requests.size()+" Requests");
+		if(requests == null)
+			return new ArrayList<Request>();
+		
+		return requests;
 	}
 	
 	//TODO: Not yet finished method
@@ -231,14 +238,25 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	 * (non-Javadoc)
 	 * @see de.mensch.onlineservice.MenschOnlineIntegration#joinGameResponse(boolean)
 	 */
-	@Override
-	public JoinResponse joinGameResponse(int id) {
-		JoinResponse joinResponse = new JoinResponse();
-		boolean success = this.dao.getRequests(id).isSuccess();
-		joinResponse.setSuccess(success);
-		return joinResponse;
-	}
+//	@Override
+//	public JoinResponse joinGameResponse(int id) {
+//		JoinResponse joinResponse = new JoinResponse();
+//		boolean success = this.dao.getRequests(id).isSuccess();
+//		joinResponse.setSuccess(success);
+//		return joinResponse;
+//	}
 	
+	public RequestResponse checkMyRequest(int requestId){
+		System.out.println("checkrequest reqID:"+requestId);
+		Request r = this.dao.getRequest(requestId);
+		RequestResponse result = new RequestResponse();
+		result.setState(r.getState());
+		if(r.getState().equals("declined")){
+			this.dao.removeRequest(requestId);
+		}
+		return result;
+		
+	}
 	/*
 	 * Wird vom Client aufgerufen, um ein neues Spiel zu erstellen
 	 * 
@@ -255,6 +273,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		response.setSuccess(true);
 		System.out.println("user:" + user);
 		Game foundGame = this.dao.findGameByOwnerUserName(user);
+		foundGame.setSpieler1(user);
 		System.out.println(foundGame + " ; "+ foundGame.getId() + " ; " +foundGame.getOwner());
 		response.setId(foundGame.getId());
 		response.toString();
@@ -281,5 +300,40 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	public AcceptOrDeclineFellowPlayer fellowPlayer(int id, int sessionId) {
 		AcceptOrDeclineFellowPlayer response = new AcceptOrDeclineFellowPlayer();
 		return response;
+	}
+
+	@Override
+	public void allowPlayer(int requestId) {
+		
+		Request r = this.dao.getRequest(requestId);
+		r.setState("accepted");
+		Game g = r.getGame();
+		Customer c = this.dao.findCustomerByName(r.getUser());
+		
+		if(g.getSpieler1() == null){
+			g.setSpieler1(c);
+		}else{
+		if(g.getSpieler2() == null){
+			g.setSpieler2(c);
+		}else{
+		if(g.getSpieler3() == null){
+			g.setSpieler3(c);
+		}else{
+		if(g.getSpieler4() == null){
+			g.setSpieler4(c);
+		}
+		}
+		}
+		}
+		
+		
+	}
+
+	@Override
+	public void declinePlayer(int requestId) {
+
+		Request r = this.dao.getRequest(requestId);
+		r.setState("declined");
+		
 	}
 }

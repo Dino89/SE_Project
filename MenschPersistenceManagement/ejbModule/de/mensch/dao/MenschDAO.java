@@ -66,7 +66,7 @@ public class MenschDAO implements MenschDAOLocal {
 	
 	@Override
 	public ArrayList<Game> getGameList() {		
-		Query query = em.createQuery("SELECT e FROM Game e");
+		Query query = em.createQuery("SELECT e FROM Game e where started=false");
 		return (ArrayList<Game>) query.getResultList();
 	 }
 
@@ -91,24 +91,26 @@ public class MenschDAO implements MenschDAOLocal {
 	}
 	//TODO: NOT FINISHED
 	@Override
-	public Request getRequests(int id) {
-//		ist glaube ich alles mist was ich hier gemacht hab...zu warm
-//		Query query = em.createQuery("SELECT e FROM Request e");
-//		ArrayList<Request> requests = new ArrayList<>();
-//		ArrayList<E> response = new ArrayList<>();
-//		for(Request request : requests) {
-//			if(request.getRequest(id) == id) response.add(request); 
-//		}
-		return null;
+	public ArrayList<Request> getRequests(int gameid) {
+		Query query = em.createQuery("SELECT e FROM Request e WHERE game="+gameid);
+		return (ArrayList<Request>) query.getResultList();
+		
+	}
+	
+	public Request getRequest(int requestid) {
+		return em.find(Request.class, requestid);
+		
 	}
 	//TODO: NOT FINISHED
 	@Override
-	public Request createRequest(int id, String username) {
+	public Request createRequest(int gameid, String username) {
 		Request request = new Request();
 		request.setUser(username);
-		Game game = em.find(Game.class, id);
-		request.createRequest(game);
-		return null;
+		Game game = em.find(Game.class, gameid);
+		request.setGame(game);
+		
+		em.persist(request);
+		return request;
 	}
 
 	@Override
@@ -125,6 +127,12 @@ public class MenschDAO implements MenschDAOLocal {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void removeRequest(int requestId) {
+		// TODO Auto-generated method stub
+		em.remove(getRequest(requestId));
 	}
 	
 }

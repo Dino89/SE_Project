@@ -19,30 +19,47 @@ public class Request implements Serializable {
 	@Id @GeneratedValue
 	private int id;
 	@ManyToOne
-	private Game request;
+	private Game game;
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	boolean success = false;
-	private String user;
+	private String userName;
+	private String state="not answered";
 	
 	public Request() {
 		super();
 	}
 	
-	public Game getRequest(int id) {
-		return request;
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public Game getGame() {
+		return game;
 	}
 	//TODO: NOT FINISHED
-	public Game createRequest(Game game) {
-		this.request = game;
-		return null;
+	public void setGame(Game game) {
+		this.game = game;
+		
 	}
 
 	public String getUser() {
-		return user;
+		return userName;
 	}
 
 	public void setUser(String user) {
-		this.user = user;
+		this.userName = user;
 	}
 
 	/**

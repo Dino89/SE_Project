@@ -314,18 +314,19 @@ public class MenschSystemStub implements MenschSystem {
 	 */
 	@Override
 	public Request joinGame(int id) {
-		String METHOD_NAME = "joinGame";
+		String METHOD_NAME = "requestJoinGame";
 		Log.d(TAG, ""+METHOD_NAME+" called");
-		SoapObject response = executeSoapAction(METHOD_NAME, id, sessionId);
+		SoapObject response = executeSoapAction(METHOD_NAME,  id,sessionId);
 		Log.d(TAG, response.toString());
 		
 		SoapPrimitive success = (SoapPrimitive) response.getProperty("success");
-				
+		
 		Request request = new Request();
 		request.setSuccess(success);
+		request.setId(Integer.parseInt(response.getPrimitivePropertyAsString("requestId")));
 		return request;
 	}
-	public Request leaveGame(int id){
+	public void leaveGame(int id){
 		String METHOD_NAME = "leaveGame";
 		Log.d(TAG, ""+METHOD_NAME+" called");
 		SoapObject response = executeSoapAction(METHOD_NAME, sessionId, id);
@@ -336,12 +337,12 @@ public class MenschSystemStub implements MenschSystem {
 		//Request request = new Request();
 		//request.setSuccess(success);
 		//return request;
-		return null;
+		//return null;
 	}
-	@Override
-	public Response joinGameResponse() {
-		return null;
-	}
+	//@Override
+//	public Response joinGameResponse() {
+//		return null;
+//	}
 
 	@Override
 	public void getGameFields(int gameid) {
@@ -357,5 +358,69 @@ public class MenschSystemStub implements MenschSystem {
 			int value = Integer.valueOf(valueRe.toString());
 			gameField.setField(i, value); 
 		}
+	}
+
+	@Override
+	public String checkMyRequest(int requestId) {
+		String result;
+		
+		String METHOD_NAME = "checkMyRequest";
+		Log.d(TAG, ""+METHOD_NAME+ " called");
+		
+		SoapObject response = executeSoapAction(METHOD_NAME, requestId);
+		Log.d(TAG, response.toString());
+		result = response.getPropertyAsString("state");
+		
+		return result;
+	}
+
+	@Override
+	public ArrayList<Request> checkForRequests(int gameId) {
+		ArrayList<Request> result = new ArrayList<Request>();
+		
+		String METHOD_NAME = "getRequests";
+		Log.d(TAG, ""+METHOD_NAME+ " called");
+		
+		SoapObject response = executeSoapAction(METHOD_NAME, gameId);
+		if(response == null)
+			return new ArrayList();
+			
+		Log.d(TAG, response.toString());
+		
+		for (int i=1; i<response.getPropertyCount(); i++) {
+			SoapObject soapRequestEntry = (SoapObject) response.getProperty(i);
+			SoapPrimitive requestId = (SoapPrimitive) soapRequestEntry.getProperty("requestId");
+			SoapPrimitive userName = (SoapPrimitive) soapRequestEntry.getProperty("userName");
+			
+			
+			
+			Request req = new Request();
+			
+			req.setId(Integer.valueOf(requestId.toString()));
+			req.setUserName(userName.toString());
+			
+			result.add(req);
+		}
+		
+		
+		return result;
+	}
+
+	@Override
+	public void allowPlayer(int requestId) {
+		String METHOD_NAME = "allowPlayer";
+		Log.d(TAG, ""+METHOD_NAME+ " called");
+		
+		SoapObject response = executeSoapAction(METHOD_NAME, requestId);
+		
+	}
+
+	@Override
+	public void declinePlayer(int requestId) {
+		String METHOD_NAME = "declinePlayer";
+		Log.d(TAG, ""+METHOD_NAME+ " called");
+		
+		SoapObject response = executeSoapAction(METHOD_NAME, requestId);
+		
 	}
 }

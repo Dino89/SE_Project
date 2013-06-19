@@ -42,7 +42,7 @@ public class Game implements Serializable {
 	@OneToOne
 	private GameField gameField;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="request") @MapKey
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="game") @MapKey
 	private java.util.Map<Integer,Request> requests;
 	
 	public Game() {

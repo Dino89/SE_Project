@@ -134,7 +134,7 @@ public class LobbyActivity extends Activity {
 
 		Intent myIntent = new Intent(gameListView.getContext(), GameDetailActivity.class);
 		myIntent.putExtra("gameid", gameid);
-		myIntent.putExtra("joined", true);
+		myIntent.putExtra("host", true);
 		Log.d("intent", ""+myIntent.getIntExtra("gameid", gameid));
         startActivityForResult(myIntent, 0);
 

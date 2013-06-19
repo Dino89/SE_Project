@@ -49,10 +49,22 @@ public interface MenschSystem {
 
 	public Request joinGame(int id);
 	
-	public Request leaveGame(int id);
+	public void leaveGame(int id);
 
-	public Response joinGameResponse();
+	//public Response joinGameResponse();
 
 
 	public void getGameFields(int gameid);
+
+
+	public String checkMyRequest(int requestId);
+
+
+	public ArrayList<Request> checkForRequests(int gameId);
+
+
+	public void allowPlayer(int id);
+
+
+	public void declinePlayer(int id);
 }
