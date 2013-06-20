@@ -76,6 +76,7 @@ public class GameDetailActivity extends Activity {
 		
 		Intent myIntent = getIntent();
 		gameid = myIntent.getExtras().getInt("gameid");
+		Log.d("GameDetailActivity", "gameid: "+gameid);
 		host = myIntent.getExtras().getBoolean("host");
 		
 		gameTask = new GameDetailTask();
@@ -178,6 +179,7 @@ public class GameDetailActivity extends Activity {
 			
 //		    gameDetail = GameDetailActivity.this.obsApp.getObsStub().getGameDetails(gameid);
 			gamesArray = GameDetailActivity.this.obsApp.getObsStub().getGames();
+			
 			for(Games game : gamesArray) {
 				if(game.getId()==gameid) {
 					gameDetail = game;
@@ -195,6 +197,12 @@ public class GameDetailActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
+			try {
+				Log.d("hallo",""+gameDetail.getSpieler1());
+			}
+			catch (Exception e) {
+				Log.d("exception", "exception");
+			}
 			spieler1.setText(gameDetail.getSpieler1());
 			if(gameDetail.getSpieler2()!=null) spieler2.setText(gameDetail.getSpieler2());
 			if(gameDetail.getSpieler3()!=null) spieler3.setText(gameDetail.getSpieler3());
@@ -215,7 +223,7 @@ public class GameDetailActivity extends Activity {
 		    	Request r = GameDetailActivity.this.obsApp.getObsStub().joinGame(gameid);
 		    	requestid = r.getId();
 		    	int delay = 1000; // delay for 1 sec. 
-				int period = 10000; // repeat every 10 sec. 
+				int period = 30000; // repeat every 10 sec. 
 				checkForMyRequestTimer=new Timer();
 				checkForMyRequestTimer.scheduleAtFixedRate(new TimerTask()  
 				    { 

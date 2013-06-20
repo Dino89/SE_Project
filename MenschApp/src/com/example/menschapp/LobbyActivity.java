@@ -83,7 +83,10 @@ public class LobbyActivity extends Activity {
 	          public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
 
 				Intent myIntent = new Intent(gameListView.getContext(), GameDetailActivity.class);
-				myIntent.putExtra("gameid", myItemInt+1);
+				int gamelistid = gamesArray.get(myItemInt).getId();
+
+				Log.d("gameid:", ""+gamelistid);
+				myIntent.putExtra("gameid", gamelistid);
 				Log.d("intent", ""+myIntent.getIntExtra("gameid", myItemInt));
 	            startActivityForResult(myIntent, 0);
 	          }
