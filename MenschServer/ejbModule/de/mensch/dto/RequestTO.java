@@ -18,10 +18,11 @@ public class RequestTO implements Serializable {
 	public RequestTO() {
 	}
 
-	public RequestTO(int id, String userName) {
+	public RequestTO(int id, String userName, String hallo) {
 		super();
 		this.id = id;
 		this.userName = userName;
+		this.hallo = hallo;
 	}
 
 	public void setUserName(String user) {

@@ -19,6 +19,7 @@ public class DtoAssembler {
 	public RequestTO makeDTO(Request request) {
 		RequestTO dto = new RequestTO();
 		dto.setUserName(request.getUser());
+		System.out.println("REQUESTID: "+request.getId());
 		dto.setId(request.getId());
 		return dto;
 	}
