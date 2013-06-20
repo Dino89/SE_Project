@@ -380,28 +380,21 @@ public class MenschSystemStub implements MenschSystem {
 		
 		String METHOD_NAME = "getRequests";
 		Log.d(TAG, ""+METHOD_NAME+ " called");
-		
+
 		SoapObject response = executeSoapAction(METHOD_NAME, gameId);
-		if(response == null)
-			return new ArrayList();
-			
+		Log.d(TAG, "response: "+response);
 		Log.d(TAG, response.toString());
 		
-		for (int i=1; i<response.getPropertyCount(); i++) {
-			SoapObject soapRequestEntry = (SoapObject) response.getProperty(i);
-			SoapPrimitive requestId = (SoapPrimitive) soapRequestEntry.getProperty("requestId");
+			SoapObject soapRequestEntry = (SoapObject) response.getProperty(2);
+			SoapPrimitive requestId = (SoapPrimitive) soapRequestEntry.getProperty("id");
 			SoapPrimitive userName = (SoapPrimitive) soapRequestEntry.getProperty("userName");
-			
-			
-			
+
 			Request req = new Request();
 			
 			req.setId(Integer.valueOf(requestId.toString()));
 			req.setUserName(userName.toString());
 			
-			result.add(req);
-		}
-		
+			result.add(req);		
 		
 		return result;
 	}

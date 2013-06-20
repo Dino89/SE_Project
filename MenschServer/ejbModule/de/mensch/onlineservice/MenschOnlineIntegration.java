@@ -11,6 +11,7 @@ import de.mensch.dto.GameDetailResponse;
 import de.mensch.dto.GameFieldResponse;
 import de.mensch.dto.GameListResponse;
 import de.mensch.dto.JoinResponse;
+import de.mensch.dto.RequestListResponse;
 import de.mensch.dto.RequestResponse;
 import de.mensch.dto.ReturncodeResponse;
 import de.mensch.dto.UserLoginResponse;
@@ -52,7 +53,7 @@ public interface MenschOnlineIntegration {
 
 	public CreateGameResponse createNewGame(int sessionId) throws NoSessionException;
 
-	public ArrayList<Request> getRequests(int id);
+	public RequestListResponse getRequests(int id);
 
 	public AcceptOrDeclineFellowPlayer fellowPlayer(int id, int sessionId);
 

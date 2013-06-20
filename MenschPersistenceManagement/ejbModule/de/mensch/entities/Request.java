@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class Request implements Serializable {
@@ -19,7 +20,7 @@ public class Request implements Serializable {
 	@Id @GeneratedValue
 	private int id;
 	@ManyToOne
-	private Game game;
+	private Game gameentity;
 	
 	public int getId() {
 		return id;
@@ -45,12 +46,12 @@ public class Request implements Serializable {
 		this.state = state;
 	}
 
-	public Game getGame() {
-		return game;
+	public Game getGameentity() {
+		return gameentity;
 	}
 	//TODO: NOT FINISHED
-	public void setGame(Game game) {
-		this.game = game;
+	public void setGameentity(Game game) {
+		this.gameentity = game;
 		
 	}
 

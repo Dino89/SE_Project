@@ -13,6 +13,7 @@ import javax.persistence.MapKey;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlTransient;
 
 
 @Entity
@@ -41,8 +42,8 @@ public class Game implements Serializable {
 	
 	@OneToOne
 	private GameField gameField;
-	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="game") @MapKey
+
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="gameentity") @MapKey
 	private java.util.Map<Integer,Request> requests;
 	
 	public Game() {

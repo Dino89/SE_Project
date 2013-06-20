@@ -2,7 +2,7 @@ package de.mensch.dto;
 
 public class RequestResponse extends ReturncodeResponse {
 
-	private static final long serialVersionUID = -3175635831091840828L;
+	private static final long serialVersionUID = -313256358791812828L;
 	
 	String state;
 	

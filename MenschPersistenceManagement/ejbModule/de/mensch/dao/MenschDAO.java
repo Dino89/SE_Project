@@ -10,6 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.xml.bind.annotation.XmlTransient;
 
 import de.mensch.entities.Account;
 import de.mensch.entities.Customer;
@@ -92,11 +93,12 @@ public class MenschDAO implements MenschDAOLocal {
 	//TODO: NOT FINISHED
 	@Override
 	public ArrayList<Request> getRequests(int gameid) {
-		Query query = em.createQuery("SELECT e FROM Request e WHERE game="+gameid);
+		Query query = em.createQuery("SELECT e FROM Request e where gameentity="+gameid);
+		ArrayList<Request> querylist = (ArrayList<Request>) query.getResultList();
 		return (ArrayList<Request>) query.getResultList();
 		
 	}
-	
+
 	public Request getRequest(int requestid) {
 		return em.find(Request.class, requestid);
 		
@@ -107,7 +109,7 @@ public class MenschDAO implements MenschDAOLocal {
 		Request request = new Request();
 		request.setUser(username);
 		Game game = em.find(Game.class, gameid);
-		request.setGame(game);
+		request.setGameentity(game);
 		
 		em.persist(request);
 		return request;

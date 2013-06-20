@@ -20,7 +20,9 @@ import de.mensch.dto.GameDetailResponse;
 import de.mensch.dto.GameFieldResponse;
 import de.mensch.dto.GameListResponse;
 import de.mensch.dto.JoinResponse;
+import de.mensch.dto.RequestListResponse;
 import de.mensch.dto.RequestResponse;
+import de.mensch.dto.Response;
 import de.mensch.dto.ReturncodeResponse;
 import de.mensch.dto.UserLoginResponse;
 import de.mensch.dto.UserRegisterResponse;
@@ -177,6 +179,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		System.out.println("Neuer JoinGameRequest "+request.getId()+" Gameid "+id);
 		return response;
 	}
+	
 	public void leaveGame(int sessionId, int gameid){
 		Game g = this.dao.getGameDetails(gameid);
 		MenschSession s = this.dao.findSessionById(sessionId);
@@ -217,15 +220,15 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	 * @param id gameid, welchem eine beitrittsanfrage gestellt werden soll
 	 */
 	@Override
-	public ArrayList<Request> getRequests(int id) {
-		//RequestResponse response = new RequestResponse();
+	public RequestListResponse getRequests(int id) {
+		RequestListResponse response = new RequestListResponse();
 		System.out.println("Frage ab ob Requests vorliegen für Spiel "+id);
 		ArrayList<Request> requests = this.dao.getRequests(id);
 		System.out.println(requests.size()+" Requests");
-		if(requests == null)
-			return new ArrayList<Request>();
-		
-		return requests;
+		if(requests.size()!=0) System.out.println("user request: "+requests.get(0).getUser());
+		response.setRequestList(dtoAssembler.makeDTORequestList(requests)); 
+		if(requests.size()!=0) System.out.println(response.getRequestList().get(0).getUserName());
+		return response;
 	}
 	
 	//TODO: Not yet finished method
@@ -273,8 +276,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		response.setSuccess(true);
 		System.out.println("user:" + user);
 		Game foundGame = this.dao.findGameByOwnerUserName(user);
-		foundGame.setSpieler1(user);
-		System.out.println(foundGame + " ; "+ foundGame.getId() + " ; " +foundGame.getOwner());
+//		foundGame.setSpieler1(user);
+		System.out.println(foundGame + " ; "+ foundGame.getId() + " ; " +foundGame.getOwner().getUserName());
 		response.setId(foundGame.getId());
 		response.toString();
 		return response;
@@ -307,7 +310,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		
 		Request r = this.dao.getRequest(requestId);
 		r.setState("accepted");
-		Game g = r.getGame();
+		Game g = r.getGameentity();
 		Customer c = this.dao.findCustomerByName(r.getUser());
 		
 		if(g.getSpieler1() == null){

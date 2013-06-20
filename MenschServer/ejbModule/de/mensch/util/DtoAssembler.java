@@ -10,11 +10,27 @@ import de.mensch.dto.CustomerTO;
 import de.mensch.dto.DiceResponse;
 import de.mensch.dto.DiceTO;
 import de.mensch.dto.GameTO;
+import de.mensch.dto.RequestTO;
 import de.mensch.entities.*;
 
 @Stateless
 public class DtoAssembler {
   
+	public RequestTO makeDTO(Request request) {
+		RequestTO dto = new RequestTO();
+		dto.setUserName(request.getUser());
+		dto.setId(request.getId());
+		return dto;
+	}
+	
+	public ArrayList<RequestTO> makeDTORequestList(ArrayList<Request> requestList) {
+		ArrayList<RequestTO> dtoList = new ArrayList<>();
+		for(Request r : requestList) {
+			dtoList.add(this.makeDTO(r));
+		}
+		return dtoList;
+	}
+	
   public GameTO makeDTO(Game game) {
 	  GameTO dto = new GameTO();
 	  dto.setId(game.getId());
