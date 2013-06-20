@@ -33,6 +33,10 @@ public class RequestTO implements Serializable {
 		this.id = id;		
 	}
 
+	public int getId() {
+		return id;
+	}
+
 	public String getUserName() {
 		return userName;
 		

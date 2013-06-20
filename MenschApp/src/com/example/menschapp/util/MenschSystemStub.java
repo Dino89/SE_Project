@@ -386,12 +386,12 @@ public class MenschSystemStub implements MenschSystem {
 		Log.d(TAG, response.toString());
 		if(response.getPropertyCount()>1) {
 			SoapObject soapRequestEntry = (SoapObject) response.getProperty(1);
-//			SoapPrimitive requestId = (SoapPrimitive) soapRequestEntry.getProperty("id");
+			SoapPrimitive requestId = (SoapPrimitive) soapRequestEntry.getProperty("id");
 			SoapPrimitive userName = (SoapPrimitive) soapRequestEntry.getProperty("userName");
 
 			Request req = new Request();
 			
-//			req.setId(Integer.valueOf(requestId.toString()));
+			req.setId(Integer.valueOf(requestId.toString()));
 			req.setUserName(userName.toString());
 			
 			result.add(req);		
@@ -399,7 +399,7 @@ public class MenschSystemStub implements MenschSystem {
 		return result;
 	}
 
-	@Override
+	
 	public void allowPlayer(int requestId) {
 		String METHOD_NAME = "allowPlayer";
 		Log.d(TAG, ""+METHOD_NAME+ " called");
@@ -408,7 +408,7 @@ public class MenschSystemStub implements MenschSystem {
 		
 	}
 
-	@Override
+	
 	public void declinePlayer(int requestId) {
 		String METHOD_NAME = "declinePlayer";
 		Log.d(TAG, ""+METHOD_NAME+ " called");

@@ -56,6 +56,7 @@ public class GameDetailActivity extends Activity {
 	private LeaveGameTask leaveTask = null;
 	private CheckForMyRequestTask checkMyRequestTask=null;	//for client
 	private CheckForRequestsTask checkRequestsTask=null; 	//for host
+	private AllowOrDeclineRequestTask aodTask=null;
 	private Timer checkForMyRequestTimer=null;
 	private Timer checkForRequestsTimer=null;
 	
@@ -197,12 +198,7 @@ public class GameDetailActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
-			try {
-				Log.d("hallo",""+gameDetail.getSpieler1());
-			}
-			catch (Exception e) {
-				Log.d("exception", "exception");
-			}
+		
 			spieler1.setText(gameDetail.getSpieler1());
 			if(gameDetail.getSpieler2()!=null) spieler2.setText(gameDetail.getSpieler2());
 			if(gameDetail.getSpieler3()!=null) spieler3.setText(gameDetail.getSpieler3());
@@ -311,7 +307,7 @@ public class GameDetailActivity extends Activity {
 		protected Boolean doInBackground(String... params) {
 	    	
 	    String result = GameDetailActivity.this.obsApp.getObsStub().checkMyRequest(requestid);
-	    
+	    Log.d("RequestResult", "RequestResult: "+result);
 	    if(result.equals("accepted")){
 	    checkForMyRequestTimer.cancel();
 	    Button a = (Button) findViewById(R.id.mitspielen);
@@ -321,6 +317,7 @@ public class GameDetailActivity extends Activity {
 	    if(result.equals("declined")){
 		    checkForMyRequestTimer.cancel();
 		    Button a = (Button) findViewById(R.id.mitspielen);
+		    a.setEnabled(true);
 		    a.setText("Mitspiel-Anfrage abgelehnt");
 		    a.setEnabled(false);
 		 }
@@ -401,15 +398,19 @@ public class CheckForRequestsTask extends AsyncTask<String, Void, Boolean> {
 						// if this button is clicked, close
 						// current activity
 						
-						GameDetailActivity.this.obsApp.getObsStub().allowPlayer(reqid);
+						aodTask=new AllowOrDeclineRequestTask();
+						aodTask.execute("allow "+reqid);
 					}
 				  })
 				.setNegativeButton("Nein",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
 						// if this button is clicked, just close
 						// the dialog box and do nothing
-						GameDetailActivity.this.obsApp.getObsStub().declinePlayer(reqid);
-						dialog.cancel();
+						aodTask=new AllowOrDeclineRequestTask();
+						aodTask.execute("decline "+reqid);
+						
+						
+						//dialog.cancel();
 					}
 				});
  
@@ -430,4 +431,52 @@ public class CheckForRequestsTask extends AsyncTask<String, Void, Boolean> {
 	
 		}
 	}
+
+public class AllowOrDeclineRequestTask extends AsyncTask<String, Void, Boolean> {
+	
+    @Override
+	protected Boolean doInBackground(String... params) {
+    	
+    	int reqid = Integer.parseInt(String.valueOf(params[0].charAt(params[0].length()-1)));
+    	String allowOrDecline=params[0];
+    	Log.d("allowOrdeclineARGs", reqid+" "+allowOrDecline);
+    	if(allowOrDecline.startsWith("allow")){
+    		Log.d("Spieler angenommen", "Spieler angenommen");
+    		GameDetailActivity.this.obsApp.getObsStub().allowPlayer(reqid);
+    	}
+    	if(allowOrDecline.startsWith("decline")){
+    		Log.d("Spieler abgelehnt", "Spieler abgelehnt");
+    		GameDetailActivity.this.obsApp.getObsStub().declinePlayer(reqid);
+    	}
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    try {
+			// Simulate network access.
+			Thread.sleep(250);
+		} catch (InterruptedException e) {
+			return false;
+		}
+
+		return true;
+	}
+	
+	@Override
+	protected void onPostExecute(final Boolean success) {
+
+
+    	    	
+	}
+	
+
+	@Override
+	protected void onCancelled() {
+
+	}
+}
+
 }

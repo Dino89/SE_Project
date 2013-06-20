@@ -254,7 +254,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		Request r = this.dao.getRequest(requestId);
 		RequestResponse result = new RequestResponse();
 		result.setState(r.getState());
-		if(r.getState().equals("declined")){
+		if(r.getState().equals("declined") || r.getState().equals("accepted")){
 			this.dao.removeRequest(requestId);
 		}
 		return result;
@@ -307,7 +307,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 
 	@Override
 	public void allowPlayer(int requestId) {
-		
+		System.out.println("Request aktzeptiert "+requestId);
 		Request r = this.dao.getRequest(requestId);
 		r.setState("accepted");
 		Game g = r.getGameentity();
@@ -334,7 +334,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 
 	@Override
 	public void declinePlayer(int requestId) {
-
+		System.out.println("Request abgelehnt "+requestId);
+		
 		Request r = this.dao.getRequest(requestId);
 		r.setState("declined");
 		
