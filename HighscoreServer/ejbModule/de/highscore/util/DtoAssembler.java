@@ -6,24 +6,24 @@ import java.util.List;
 import javax.ejb.Stateless;
 
 import de.highscore.dto.HighscoreTO;
-import de.highscore.entities.Highscore;
+//import de.highscore.entities.Highscore;
 
 
-@Stateless
-public class DtoAssembler {
-  
-	public HighscoreTO makeDTO(Highscore highscore){
-		HighscoreTO dto = new HighscoreTO(highscore.getUsername(), highscore.getPoints());
-		return dto;
-	}
-	
-	public ArrayList <HighscoreTO> makeDTO(ArrayList<Highscore> highscoreList){
-		  ArrayList<HighscoreTO> dtoList = new ArrayList<>();
-		  for (Highscore h : highscoreList) {
-			  dtoList.add(this.makeDTO(h));
-		  }
-		  return dtoList;
-	}
+//@Stateless
+//public class DtoAssembler {
+//  
+//	public HighscoreTO makeDTO(Highscore highscore){
+//		HighscoreTO dto = new HighscoreTO(highscore.getUsername(), highscore.getPoints());
+//		return dto;
+//	}
+//	
+//	public ArrayList <HighscoreTO> makeDTO(ArrayList<Highscore> highscoreList){
+//		  ArrayList<HighscoreTO> dtoList = new ArrayList<>();
+//		  for (Highscore h : highscoreList) {
+//			  dtoList.add(this.makeDTO(h));
+//		  }
+//		  return dtoList;
+//	}
 	
 //  public GameTO makeDTO(Game game) {
 //	  GameTO dto = new GameTO();
@@ -52,4 +52,4 @@ public class DtoAssembler {
 //	  dto.setUserName(customer.getUserName());
 //	  return dto;
 //  }
-}
+//}

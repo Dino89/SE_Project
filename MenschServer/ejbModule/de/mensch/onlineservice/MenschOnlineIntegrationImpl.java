@@ -58,6 +58,9 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	 */
 	@EJB
 	private DtoAssembler dtoAssembler;
+	
+//	@EJB
+//	private SendHighscore sendH;
 
 	@EJB(beanName = "MenschDAO", beanInterface = de.mensch.dao.MenschDAOLocal.class)
 	private MenschDAOLocal dao;
@@ -79,6 +82,18 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 				int sessionId = dao.createSession(user);
 				System.out.println("Login erfolgreich. Session=" + sessionId);
 				response.setSessionId(sessionId);
+				
+				//Test TEMP!!!
+				try {
+					SendHighscore sendH = new SendHighscore();
+					
+					sendH.sendLetter("xyz");
+					
+				}
+				catch(Exception ex) {
+					
+				}
+				//ENDE TEST
 			}
 			else {
 				System.out.println("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
@@ -99,6 +114,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 			dao.registerCustomer(username, password);
 			response.setSuccess(true);
 		}
+
 		return response;
 	}
 
@@ -347,14 +363,14 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	
 	@Override
 	public void sendHighsocre() {
-		try {
-			SendHighscore sH = new SendHighscore();
-			
-			sH.printLetter("Ich bin eine Nachricht!");
-			
-		}
-		catch(Exception ex) {
-			
-		}
+//		try {
+//			SendHighscore sH = new SendHighscore();
+//			
+//			sH.printLetter();
+//			
+//		}
+//		catch(Exception ex) {
+//			
+//		}
 	}
 }

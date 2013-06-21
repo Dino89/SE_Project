@@ -1,69 +1,72 @@
 package de.mensch.onlineservice;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
 import javax.jms.Queue;
-import javax.jms.Session;
+import javax.jms.QueueConnection;
+import javax.jms.QueueConnectionFactory;
+import javax.jms.QueueSender;
+import javax.jms.QueueSession;
 import javax.jms.TextMessage;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 
 
 
 @Stateless
 @LocalBean
+@Resource(name="jms/Pretech")
 public class SendHighscore {
-	
-	@Resource(mappedName="java:/JmsXA")
-	  private ConnectionFactory jmsFactory;
-	  
-	  @Resource(mappedName="java:/queue/Highscore")
-	  private Queue outputQueue;
-	  
-	  private Connection jmsConnection;
+ 
+ private static Queue queue = null;
+   QueueConnectionFactory factory = null;
+   QueueConnection connection = null;
+   QueueSender sender = null;
+   QueueSession session = null;
 
-	  @PostConstruct
-	  private void startConnection() {
-	    try {
-			jmsConnection = jmsFactory.createConnection();
-		    jmsConnection.start();
-	    } catch (JMSException e) {
-			// TODO replace with output to logging framework	    	
-			e.printStackTrace();
-		}
-	  }
-
-	  @PreDestroy
-	  private void closeConnection() {
-	    try {
-			jmsConnection.close();
-		} catch (JMSException e) {
-			// TODO replace with output to logging framework
-			e.printStackTrace();
-		}
-	  }
-
-	  public void printLetter(String letter) {
-		Session session = null;
-		try {
-			session = jmsConnection.createSession(true,Session.SESSION_TRANSACTED);
-			TextMessage message = session.createTextMessage();
-			message.setStringProperty("DocType", "Letter");
-			message.setText(letter);
-			MessageProducer sender = session.createProducer(outputQueue);
-			sender.send(message);
-			session.close();
-		}
-		catch (JMSException e) {
-			// TODO replace with output to logging framework			
-			e.printStackTrace();
-		}  
-	  }
-
-
+   public void sendLetter(String test){
+    System.out.println("in methode der lokalen Bean");
+    final String QUEUE_LOOKUP = "queue/Pretech";
+    final String CONNECTION_FACTORY = "ConnectionFactory";
+    
+    try {
+     //client creates the connection, session, and message sender:
+     Context context = new InitialContext();
+     QueueConnectionFactory factory = (QueueConnectionFactory) context.lookup(CONNECTION_FACTORY);
+     QueueConnection connection = factory.createQueueConnection();
+     QueueSession session = connection.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+     
+     Queue queue = (Queue) context.lookup(QUEUE_LOOKUP);
+     QueueSender sender = session.createSender(queue);
+     
+     // send message
+     TextMessage message = session.createTextMessage();
+     message.setText("DJ Nachricht aus lokale Bean");
+     sender.send(message);
+     
+     System.out.println("Message sent");
+     session.close();
+    } catch (Exception e) {
+     e.printStackTrace();
+    }
+    
+//    connection = factory.createQueueConnection();
+//    session = connection.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+//    sender = session.createSender(queue);
+//    //create and set a message to send
+//    TextMessage msg = session.createTextMessage();
+//    for (int i = 0; i < 5; i++) {
+//    msg.setText("This is my sent message " + (i + 1));
+//    //finally client sends messages 
+//    //asynchronously to the queue
+//    sender.send(msg);
+//    } 
+// 
+//    System.out.println("Sending message"); 
+//    session.close ();
+//    } catch (Exception e) {
+//     e.printStackTrace ();
+//    }
+   }
 }

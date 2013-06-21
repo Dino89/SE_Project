@@ -7,11 +7,11 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 
-import de.highscore.dao.HighscoreDAOLocal;
+//import de.highscore.dao.HighscoreDAOLocal;
 import de.highscore.dto.HighscoreListResponse;
 import de.highscore.dto.HighscoreTO;
-import de.highscore.entities.Highscore;
-import de.highscore.util.DtoAssembler;
+//import de.highscore.entities.Highscore;
+//import de.highscore.util.DtoAssembler;
 
 
 @WebService
@@ -20,11 +20,11 @@ import de.highscore.util.DtoAssembler;
 
 public class HighscoreOnlineIntegrationImpl implements HighscoreOnlineIntegration{
 
-	@EJB
-	private DtoAssembler dtoAssembler;
+//	@EJB
+//	private DtoAssembler dtoAssembler;
 	
-	@EJB(beanName = "HighscoreDAO", beanInterface = de.highscore.dao.HighscoreDAO.class)
-	private HighscoreDAOLocal dao;
+//	@EJB(beanName = "HighscoreDAO", beanInterface = de.highscore.dao.HighscoreDAO.class)
+//	private HighscoreDAOLocal dao;
 
 	
 //	@Override

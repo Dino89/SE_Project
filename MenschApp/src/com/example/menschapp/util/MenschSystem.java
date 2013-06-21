@@ -69,5 +69,5 @@ public interface MenschSystem {
 	public void declinePlayer(int id);
 
 
-	void sendHighscore();
+	public void sendHighscore();
 }
