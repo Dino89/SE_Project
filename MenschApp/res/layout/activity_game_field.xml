@@ -756,18 +756,10 @@
 		    android:paddingRight="0dp" >
 
 		    <Button
-		        android:id="@+id/start"
+		        android:id="@+id/wuerfeln"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:text="@string/wuerfeln" />
-
-		    <TextView
-		        android:id="@+id/textView1"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_alignParentLeft="true"
-		        android:layout_below="@+id/start"
-		        android:text="Würfelergebnis" />
 
 		    <TextView
 		        android:id="@+id/textView2"
@@ -793,6 +785,14 @@
 		        android:layout_centerHorizontal="true"
 		        android:text="Systemmeldungen"
 		        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+		    <TextView
+		        android:id="@+id/wuerfelergebnis"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"
+		        android:layout_below="@+id/wuerfeln"
+		        android:text="Würfelergebnis" />
 
 		</RelativeLayout>
 

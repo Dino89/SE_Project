@@ -66,8 +66,9 @@ public class MenschDAO implements MenschDAOLocal {
 	}
 	
 	@Override
-	public ArrayList<Game> getGameList() {		
-		Query query = em.createQuery("SELECT e FROM Game e where started=false");
+	public ArrayList<Game> getGameList() {	
+//		ALT: 		Query query = em.createQuery("SELECT e FROM Game e where started=false");
+		Query query = em.createQuery("SELECT e FROM Game e");
 		return (ArrayList<Game>) query.getResultList();
 	 }
 

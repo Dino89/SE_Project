@@ -106,4 +106,18 @@ public class Games implements Serializable {
 		this.zuschauer = zuschauer;
 	}
 
+	/**
+	 * @return the started
+	 */
+	public boolean isStarted() {
+		return started;
+	}
+
+	/**
+	 * @param started the started to set
+	 */
+	public void setStarted(boolean started) {
+		this.started = started;
+	}
+
 }

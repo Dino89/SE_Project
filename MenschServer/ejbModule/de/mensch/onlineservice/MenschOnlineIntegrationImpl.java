@@ -55,6 +55,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	public void removeOldSessions() {
 		System.out.println("Removing Sessions...");
 		ArrayList<MenschSession> sessionList = this.dao.findSessions();
+		
 		for(MenschSession s : sessionList) {
 			Date currentTime = new Date();
 			
@@ -94,7 +95,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 				System.out.println("Session removed: "+s.getUsername());
 				this.dao.closeSession(s.getId());
 				Customer c = this.dao.findCustomerByName(s.getUsername());
-				this.dao.removeGame(s.getCurrentGame().getId());
+//				this.dao.removeGame(s.getCurrentGame().getId());
 			}
 		}
 	}
@@ -340,7 +341,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		System.out.println(foundGame + " ; "+ foundGame.getId() + " ; " +foundGame.getOwner().getUserName());
 		response.setId(foundGame.getId());
 		response.toString();
-		session.setCurrentGame(foundGame);
+		System.out.println("createNewGame(): " + foundGame.toString());
+//		session.setCurrentGame(foundGame);
 		return response;
 	}
 		
@@ -401,6 +403,14 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		
 		Request r = this.dao.getRequest(requestId);
 		r.setState("declined");
-		
+	}
+	
+	@Override
+	public void startGame(int gameid, int sessionId) throws NoSessionException {
+		System.out.println(sessionId);
+		MenschSession session = getSession(sessionId);
+		Game game = this.dao.getGame(gameid);
+		game.setStarted(true);
+		System.out.println("Gestartet: "+game.isStarted());
 	}
 }

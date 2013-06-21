@@ -240,12 +240,16 @@ public class MenschSystemStub implements MenschSystem {
 			
 			SoapObject soapOwnerObj = (SoapObject) soapGameEntry.getProperty("owner");
 			SoapPrimitive soapOwnerName = (SoapPrimitive) soapOwnerObj.getProperty("userName");
+			SoapPrimitive started = (SoapPrimitive) soapGameEntry.getProperty("started");
+			System.out.println(started);
 			Games game = new Games();
 			
 			game.setId(Integer.valueOf(soapGameNr.toString()));
 			game.setSlots(Integer.valueOf(soapSlots.toString()));
 			game.setOwner(soapOwnerName.toString());
 			game.setSpieler1(soapOwnerName.toString());
+			
+			if(started.toString().equals("true")) game.setStarted(true);
 			
 			if(soapGameEntry.toString().contains("spieler2")){
 			SoapObject spieler2 = (SoapObject) soapGameEntry.getPropertySafely("spieler2");
@@ -408,7 +412,7 @@ public class MenschSystemStub implements MenschSystem {
 		return result;
 	}
 
-	
+	@Override
 	public void allowPlayer(int requestId) {
 		String METHOD_NAME = "allowPlayer";
 		Log.d(TAG, ""+METHOD_NAME+ " called");
@@ -417,12 +421,19 @@ public class MenschSystemStub implements MenschSystem {
 		
 	}
 
-	
+	@Override
 	public void declinePlayer(int requestId) {
 		String METHOD_NAME = "declinePlayer";
 		Log.d(TAG, ""+METHOD_NAME+ " called");
 		
 		SoapObject response = executeSoapAction(METHOD_NAME, requestId);
+	}
+	
+	@Override
+	public void startGame(int id) {
+		String METHOD_NAME = "startGame";
+		Log.d(TAG, ""+METHOD_NAME+ " called; sessoinid: "+sessionId);
 		
+		SoapObject response = executeSoapAction(METHOD_NAME, id, sessionId);
 	}
 }

@@ -25,7 +25,7 @@ public class Game implements Serializable {
 	private int id;
 	
 	private int slots = 3;
-	boolean started = false;
+	boolean started;
 	@OneToOne
 	private Customer owner;
 	@OneToOne
@@ -48,6 +48,7 @@ public class Game implements Serializable {
 	
 	public Game() {
 		super();
+		this.started = false;
 	}
 //	
 //	public Account(Customer owner) {
@@ -140,9 +141,11 @@ public class Game implements Serializable {
 	public int getGameList() {
 		return id;
 	}
+	
 	public boolean isStarted() {
 		return started;
 	}
+	
 	public void setStarted(boolean started) {
 		this.started = started;
 	}
@@ -159,6 +162,20 @@ public class Game implements Serializable {
 	 */
 	public void setRequests(java.util.Map<Integer, Request> requests) {
 		this.requests = requests;
+	}
+
+	/**
+	 * @return the gameField
+	 */
+	public GameField getGameField() {
+		return gameField;
+	}
+
+	/**
+	 * @param gameField the gameField to set
+	 */
+	public void setGameField(GameField gameField) {
+		this.gameField = gameField;
 	}
 
 }

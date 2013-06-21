@@ -55,5 +55,7 @@ public interface MenschSystem {
 
 	public void declinePlayer(int id);
 
-	int getSessionId();
+	public int getSessionId();
+
+	void startGame(int id);
 }

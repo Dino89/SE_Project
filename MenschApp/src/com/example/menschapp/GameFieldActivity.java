@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.example.menschapp.GameDetailActivity.GameDetailTask;
+import com.example.menschapp.GameDetailActivity.JoinGameTask;
 import com.example.menschapp.util.Games;
 import com.example.menschapp.util.MenschSystemStub;
 
@@ -14,15 +15,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class GameFieldActivity extends Activity {
 
 	private int gameid;
+	private TextView wuerfelergebnis;
 	
 	private SharedPreferences prefs;
 	private MenschApplication obsApp;
-	
+	Double wuerfel;
 	private RefreshViewTask refreshView = null;
+	private WuerfelTask wuerfelTask = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +40,29 @@ public class GameFieldActivity extends Activity {
         
 		setContentView(R.layout.activity_game_field);
 		
-		int delay = 1000; // delay for 1 sec. 
+		wuerfelergebnis = (TextView) findViewById(R.id.wuerfelergebnis);
+		
+		int delay = 10000; // delay for 1 sec. 
 		int period = 10000; // repeat every 1 sec. 
 		Timer timer = new Timer(); 
 		timer.scheduleAtFixedRate(new TimerTask() 
 		    { 
 		        public void run() 
 		        { 
-		        	refreshView = new RefreshViewTask();
-		        	refreshView.execute();  // display the data
+//		        	refreshView = new RefreshViewTask();
+//		        	refreshView.execute();  // display the data
 		        } 
 		    }, delay, period);
+		
+		findViewById(R.id.wuerfeln).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Button wuerfel = (Button) findViewById(R.id.wuerfeln);
+						wuerfelTask = new WuerfelTask();
+						wuerfelTask.execute();
+					}
+				});
 	}
 
 	@Override
@@ -91,6 +109,35 @@ public class GameFieldActivity extends Activity {
 		@Override
 		protected void onCancelled() {
 
+		}
+	}
+
+	public class WuerfelTask extends AsyncTask<String, Void, Boolean> {
+		
+	    @Override
+		protected Boolean doInBackground(String... params) {
+	    	
+	    	wuerfel = GameFieldActivity.this.obsApp.getObsStub().diceNumber();
+	    	System.out.println("wuerfel: "+wuerfel);
+	    try {
+				// Simulate network access.
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+				return false;
+			}
+	
+			return true;
+		}
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			wuerfelergebnis.setText(String.valueOf(wuerfel));	    	    	
+		}
+		
+	
+		@Override
+		protected void onCancelled() {
+	
 		}
 	}
 
