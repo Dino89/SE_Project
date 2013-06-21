@@ -150,4 +150,3 @@ public class MenschDAO implements MenschDAOLocal {
 	}
 	
 }
-

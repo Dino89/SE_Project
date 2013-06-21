@@ -246,9 +246,23 @@ public class MenschSystemStub implements MenschSystem {
 			game.setSlots(Integer.valueOf(soapSlots.toString()));
 			game.setOwner(soapOwnerName.toString());
 			game.setSpieler1(soapOwnerName.toString());
-			game.setSpieler2(soapOwnerObj.getPropertySafelyAsString("spieler2").toString());
-			game.setSpieler3(soapOwnerObj.getPropertySafelyAsString("spieler3").toString());
-			game.setSpieler4(soapOwnerObj.getPropertySafelyAsString("spieler4").toString());
+			
+			if(soapGameEntry.toString().contains("spieler2")){
+			SoapObject spieler2 = (SoapObject) soapGameEntry.getPropertySafely("spieler2");
+			SoapPrimitive spieler2username = (SoapPrimitive) spieler2.getProperty("userName");
+			game.setSpieler2(String.valueOf(spieler2username));
+			}
+			if(soapGameEntry.toString().contains("spieler3")){
+			SoapObject spieler3 = (SoapObject) soapGameEntry.getPropertySafely("spieler3");
+			SoapPrimitive spieler3username = (SoapPrimitive) spieler3.getProperty("userName");
+			game.setSpieler3(String.valueOf(spieler3username));
+			}
+			if(soapGameEntry.toString().contains("spieler4")){
+			SoapObject spieler4 = (SoapObject) soapGameEntry.getPropertySafely("spieler4");
+			SoapPrimitive spieler4username = (SoapPrimitive) spieler4.getProperty("userName");
+			game.setSpieler4(String.valueOf(spieler4username));
+			}
+			
 //			game.setZuschauer(zuschauer);
 			result.add(game);
 		}

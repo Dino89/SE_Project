@@ -205,6 +205,10 @@ public class GameDetailActivity extends Activity {
 			if(gameDetail.getSpieler2()!=null) spieler2.setText(gameDetail.getSpieler2());
 			if(gameDetail.getSpieler3()!=null) spieler3.setText(gameDetail.getSpieler3());
 			if(gameDetail.getSpieler4()!=null) spieler4.setText(gameDetail.getSpieler4());
+			
+			if(gameDetail.getSpieler2()==null) spieler2.setText("Nicht besetzt");
+			if(gameDetail.getSpieler3()==null) spieler3.setText("Nicht besetzt");
+			if(gameDetail.getSpieler4()==null) spieler4.setText("Nicht besetzt");
 		}
 
 		@Override
@@ -259,6 +263,7 @@ public class GameDetailActivity extends Activity {
 	    @Override
 		protected Boolean doInBackground(String... params) {
 	
+	    	
 	        try {
 				// Simulate network access.
 				Thread.sleep(250);
@@ -304,7 +309,7 @@ public class GameDetailActivity extends Activity {
 	}
 	
 	public class CheckForMyRequestTask extends AsyncTask<String, Void, Boolean> {
-		
+		String result;
 	    @Override
 		protected Boolean doInBackground(String... params) {
 	    	
@@ -323,19 +328,20 @@ public class GameDetailActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
+			Log.d("RequestResult", "RequestResult: "+result);
 		    if(result.equals("accepted")){
+		    checkForMyRequestTimer.cancel();
+		    Button a = (Button) findViewById(R.id.mitspielen);
+		    a.setText("Mitspiel-Anfrage angenommen");
+		    a.setEnabled(false);
+		    }
+		    if(result.equals("declined")){
 			    checkForMyRequestTimer.cancel();
 			    Button a = (Button) findViewById(R.id.mitspielen);
-			    a.setText("Mitspiel-Anfrage angenommen");
+			    //a.setEnabled(true);
+			    a.setText("Mitspiel-Anfrage abgelehnt");
 			    a.setEnabled(false);
-			    }
-			    if(result.equals("declined")){
-				    checkForMyRequestTimer.cancel();
-				    Button a = (Button) findViewById(R.id.mitspielen);
-				    a.setEnabled(true);
-				    a.setText("Mitspiel-Anfrage abgelehnt");
-				    a.setEnabled(false);
-				 }
+			 }
 		}
 	
 		@Override

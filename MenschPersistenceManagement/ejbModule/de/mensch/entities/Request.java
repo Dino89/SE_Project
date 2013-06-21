@@ -34,6 +34,16 @@ public class Request implements Serializable {
 	private String userName;
 	private String state="not answered";
 	
+	private boolean pulledByHost=false;
+	
+	public boolean isPulledByHost() {
+		return pulledByHost;
+	}
+
+	public void setPulledByHost(boolean pulledByHost) {
+		this.pulledByHost = pulledByHost;
+	}
+
 	public Request() {
 		super();
 	}
