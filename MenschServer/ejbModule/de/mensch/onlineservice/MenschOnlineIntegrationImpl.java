@@ -40,6 +40,7 @@ import de.mensch.entities.Game;
 import de.mensch.entities.GameField;
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
+import de.mensch.highscore.SendHighscore;
 
 
 /**

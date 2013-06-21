@@ -1,4 +1,4 @@
-package de.mensch.onlineservice;
+package de.mensch.highscore;
 
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
