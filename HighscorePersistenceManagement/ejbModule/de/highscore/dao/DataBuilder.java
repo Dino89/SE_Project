@@ -29,7 +29,7 @@ public class DataBuilder {
 	private void init() {
 		
 		
-		Highscore h1 = new Highscore("Malte");
+		//Highscore h1 = new Highscore("Malte");
 //		h1.setPoints(100);
 //		Highscore h2 = new Highscore("Daniel");
 //		h2.setPoints(100);

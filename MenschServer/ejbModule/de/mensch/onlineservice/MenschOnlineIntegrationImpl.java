@@ -9,7 +9,15 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.TextMessage;
 import javax.jws.WebService;
+import javax.naming.InitialContext;
+
+import com.sun.corba.se.pept.transport.Connection;
 
 import de.mensch.dto.AcceptOrDeclineFellowPlayer;
 import de.mensch.dto.AttemptToJoinResponse;
@@ -335,5 +343,18 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		Request r = this.dao.getRequest(requestId);
 		r.setState("declined");
 		
+	}
+	
+	@Override
+	public void sendHighsocre() {
+		try {
+			SendHighscore sH = new SendHighscore();
+			
+			sH.printLetter("Ich bin eine Nachricht!");
+			
+		}
+		catch(Exception ex) {
+			
+		}
 	}
 }

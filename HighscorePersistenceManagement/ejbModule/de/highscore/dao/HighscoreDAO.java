@@ -14,19 +14,19 @@ public class HighscoreDAO implements HighscoreDAOLocal {
 	@PersistenceContext
 	private EntityManager em;
 	
-	@Override
-	public ArrayList<Highscore> getTopTwenty() {
-		
-		Query query = em.createQuery("SELECT e FROM Highscore e ORDER_BY points LIMIT 20");
-		return (ArrayList<Highscore>) query.getResultList();
-		
-	}
+	//@Override
+//	public ArrayList<Highscore> getTopTwenty() {
+//		
+////		Query query = em.createQuery("SELECT e FROM Highscore e ORDER_BY points LIMIT 20");
+////		return (ArrayList<Highscore>) query.getResultList();
+//		
+//	}
 
-	@Override
-	public Highscore getScore(String username) {
-		return em.find(Highscore.class, username);
+//	@Override
+//	public Highscore getScore(String username) {
+//		return em.find(Highscore.class, username);
 		
-	}
+	//}
 
 	
 	

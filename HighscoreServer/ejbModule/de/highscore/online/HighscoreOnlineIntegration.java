@@ -7,7 +7,7 @@ import de.highscore.dto.HighscoreTO;
 
 public interface HighscoreOnlineIntegration {
 
-	HighscoreTO getScore(String username);
-	HighscoreListResponse getTopTwenty();
+//	HighscoreTO getScore(String username);
+//	HighscoreListResponse getTopTwenty();
 	
 }

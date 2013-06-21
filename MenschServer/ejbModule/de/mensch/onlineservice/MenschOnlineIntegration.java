@@ -64,4 +64,6 @@ public interface MenschOnlineIntegration {
 	public void allowPlayer(int requestId);
 	
 	public void declinePlayer(int requestId);
+
+	void sendHighsocre();
 }

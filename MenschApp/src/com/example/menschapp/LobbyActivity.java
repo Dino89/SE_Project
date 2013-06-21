@@ -17,6 +17,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,6 +42,7 @@ public class LobbyActivity extends Activity {
 	String[] valueList;
 	private GameListTask listTask = null;
 	private NewGameTask newGameTask = null;
+	private NewHighscoreTask newHighscoreTask = null;
 	ArrayList<Games> gamesArray = new ArrayList<Games>();
 	ArrayList<String> games = new ArrayList<String>();
 	private TextView GameListStatusView;
@@ -99,6 +101,16 @@ public class LobbyActivity extends Activity {
 				listTask = new GameListTask(); 
 				listTask.execute();
 				
+			}
+		});
+		
+		//HighscoreButton 
+		findViewById(R.id.highscore).setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+
+				newHighscoreTask = new NewHighscoreTask();
+				newHighscoreTask.execute();
 			}
 		});
 		
@@ -220,6 +232,36 @@ public class LobbyActivity extends Activity {
 		@Override
 		protected void onPostExecute(final Boolean success) {
 			createGame();
+		}
+	
+		@Override
+		protected void onCancelled() {
+	
+		}
+	}
+
+	public class NewHighscoreTask extends AsyncTask<String, Void, Boolean> {
+				
+	    @Override
+		protected Boolean doInBackground(String... params) {
+			// TODO: attempt authentication against a network service.
+	
+		    LobbyActivity.this.obsApp.getObsStub().sendHighscore();	    
+	
+	  
+	        	
+	        try {
+				// Simulate network access.
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				return false;
+			}
+			return true;
+		}
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			
 		}
 	
 		@Override

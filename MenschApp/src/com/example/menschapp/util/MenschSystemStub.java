@@ -423,4 +423,13 @@ public class MenschSystemStub implements MenschSystem {
 		SoapObject response = executeSoapAction(METHOD_NAME, requestId);
 		
 	}
+	
+	@Override
+	public void sendHighscore() {
+		String METHOD_NAME = "sendHighscore";
+		Log.d(TAG, ""+METHOD_NAME+ " called");
+		
+		SoapObject response = executeSoapAction(METHOD_NAME);
+		
+	}
 }

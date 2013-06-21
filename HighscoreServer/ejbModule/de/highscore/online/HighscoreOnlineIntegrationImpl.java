@@ -27,21 +27,21 @@ public class HighscoreOnlineIntegrationImpl implements HighscoreOnlineIntegratio
 	private HighscoreDAOLocal dao;
 
 	
-	@Override
-	public HighscoreTO getScore(String username) {
-		Highscore h = this.dao.getScore(username);
-		return dtoAssembler.makeDTO(h);
-	}
-
-	@Override
-	public HighscoreListResponse getTopTwenty() {
-		HighscoreListResponse response = new HighscoreListResponse();
-		ArrayList<Highscore> highscoreList = this.dao.getTopTwenty();
-		response.setHighscoreList( dtoAssembler.makeDTO(highscoreList));
-		return response;
-		
-		
-	}
+//	@Override
+//	public HighscoreTO getScore(String username) {
+//		Highscore h = this.dao.getScore(username);
+//		return dtoAssembler.makeDTO(h);
+//	}
+//
+//	@Override
+//	public HighscoreListResponse getTopTwenty() {
+//		HighscoreListResponse response = new HighscoreListResponse();
+//		ArrayList<Highscore> highscoreList = this.dao.getTopTwenty();
+//		response.setHighscoreList( dtoAssembler.makeDTO(highscoreList));
+//		return response;
+//		
+//		
+//	}
 
 	
 	
