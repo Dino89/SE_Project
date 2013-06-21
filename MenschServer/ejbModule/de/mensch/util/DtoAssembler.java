@@ -27,6 +27,7 @@ public class DtoAssembler {
 	public ArrayList<RequestTO> makeDTORequestList(ArrayList<Request> requestList) {
 		ArrayList<RequestTO> dtoList = new ArrayList<>();
 		for(Request r : requestList) {
+			r.setPulledByHost(true);
 			dtoList.add(this.makeDTO(r));
 		}
 		return dtoList;

@@ -191,12 +191,17 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 			if(g.getSpieler1().getUserName().equals(s.getUsername())){
 				g.setSpieler1(null);
 			}
+			System.out.println(s.getUsername()+" verlässt Spiel als Spieler 2: "+g.getSpieler2().getUserName());
+			if(g.getSpieler2() != null)
 			if(g.getSpieler2().getUserName().equals(s.getUsername())){
 				g.setSpieler2(null);
+				
 			}
+			if(g.getSpieler3() != null)
 			if(g.getSpieler3().getUserName().equals(s.getUsername())){
 				g.setSpieler3(null);
 			}
+			if(g.getSpieler4() != null)
 			if(g.getSpieler4().getUserName().equals(s.getUsername())){
 				g.setSpieler4(null);
 			}
@@ -250,11 +255,13 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 //	}
 	
 	public RequestResponse checkMyRequest(int requestId){
-		System.out.println("checkrequest reqID:"+requestId);
+		
 		Request r = this.dao.getRequest(requestId);
 		RequestResponse result = new RequestResponse();
 		result.setState(r.getState());
+		System.out.println("checkrequest reqID:"+requestId+" "+result);
 		if(r.getState().equals("declined") || r.getState().equals("accepted")){
+			System.out.println("Request removed");
 			this.dao.removeRequest(requestId);
 		}
 		return result;

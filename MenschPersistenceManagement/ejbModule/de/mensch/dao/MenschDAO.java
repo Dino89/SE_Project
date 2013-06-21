@@ -93,7 +93,7 @@ public class MenschDAO implements MenschDAOLocal {
 	//TODO: NOT FINISHED
 	@Override
 	public ArrayList<Request> getRequests(int gameid) {
-		Query query = em.createQuery("SELECT e FROM Request e where gameentity="+gameid);
+		Query query = em.createQuery("SELECT e FROM Request e where gameentity="+gameid+" AND pulledByHost=false");
 		ArrayList<Request> querylist = (ArrayList<Request>) query.getResultList();
 		return (ArrayList<Request>) query.getResultList();
 		
