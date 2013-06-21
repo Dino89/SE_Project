@@ -48,5 +48,9 @@ public interface MenschDAOLocal {
 
 	public void removeRequest(int requestId);
 
+	public ArrayList<MenschSession> findSessions();
+
+	public MenschSession findSessionByUserName(String userName);
+
 		
 }

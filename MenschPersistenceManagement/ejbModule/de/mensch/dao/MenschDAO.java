@@ -136,6 +136,18 @@ public class MenschDAO implements MenschDAOLocal {
 		// TODO Auto-generated method stub
 		em.remove(getRequest(requestId));
 	}
+
+	@Override
+	public ArrayList<MenschSession> findSessions() {	
+		Query query = em.createQuery("SELECT e FROM MenschSession e");
+		return (ArrayList<MenschSession>) query.getResultList();
+	}
+	
+	@Override
+	public MenschSession findSessionByUserName(String userName) {
+		Query query = em.createQuery("SELECT e FROM MenschSession e where username="+userName);
+		return (MenschSession) query;
+	}
 	
 }
 

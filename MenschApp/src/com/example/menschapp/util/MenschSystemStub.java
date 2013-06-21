@@ -46,19 +46,14 @@ public class MenschSystemStub implements MenschSystem {
      * sessionId contains the session id delivered from the server.
      */
 	private static int sessionId;
-
-//	@Override
-//	public Kunde login(String username, String password) {
-//		Kunde result = null;
-//		String METHOD_NAME = "login";
-//		SoapObject response = executeSoapAction(METHOD_NAME, username, password);
-//		Log.d(TAG, response.toString());
-//		this.sessionId = Integer.parseInt(response.getPrimitivePropertySafelyAsString("sessionId"));
-//		result = new Kunde(username, password);
-//		return result;
-//	}
-			
 	
+	/**
+	 * @return the sessionId
+	 */
+	public int getSessionId() {
+		return sessionId;
+	}
+
 	@Override
 	public void logout(){
 		Log.d(TAG,"logout called.");
@@ -233,7 +228,7 @@ public class MenschSystemStub implements MenschSystem {
 		ArrayList<Games> result = new ArrayList<Games>();
 		
 		String METHOD_NAME = "getGames";
-		SoapObject response = executeSoapAction(METHOD_NAME);
+		SoapObject response = executeSoapAction(METHOD_NAME, sessionId);
 
 		Log.d(TAG, METHOD_NAME);
 		Log.d(TAG, response.toString());

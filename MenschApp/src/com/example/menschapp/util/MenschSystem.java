@@ -18,10 +18,8 @@ public interface MenschSystem {
 	 */
 	public void logout();
 
-
 	public double diceNumber();
 	
-
 	public String register(String username, String password);
 
 	
@@ -33,19 +31,13 @@ public interface MenschSystem {
 	 * @throws PasswortUngueltigException 
 	 * @throws UsernameUngueltigException 
 	 */
-
-
 	public Kunde login(String username, String password);
-
 
 	public ArrayList<Games> getGames();
 
-
 	public Games getGameDetails(int id);
 
-
 	public Games createGame();
-
 
 	public Request joinGame(int id);
 	
@@ -53,18 +45,15 @@ public interface MenschSystem {
 
 	//public Response joinGameResponse();
 
-
 	public void getGameFields(int gameid);
-
 
 	public String checkMyRequest(int requestId);
 
-
 	public ArrayList<Request> checkForRequests(int gameId);
-
 
 	public void allowPlayer(int id);
 
-
 	public void declinePlayer(int id);
+
+	int getSessionId();
 }

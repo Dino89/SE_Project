@@ -1,13 +1,17 @@
 package de.mensch.onlineservice;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
+import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 
@@ -47,6 +51,53 @@ import de.mensch.entities.Request;
 
 public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 
+	@Schedule(second="*/15", minute="*",hour="*", persistent=false)
+	public void removeOldSessions() {
+		System.out.println("Removing Sessions...");
+		ArrayList<MenschSession> sessionList = this.dao.findSessions();
+		for(MenschSession s : sessionList) {
+			Date currentTime = new Date();
+			
+//			System.out.println(currentTime);
+			String servertime = currentTime.toString();
+			
+			String[] serverTimeMinutes = servertime.split(":");
+			String[] serverTimeHour = serverTimeMinutes[0].split(" ");
+//			System.out.println("server time 1:");
+//			for(String string : serverTimeMinutes) {
+//				System.out.print(string+ " ### ");
+//			}
+//			System.out.println("server time 2:");
+//			for(String string : serverTimeHour) {
+//				System.out.print(string+ " ### ");
+//			}
+			int currentTimeStamp = Integer.valueOf(serverTimeHour[3]+serverTimeMinutes[1]);
+			
+//			System.out.println("serverzeit:" +servertime);
+			
+			String result = s.getCreationTime().toString();
+			String[] sessionTimeMinutes = result.split(":");
+			String[] sessionTimeHour = sessionTimeMinutes[0].split(" ");
+//			System.out.println("Session time 1:");
+//			for(String string : sessionTimeMinutes) {
+//				System.out.print(string+ " ### ");
+//			}
+//			System.out.println("Session time 2:");
+//			for(String string : sessionTimeHour) {
+//				System.out.print(string+ " ### ");
+//			}
+			
+			int timestamp = Integer.valueOf(sessionTimeHour[1]+sessionTimeMinutes[1]);
+			
+			if(timestamp+1<currentTimeStamp) {
+				System.out.println("timestamp: "+timestamp +" < "+ currentTimeStamp);
+				System.out.println("Session removed: "+s.getUsername());
+				this.dao.closeSession(s.getId());
+				Customer c = this.dao.findCustomerByName(s.getUsername());
+				this.dao.removeGame(s.getCurrentGame().getId());
+			}
+		}
+	}
 	/**
 	 * EJB zur Erzeugung von DataTransferObjects
 	 */
@@ -119,10 +170,12 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	}
 
 	@Override
-	public GameListResponse getGames() {
+	public GameListResponse getGames(int sessionId) throws NoSessionException {
+		MenschSession session = getSession(sessionId);
+		Date date = new Date();
+		session.setCreationTime(date);
 		GameListResponse response = new GameListResponse();
 		ArrayList<Game> gameList = this.dao.getGameList();
-
 		response.setGameList(dtoAssembler.makeDTO(gameList));
 		return response;
 	}
@@ -183,6 +236,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	public void leaveGame(int sessionId, int gameid){
 		Game g = this.dao.getGameDetails(gameid);
 		MenschSession s = this.dao.findSessionById(sessionId);
+		s.setCurrentGame(null);
 		
 		if(g.getOwner().getUserName().equals(s.getUsername())){
 			System.out.println("Spielleiter "+g.getOwner().getUserName()+" schlieﬂt sein Spiel");
@@ -276,10 +330,10 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		response.setSuccess(true);
 		System.out.println("user:" + user);
 		Game foundGame = this.dao.findGameByOwnerUserName(user);
-//		foundGame.setSpieler1(user);
 		System.out.println(foundGame + " ; "+ foundGame.getId() + " ; " +foundGame.getOwner().getUserName());
 		response.setId(foundGame.getId());
 		response.toString();
+		session.setCurrentGame(foundGame);
 		return response;
 	}
 		
@@ -312,6 +366,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		r.setState("accepted");
 		Game g = r.getGameentity();
 		Customer c = this.dao.findCustomerByName(r.getUser());
+		MenschSession session = this.dao.findSessionByUserName(c.getUserName());
+		session.setCurrentGame(g);
 		
 		if(g.getSpieler1() == null){
 			g.setSpieler1(c);

@@ -8,6 +8,7 @@ import com.example.menschapp.LobbyActivity.GameListTask;
 import com.example.menschapp.util.Games;
 import com.example.menschapp.util.MenschSystemStub;
 import com.example.menschapp.util.Request;
+import com.example.menschapp.util.Session;
 
 import android.os.AsyncTask;
 import android.os.Build;
@@ -41,7 +42,7 @@ public class GameDetailActivity extends Activity {
 	ArrayList<Request> requests;
 	final Context context = this;
 	
-	  
+	String result = null;
 	
 	private boolean host=false;
 	private boolean joined=false;
@@ -87,6 +88,7 @@ public class GameDetailActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
+//						if(gameDetail.getSpieler1()!=null & gameDetail.getSpieler1()!=GameDetailActivity.this.obsApp.getObsStub().getSessionId())
 						Button a = (Button) findViewById(R.id.mitspielen);
 					    a.setText("Mitspiel-Anfrage versendet ...");
 					    a.setEnabled(false);
@@ -306,21 +308,9 @@ public class GameDetailActivity extends Activity {
 	    @Override
 		protected Boolean doInBackground(String... params) {
 	    	
-	    String result = GameDetailActivity.this.obsApp.getObsStub().checkMyRequest(requestid);
+	    result = GameDetailActivity.this.obsApp.getObsStub().checkMyRequest(requestid);
 	    Log.d("RequestResult", "RequestResult: "+result);
-	    if(result.equals("accepted")){
-	    checkForMyRequestTimer.cancel();
-	    Button a = (Button) findViewById(R.id.mitspielen);
-	    a.setText("Mitspiel-Anfrage angenommen");
-	    a.setEnabled(false);
-	    }
-	    if(result.equals("declined")){
-		    checkForMyRequestTimer.cancel();
-		    Button a = (Button) findViewById(R.id.mitspielen);
-		    a.setEnabled(true);
-		    a.setText("Mitspiel-Anfrage abgelehnt");
-		    a.setEnabled(false);
-		 }
+
 	    try {
 				// Simulate network access.
 				Thread.sleep(250);
@@ -333,7 +323,19 @@ public class GameDetailActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
-	
+		    if(result.equals("accepted")){
+			    checkForMyRequestTimer.cancel();
+			    Button a = (Button) findViewById(R.id.mitspielen);
+			    a.setText("Mitspiel-Anfrage angenommen");
+			    a.setEnabled(false);
+			    }
+			    if(result.equals("declined")){
+				    checkForMyRequestTimer.cancel();
+				    Button a = (Button) findViewById(R.id.mitspielen);
+				    a.setEnabled(true);
+				    a.setText("Mitspiel-Anfrage abgelehnt");
+				    a.setEnabled(false);
+				 }
 		}
 	
 		@Override
