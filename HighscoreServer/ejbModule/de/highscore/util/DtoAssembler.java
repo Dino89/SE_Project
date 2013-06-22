@@ -1,14 +1,14 @@
-package de.highscore.util;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.ejb.Stateless;
-
-import de.highscore.dto.HighscoreTO;
-//import de.highscore.entities.Highscore;
-
-
+//package de.highscore.util;
+//
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//import javax.ejb.Stateless;
+//
+//import de.highscore.dto.HighscoreTO;
+////import de.highscore.entities.Highscore;
+//
+//
 //@Stateless
 //public class DtoAssembler {
 //  
@@ -24,7 +24,7 @@ import de.highscore.dto.HighscoreTO;
 //		  }
 //		  return dtoList;
 //	}
-	
+//	
 //  public GameTO makeDTO(Game game) {
 //	  GameTO dto = new GameTO();
 //	  dto.setId(game.getId());

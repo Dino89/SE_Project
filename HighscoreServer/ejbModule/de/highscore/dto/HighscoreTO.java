@@ -5,23 +5,23 @@ public class HighscoreTO {
 	private static final long serialVersionUID = 1L;
 	
 	String username;
-	int points;
+	int credits;
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public int getPoints() {
-		return points;
+	public int getcredits() {
+		return credits;
 	}
-	public void setPoints(int points) {
-		this.points = points;
+	public void setcredits(int credits) {
+		this.credits = credits;
 	}
-	public HighscoreTO(String username, int points) {
+	public HighscoreTO(String username, int credits) {
 		super();
 		this.username = username;
-		this.points = points;
+		this.credits = credits;
 	}
 	
 

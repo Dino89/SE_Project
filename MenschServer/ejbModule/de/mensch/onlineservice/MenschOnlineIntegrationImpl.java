@@ -88,7 +88,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 				try {
 					SendHighscore sendH = new SendHighscore();
 					
-					sendH.sendLetter("xyz");
+					sendH.highscorePoinsForLeavingGame(user);
 					
 				}
 				catch(Exception ex) {

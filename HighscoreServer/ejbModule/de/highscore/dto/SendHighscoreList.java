@@ -1,4 +1,4 @@
-package de.mensch.highscore;
+package de.highscore.dto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,14 +19,14 @@ import javax.jms.TextMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
-import de.mensch.entities.Customer;
+
 
 
 
 @Stateless
 @LocalBean
 @Resource(name="jms/Pretech")
-public class SendHighscore {
+public class SendHighscoreList {
 	
 	//Def. Var.
 	 private static Queue queue = null;
@@ -35,13 +35,7 @@ public class SendHighscore {
 	   QueueSender sender = null;
 	   QueueSession session = null;
 	   
-	   public void highscorePoinsForLeavingGame(Customer user) {
-		   sendHighscoreList(user.getUserName(), -1); 
-	   }
-	   
-	   public void highscorePointsForFinishingGame(Customer finishingPlayer, int remainingPlayers) {
-		   sendHighscoreList(finishingPlayer.getUserName(), remainingPlayers);
-	   }
+
 
 	   public void sendHighscoreList(String userName, Integer credits){
 		   
