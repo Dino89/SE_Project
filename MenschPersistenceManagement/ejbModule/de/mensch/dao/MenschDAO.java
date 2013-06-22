@@ -99,7 +99,14 @@ public class MenschDAO implements MenschDAOLocal {
 		return (ArrayList<Request>) query.getResultList();
 		
 	}
-
+	
+	@Override
+	public ArrayList<Request> getAllRequests() {
+		Query query = em.createQuery("SELECT e FROM Request e");
+		ArrayList<Request> querylist = (ArrayList<Request>) query.getResultList();
+		return querylist;
+	}
+	@Override
 	public Request getRequest(int requestid) {
 		return em.find(Request.class, requestid);
 		
@@ -147,7 +154,7 @@ public class MenschDAO implements MenschDAOLocal {
 	@Override
 	public MenschSession findSessionByUserName(String userName) {
 		Query query = em.createQuery("SELECT e FROM MenschSession e where username="+userName);
-		return (MenschSession) query;
+		return (MenschSession) query.getSingleResult();
 	}
 	
 }

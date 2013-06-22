@@ -107,6 +107,7 @@ public class GameDetailActivity extends Activity {
 					public void onClick(View view) {
 //						zuschauen();
 						joined=true;
+						finish();
 					}
 				});
 		
@@ -117,6 +118,7 @@ public class GameDetailActivity extends Activity {
 						startGameTask = new StartGameTask();
 						startGameTask.execute();
 //						TODO: ACTIVITY BEENDEN BEIM WECHSEL AUFS SPIELFELD
+						finish();
 					}
 				});
 		

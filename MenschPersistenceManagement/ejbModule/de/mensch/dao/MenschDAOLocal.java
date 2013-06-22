@@ -52,5 +52,7 @@ public interface MenschDAOLocal {
 
 	public MenschSession findSessionByUserName(String userName);
 
+	ArrayList<Request> getAllRequests();
+
 		
 }

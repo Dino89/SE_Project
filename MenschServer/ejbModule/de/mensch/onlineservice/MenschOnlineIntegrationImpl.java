@@ -50,11 +50,16 @@ import de.mensch.entities.Request;
 @Remote(MenschOnlineIntegration.class)
 
 public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
-
+	
+	/*
+	 * Diese Methode kümmert (bzw. sollte) sich um das Aufräumen alter Sessions, Spiele und Requests.
+	 */
 	@Schedule(second="*/15", minute="*",hour="*", persistent=false)
 	public void removeOldSessions() {
 		System.out.println("Removing Sessions...");
 		ArrayList<MenschSession> sessionList = this.dao.findSessions();
+		ArrayList<Game> gameList = this.dao.getGameList();
+		ArrayList<Request> requestList = this.dao.getAllRequests();
 		
 		for(MenschSession s : sessionList) {
 			Date currentTime = new Date();
@@ -95,7 +100,23 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 				System.out.println("Session removed: "+s.getUsername());
 				this.dao.closeSession(s.getId());
 				Customer c = this.dao.findCustomerByName(s.getUsername());
-//				this.dao.removeGame(s.getCurrentGame().getId());
+				for(Request q : requestList) {
+					if(q.getUser().equals(c)) this.dao.removeRequest(q.getId());
+					System.out.println("Request "+q.getId()+" "+q.getUser()+" entfernt");
+				}
+
+			}
+		}
+		
+		for(Game g : gameList) {
+			String gameOwnerName = g.getOwner().getUserName();
+			int counter = 0;
+			for(MenschSession s : sessionList) {
+				if(gameOwnerName.equals(s.getUsername())) counter++;
+			}
+			if(counter==0) {
+				this.dao.removeGame(g.getId());
+				System.out.println("Game "+g.getId()+" "+g.getOwner().getUserName()+" removed");
 			}
 		}
 	}
@@ -138,6 +159,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		return response;
 	}
 	
+	@Override
 	public UserRegisterResponse register(String username, String password) {
 		Customer user = this.dao.findCustomerByName(username);	
 		UserRegisterResponse response = new UserRegisterResponse();
@@ -164,20 +186,27 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	@Override
 	public DiceResponse diceNumber() {
 		DiceResponse response = new DiceResponse();
-		double random = Math.round(Math.random()*100%6);
+		double random = Math.round(Math.random()*100%7);
 		response.setDiceNumber(random);
 		System.out.println(response);
 		return response;
 	}
-
+	/* @return Liste aller vorhandenen Spiele
+	 * @param sessionId sessionId des Anfragenden, damit nur eingeloggte Benutzer eine Liste einsehen können.
+	 * (non-Javadoc)
+	 * @see de.mensch.onlineservice.MenschOnlineIntegration#getGames(int)
+	 */
 	@Override
 	public GameListResponse getGames(int sessionId) throws NoSessionException {
 		MenschSession session = getSession(sessionId);
 		Date date = new Date();
+		System.out.println("Updating session at getGames...");
 		session.setCreationTime(date);
+		System.out.println("Session updated");
 		GameListResponse response = new GameListResponse();
 		ArrayList<Game> gameList = this.dao.getGameList();
 		response.setGameList(dtoAssembler.makeDTO(gameList));
+//		System.out.println("getGames response: "+response.toString());
 		return response;
 	}
 	/*
@@ -370,14 +399,15 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 
 	@Override
 	public void allowPlayer(int requestId) {
-		System.out.println("Request aktzeptiert "+requestId);
+		System.out.println("Request akzeptiert "+requestId);
 		Request r = this.dao.getRequest(requestId);
 		r.setState("accepted");
 		Game g = r.getGameentity();
 		Customer c = this.dao.findCustomerByName(r.getUser());
 		MenschSession session = this.dao.findSessionByUserName(c.getUserName());
-		session.setCurrentGame(g);
-		
+		this.dao.removeRequest(r.getId());
+		System.out.println("request"+r.getId()+" removed");
+
 		if(g.getSpieler1() == null){
 			g.setSpieler1(c);
 		}else{
