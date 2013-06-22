@@ -12,7 +12,6 @@ public class RequestTO implements Serializable {
 	 * Request id
 	 */
 	private int id;
-	private String hallo = "hallo requestto";	
 	private String userName;
 
 	public RequestTO() {
@@ -22,7 +21,6 @@ public class RequestTO implements Serializable {
 		super();
 		this.id = id;
 		this.userName = userName;
-		this.hallo = hallo;
 	}
 
 	public void setUserName(String user) {

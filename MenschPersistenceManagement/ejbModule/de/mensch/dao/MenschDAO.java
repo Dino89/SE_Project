@@ -62,7 +62,8 @@ public class MenschDAO implements MenschDAOLocal {
 		return em.find(Game.class, gameid);
 	}
 	public void removeGame(int gameid){
-		 em.remove(getGame(gameid));
+		Game g = em.find(Game.class, gameid);
+		em.remove(g);
 	}
 	
 	@Override
@@ -141,8 +142,8 @@ public class MenschDAO implements MenschDAOLocal {
 
 	@Override
 	public void removeRequest(int requestId) {
-		// TODO Auto-generated method stub
-		em.remove(getRequest(requestId));
+		Request r = em.find(Request.class, requestId);
+		em.remove(r);
 	}
 
 	@Override

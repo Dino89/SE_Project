@@ -3,6 +3,7 @@ package de.mensch.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ public class Request implements Serializable {
 	
 	@Id @GeneratedValue
 	private int id;
-	@ManyToOne
+	@ManyToOne(cascade =CascadeType.ALL)
 	private Game gameentity;
 	
 	public int getId() {
