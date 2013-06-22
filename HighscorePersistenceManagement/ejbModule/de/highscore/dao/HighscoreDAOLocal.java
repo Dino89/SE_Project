@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import de.highscore.entities.*;
 public interface HighscoreDAOLocal {
 
-	ArrayList<Highscore>getTopTwenty();
+	ArrayList<?> getTopTwenty();
 	int getCredits(String username);
 	Highscore setHighscore(String username, Integer credits);
 	

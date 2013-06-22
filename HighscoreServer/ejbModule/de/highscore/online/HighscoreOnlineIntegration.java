@@ -3,11 +3,13 @@ import java.util.ArrayList;
 
 import de.highscore.dto.HighscoreListResponse;
 import de.highscore.dto.HighscoreTO;
+import de.highscore.entities.Highscore;
 
 
 public interface HighscoreOnlineIntegration {
 
-	HighscoreTO getScore(String username);
-	HighscoreListResponse getTopTwenty();
+	int getCredits(String username);
+	ArrayList<Highscore> getTopTwenty();
+	void setHighscore(String user, int credits);
 	
 }

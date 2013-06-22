@@ -65,5 +65,5 @@ public interface MenschOnlineIntegration {
 	
 	public void declinePlayer(int requestId);
 
-	public void sendHighsocre();
+	public void getHighscoreList();
 }

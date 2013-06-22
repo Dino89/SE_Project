@@ -1,4 +1,5 @@
-package de.highscore.dto;
+package de.mensch.highscore;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,9 +11,7 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
-import de.highscore.*;
-import de.highscore.dao.HighscoreDAOLocal;
-import de.highscore.online.*;
+
 
 
 
@@ -31,27 +30,23 @@ import de.highscore.online.*;
 
 @MessageDriven(activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-        @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/Pretech") })
-public class ReceivedHighscore implements MessageListener  {
-	
-//	@EJB(beanName = "HighscoreDAO", beanInterface = de.highscore.dao.HighscoreDAOLocal.class)
-//	private HighscoreDAOLocal dao;
-	
+        @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/sendHighscoreListToApp") })
+public class ReceivedHighscoreListFromHighscoreServer implements MessageListener  {
 	
 	@Override
 	public void onMessage(Message message) {
 		try {
-		String user = null;
-		int credits = 0;
-
+			System.out.println("Received die verdammte LISTE!!!");
+		//ArrayList highscoreList = new ArrayList();	
 		ObjectMessage msg = (ObjectMessage) message;
-		user = msg.getStringProperty("name");
-		credits = msg.getIntProperty("credits");
+		String bla = msg.getStringProperty("test");
+		
+
+		System.out.println("HighscoreListe vom HighscoreServer empfangen " + bla);
+		
+
 		
 		
-		setHighscore(user, credits);
-		
-		System.out.println("Ausgabe aus DB"));
 		
 		}
 		catch(Exception ex) {

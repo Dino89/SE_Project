@@ -40,6 +40,7 @@ import de.mensch.entities.Game;
 import de.mensch.entities.GameField;
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
+import de.mensch.highscore.GetHighscoreListFromHighscoreServer;
 import de.mensch.highscore.SendHighscore;
 
 
@@ -84,17 +85,15 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 				System.out.println("Login erfolgreich. Session=" + sessionId);
 				response.setSessionId(sessionId);
 				
-				//Test TEMP!!!
-				try {
-					SendHighscore sendH = new SendHighscore();
-					
-					sendH.highscorePoinsForLeavingGame(user);
-					
-				}
-				catch(Exception ex) {
-					
-				}
-				//ENDE TEST
+				//TEST TEMP
+				SendHighscore sh = new SendHighscore();
+				sh.highscorePoinsForLeavingGame(user);
+				
+				GetHighscoreListFromHighscoreServer ghl = new GetHighscoreListFromHighscoreServer();
+				ghl.getHighscoreListFromServer();
+				
+				
+				//ENDE TEST EMP
 			}
 			else {
 				System.out.println("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
@@ -363,15 +362,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	}
 	
 	@Override
-	public void sendHighsocre() {
-//		try {
-//			SendHighscore sH = new SendHighscore();
-//			
-//			sH.printLetter();
-//			
-//		}
-//		catch(Exception ex) {
-//			
-//		}
+	public void getHighscoreList() {
+		System.out.println("button bla");
+
 	}
 }

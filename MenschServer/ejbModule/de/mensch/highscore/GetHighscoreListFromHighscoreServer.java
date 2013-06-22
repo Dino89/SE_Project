@@ -1,11 +1,10 @@
-package de.highscore.dto;
+package de.mensch.highscore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.jms.MapMessage;
@@ -20,16 +19,14 @@ import javax.jms.TextMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
-import de.highscore.dao.HighscoreDAOLocal;
-
-
+import de.mensch.entities.Customer;
 
 
 
 @Stateless
 @LocalBean
-@Resource(name="jms/sendHighscoreListToApp")
-public class SendHighscoreList {
+@Resource(name="jms/getHighscoreList")
+public class GetHighscoreListFromHighscoreServer {
 	
 	//Def. Var.
 	 private static Queue queue = null;
@@ -38,11 +35,10 @@ public class SendHighscoreList {
 	   QueueSender sender = null;
 	   QueueSession session = null;
 	   
-
-
-	   public void sendHighscoreList(){
-		   	
-		    final String QUEUE_LOOKUP = "queue/sendHighscoreListToApp";
+	   public void getHighscoreListFromServer(){
+		   
+		    
+		    final String QUEUE_LOOKUP = "queue/getHighscoreList";
 		    final String CONNECTION_FACTORY = "ConnectionFactory";
     
 		    try {
@@ -54,17 +50,13 @@ public class SendHighscoreList {
 			     Queue queue = (Queue) context.lookup(QUEUE_LOOKUP);
 			     QueueSender producer = session.createSender(queue);
 			     
-			     ArrayList<?> l = new ArrayList<>();
-
-			     System.out.println("Credits ausgabe test" );
-			     ObjectMessage msg = session.createObjectMessage();
-			      
-			 
-			     msg.setStringProperty("test", "Hallo");
 			     
-
+			     ObjectMessage msg = session.createObjectMessage();
+			     
+			     
+			     msg.setStringProperty("befehl", "getList");
 			     producer.send(msg);
-			     System.out.println("Aus Methode sendHighscoreList: Liste gesendet! :)");
+			     System.out.println("Aus Methode getHighscoreList: Befehl gesendet! :)");
 			     session.close();
 			    } 
 		    	catch (Exception ex) {

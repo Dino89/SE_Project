@@ -15,17 +15,18 @@ public class HighscoreDAO implements HighscoreDAOLocal {
 	private EntityManager em;
 	
 	@Override
-	public ArrayList<Highscore> getTopTwenty() {
-		
+	public ArrayList getTopTwenty() {
+		System.out.println("Methode get Top Twenty");
 		Query query = em.createQuery("SELECT e.username, e.credits FROM Highscore e ORDER_BY credits LIMIT 20");
-		return (ArrayList<Highscore>) query.getResultList();
+		System.out.println(query.getResultList().toString());
+		return (ArrayList) query.getResultList();
 
 		
 	}
 
 	@Override
 	public int getCredits(String username) {
-		
+		System.out.println("getCredit methode username:" + username);
 		return em.find(Highscore.class, username).getCredits();
 
 	}

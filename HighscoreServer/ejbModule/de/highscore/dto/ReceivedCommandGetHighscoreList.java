@@ -12,7 +12,6 @@ import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 import de.highscore.*;
 import de.highscore.dao.HighscoreDAOLocal;
-import de.highscore.online.*;
 
 
 
@@ -31,27 +30,25 @@ import de.highscore.online.*;
 
 @MessageDriven(activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-        @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/Pretech") })
-public class ReceivedHighscore implements MessageListener  {
+        @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/getHighscoreList") })
+public class ReceivedCommandGetHighscoreList implements MessageListener  {
 	
-//	@EJB(beanName = "HighscoreDAO", beanInterface = de.highscore.dao.HighscoreDAOLocal.class)
-//	private HighscoreDAOLocal dao;
-	
-	
+	SendHighscoreList shList = new SendHighscoreList();
 	@Override
 	public void onMessage(Message message) {
 		try {
-		String user = null;
-		int credits = 0;
+
 
 		ObjectMessage msg = (ObjectMessage) message;
-		user = msg.getStringProperty("name");
-		credits = msg.getIntProperty("credits");
+		if(msg.getStringProperty("befehl").equals("getList")) {
+			shList.sendHighscoreList();
+			System.out.println("Vergleich OK");
+		}
 		
 		
-		setHighscore(user, credits);
+
 		
-		System.out.println("Ausgabe aus DB"));
+		
 		
 		}
 		catch(Exception ex) {
