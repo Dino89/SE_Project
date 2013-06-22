@@ -70,4 +70,8 @@ public interface MenschSystem {
 
 
 	public void spectateGame(int gameid);
+	
+	public int getSessionId();
+
+	void startGame(int id);
 }

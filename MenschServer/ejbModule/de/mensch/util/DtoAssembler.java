@@ -43,6 +43,7 @@ public class DtoAssembler {
 	  dto.setSpieler3(game.getSpieler3());
 	  dto.setSpieler4(game.getSpieler4());
 	  dto.getOwner().setPassword(null);
+	  dto.setStarted(game.isStarted());
 	  return dto;
   }
   

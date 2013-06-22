@@ -8,5 +8,6 @@
     <string name="spieler2">Nicht besetzt</string>
     <string name="spieler3">Nicht besetzt</string>
     <string name="spieler4">Nicht besetzt</string>
+    <string name="startknopf">Starten</string>
 
 </resources>

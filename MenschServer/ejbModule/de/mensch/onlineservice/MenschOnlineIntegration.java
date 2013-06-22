@@ -39,7 +39,7 @@ public interface MenschOnlineIntegration {
 	
 	public UserRegisterResponse register(String username, String password);
 	
-	public GameListResponse getGames();
+	public GameListResponse getGames(int sessionid) throws NoSessionException;
 	
 	public GameDetailResponse getGameDetails(int id);
 	
@@ -67,4 +67,6 @@ public interface MenschOnlineIntegration {
 	public void declinePlayer(int requestId);
 	
 	public void spectateGame(int sessionId,int gameid);
+	
+	public void startGame(int gameid, int sessionId) throws NoSessionException;
 }

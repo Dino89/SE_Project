@@ -12,6 +12,7 @@ public class GameTO implements Serializable {
 	
 	private int id;
 	private int slots;
+	boolean started;
 	
 	private Customer owner;
 	private Customer spieler1;
@@ -93,5 +94,19 @@ public class GameTO implements Serializable {
 
 	public void setOwner(Customer owner) {
 		this.owner = owner;
+	}
+	
+		/**
+	 * @return the started
+	 */
+	public boolean isStarted() {
+		return started;
+	}
+
+	/**
+	 * @param started the started to set
+	 */
+	public void setStarted(boolean started) {
+		this.started = started;
 	}
 }

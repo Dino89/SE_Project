@@ -14,6 +14,8 @@ public class MenschSession {
 	private String username;
 	private Date creationTime;
 	
+	private Game currentGame;
+	
 	public MenschSession(Customer user) {
 		this.username = user.getUserName();
 		this.creationTime = new Date();
@@ -45,6 +47,20 @@ public class MenschSession {
 
 	public void setCreationTime(Date creationTime) {
 		this.creationTime = creationTime;
+	}
+
+	/**
+	 * @return the currentGame
+	 */
+	public Game getCurrentGame() {
+		return currentGame;
+	}
+
+	/**
+	 * @param currentGame the currentGame to set
+	 */
+	public void setCurrentGame(Game currentGame) {
+		this.currentGame = currentGame;
 	}
 
 }

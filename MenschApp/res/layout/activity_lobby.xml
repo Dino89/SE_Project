@@ -51,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:background="@drawable/custom_button_game_detail"
         android:text="@string/highscore" />
 
     <Button
@@ -59,6 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/lobbylist"
         android:layout_alignRight="@+id/lobbylist"
+        android:background="@drawable/custom_button_game_detail"
         android:text="@string/create_game" />
 
     <ImageView

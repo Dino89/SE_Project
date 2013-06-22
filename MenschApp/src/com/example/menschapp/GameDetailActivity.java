@@ -8,6 +8,7 @@ import com.example.menschapp.LobbyActivity.GameListTask;
 import com.example.menschapp.util.Games;
 import com.example.menschapp.util.MenschSystemStub;
 import com.example.menschapp.util.Request;
+import com.example.menschapp.util.Session;
 
 import android.os.AsyncTask;
 import android.os.Build;
@@ -44,14 +45,16 @@ public class GameDetailActivity extends Activity {
 	final Context context = this;
 	
 	ArrayList<String> zuschauer = new ArrayList<String>();  
-	
+	String result = null;
 	private boolean host=false;
+	
 	private boolean joined=false;
 	
 	private SharedPreferences prefs;
 	private MenschApplication obsApp;
 	
 	Games gameDetail;
+	private StartGameTask startGameTask = null;
 	private GameDetailTask gameTask = null;
 	private SpectateGameTask specTask = null;
 	private JoinGameTask joinTask = null;
@@ -96,6 +99,7 @@ public class GameDetailActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
+//						if(gameDetail.getSpieler1()!=null & gameDetail.getSpieler1()!=GameDetailActivity.this.obsApp.getObsStub().getSessionId())
 						Button a = (Button) findViewById(R.id.mitspielen);
 					    a.setText("Mitspiel-Anfrage versendet ...");
 					    a.setEnabled(false);
@@ -117,6 +121,18 @@ public class GameDetailActivity extends Activity {
 						specTask = new SpectateGameTask();
 						specTask.execute();
 						joined=true;
+						finish();
+					}
+				});
+		
+		findViewById(R.id.startknopf).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						startGameTask = new StartGameTask();
+						startGameTask.execute();
+//						TODO: ACTIVITY BEENDEN BEIM WECHSEL AUFS SPIELFELD
+						finish();
 					}
 				});
 		
@@ -220,6 +236,14 @@ public class GameDetailActivity extends Activity {
 			if(gameDetail.getSpieler2()==null) spieler2.setText("Nicht besetzt");
 			if(gameDetail.getSpieler3()==null) spieler3.setText("Nicht besetzt");
 			if(gameDetail.getSpieler4()==null) spieler4.setText("Nicht besetzt");
+			
+			if(gameDetail.isStarted()==true) {
+				Intent myIntent = new Intent(spieler1.getContext(), GameFieldActivity.class);
+				Log.d("gameid:", ""+gameDetail.getId());
+				myIntent.putExtra("gameid", gameDetail.getId());
+				Log.d("intent", ""+myIntent.getIntExtra("gameid", gameDetail.getId()));
+	            startActivityForResult(myIntent, 0);
+			}
 		}
 
 		@Override
@@ -324,8 +348,9 @@ public class GameDetailActivity extends Activity {
 	    @Override
 		protected Boolean doInBackground(String... params) {
 	    	
-	     result = GameDetailActivity.this.obsApp.getObsStub().checkMyRequest(requestid);
-	    
+	    result = GameDetailActivity.this.obsApp.getObsStub().checkMyRequest(requestid);
+	    Log.d("RequestResult", "RequestResult: "+result);
+
 	    try {
 				// Simulate network access.
 				Thread.sleep(250);
@@ -338,7 +363,6 @@ public class GameDetailActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
-	
 			Log.d("RequestResult", "RequestResult: "+result);
 		    if(result.equals("accepted")){
 		    checkForMyRequestTimer.cancel();
@@ -473,6 +497,37 @@ public class AllowOrDeclineRequestTask extends AsyncTask<String, Void, Boolean> 
     	
     	
     	
+    	
+    try {
+			// Simulate network access.
+			Thread.sleep(250);
+		} catch (InterruptedException e) {
+			return false;
+		}
+
+		return true;
+	}
+	
+	@Override
+	protected void onPostExecute(final Boolean success) {
+
+
+    	    	
+	}
+	
+
+	@Override
+	protected void onCancelled() {
+
+	}
+}
+
+public class StartGameTask extends AsyncTask<String, Void, Boolean> {
+	
+    @Override
+	protected Boolean doInBackground(String... params) {
+    	
+    	GameDetailActivity.this.obsApp.getObsStub().startGame(gameid);
     	
     try {
 			// Simulate network access.

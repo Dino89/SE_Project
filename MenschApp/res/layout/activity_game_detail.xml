@@ -87,6 +87,7 @@
         android:layout_alignLeft="@+id/spieler4"
         android:layout_below="@+id/spieler4"
         android:layout_marginTop="38dp"
+        android:background="@drawable/custom_button_game_detail"
         android:text="@string/mitspielen" />
 
     <Button
@@ -96,15 +97,17 @@
         android:layout_alignLeft="@+id/mitspielen"
         android:layout_below="@+id/mitspielen"
         android:layout_marginTop="16dp"
+        android:background="@drawable/custom_button_game_detail"
         android:text="@string/zuschauen" />
 
     <Button
-        android:id="@+id/start"
+        android:id="@+id/startknopf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/zuschauen"
         android:layout_below="@+id/zuschauen"
         android:layout_marginTop="21dp"
-        android:text="Button" />
+        android:background="@drawable/custom_button_game_detail"
+        android:text="@string/startknopf" />
 
 </RelativeLayout>

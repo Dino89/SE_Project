@@ -98,7 +98,7 @@ public class LobbyActivity extends Activity {
 				GameListStatusView.setText(R.string.lobby_progress_gamelist);
 				listTask = new GameListTask(); 
 				listTask.execute();
-				
+				finish();
 			}
 		});
 		
@@ -107,7 +107,7 @@ public class LobbyActivity extends Activity {
 			public void onClick(View v) {
 				newGameTask = new NewGameTask();
 				newGameTask.execute();
-				
+				finish();
 			}
 		});
 		try {
@@ -186,7 +186,9 @@ public class LobbyActivity extends Activity {
 
 			games.clear();
 			for(int i = 0; i < gamesArray.size(); i++) {
-				games.add(gamesArray.get(i).toString());
+				if(gamesArray.get(i).isStarted()==false) {
+					games.add(gamesArray.get(i).toString());
+				}
 			}
 		    
 			arrayAdapter.notifyDataSetChanged();
