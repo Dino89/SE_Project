@@ -15,7 +15,7 @@ import de.mensch.entities.*;
 
 @Stateless
 public class DtoAssembler {
-  
+
 	public RequestTO makeDTO(Request request) {
 		RequestTO dto = new RequestTO();
 		dto.setUserName(request.getUser());
