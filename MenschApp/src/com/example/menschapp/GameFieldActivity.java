@@ -33,18 +33,18 @@ public class GameFieldActivity extends Activity {
         obsApp.setObsStub(new MenschSystemStub());
         
 		setContentView(R.layout.activity_game_field);
-		
-		int delay = 1000; // delay for 1 sec. 
-		int period = 10000; // repeat every 1 sec. 
-		Timer timer = new Timer(); 
-		timer.scheduleAtFixedRate(new TimerTask() 
-		    { 
-		        public void run() 
-		        { 
-		        	refreshView = new RefreshViewTask();
-		        	refreshView.execute();  // display the data
-		        } 
-		    }, delay, period);
+//		
+//		int delay = 1000; // delay for 1 sec. 
+//		int period = 10000; // repeat every 1 sec. 
+//		Timer timer = new Timer(); 
+//		timer.scheduleAtFixedRate(new TimerTask() 
+//		    { 
+//		        public void run() 
+//		        { 
+//		        	refreshView = new RefreshViewTask();
+//		        	refreshView.execute();  // display the data
+//		        } 
+//		    }, delay, period);
 	}
 
 	@Override

@@ -17,6 +17,7 @@ import de.mensch.dto.ReturncodeResponse;
 import de.mensch.dto.UserLoginResponse;
 import de.mensch.dto.UserRegisterResponse;
 import de.mensch.entities.Request;
+import de.mensch.entities.Zuschauer;
 
 /**
  * Dieses Business Interface definiert die Schnittstelle zum OnlineSystem.
@@ -66,7 +67,9 @@ public interface MenschOnlineIntegration {
 	
 	public void declinePlayer(int requestId);
 	
-	public void spectateGame(int sessionId,int gameid);
+	public void spectateGame(int sessionId,int gameid) throws NoSessionException;
 	
 	public void startGame(int gameid, int sessionId) throws NoSessionException;
+	
+	
 }

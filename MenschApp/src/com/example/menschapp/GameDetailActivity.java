@@ -64,6 +64,7 @@ public class GameDetailActivity extends Activity {
 	private AllowOrDeclineRequestTask aodTask=null;
 	private Timer checkForMyRequestTimer=null;
 	private Timer checkForRequestsTimer=null;
+	private Timer gameDetailsTimer=null;
 	private ArrayAdapter arrayAdapter;
 	private ListView spectatorListView;
 	
@@ -139,8 +140,8 @@ public class GameDetailActivity extends Activity {
 		
 		int delay = 1000; // delay for 1 sec. 
 		int period = 10000; // repeat every 1 sec. 
-		Timer timer = new Timer(); 
-		timer.scheduleAtFixedRate(new TimerTask() 
+		 gameDetailsTimer = new Timer(); 
+		 gameDetailsTimer.scheduleAtFixedRate(new TimerTask() 
 		    { 
 		        public void run() 
 		        { 
@@ -243,6 +244,12 @@ public class GameDetailActivity extends Activity {
 				myIntent.putExtra("gameid", gameDetail.getId());
 				Log.d("intent", ""+myIntent.getIntExtra("gameid", gameDetail.getId()));
 	            startActivityForResult(myIntent, 0);
+	            
+	            if(checkForMyRequestTimer !=null)
+	            	checkForMyRequestTimer.cancel();
+	            
+	            gameDetailsTimer.cancel();
+	            
 			}
 		}
 
@@ -325,7 +332,7 @@ public class GameDetailActivity extends Activity {
 		protected Boolean doInBackground(String... params) {
 	    	
 	    	GameDetailActivity.this.obsApp.getObsStub().leaveGame(gameid);
-	    	
+	    	gameDetailsTimer.cancel();
 	        try {
 				// Simulate network access.
 				Thread.sleep(250);
@@ -528,6 +535,8 @@ public class StartGameTask extends AsyncTask<String, Void, Boolean> {
 	protected Boolean doInBackground(String... params) {
     	
     	GameDetailActivity.this.obsApp.getObsStub().startGame(gameid);
+    	checkForRequestsTimer.cancel();
+    	
     	
     try {
 			// Simulate network access.

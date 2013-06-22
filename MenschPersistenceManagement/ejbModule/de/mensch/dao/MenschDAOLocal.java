@@ -10,6 +10,7 @@ import de.mensch.entities.Customer;
 import de.mensch.entities.Game;
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
+import de.mensch.entities.Zuschauer;
 
 @Local
 public interface MenschDAOLocal {
@@ -52,7 +53,11 @@ public interface MenschDAOLocal {
 
 	public MenschSession findSessionByUserName(String userName);
 
-	ArrayList<Request> getAllRequests();
+	public ArrayList<Request> getAllRequests();
+
+	public Zuschauer findZuschauerByCustomerName(String userName);
+
+	public ArrayList<Request> getZuschauerListe(int gameid);
 
 		
 }

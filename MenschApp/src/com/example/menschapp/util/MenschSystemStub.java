@@ -441,7 +441,7 @@ public class MenschSystemStub implements MenschSystem {
 	@Override
 	public void startGame(int id) {
 		String METHOD_NAME = "startGame";
-		Log.d(TAG, ""+METHOD_NAME+ " called; sessoinid: "+sessionId);
+		Log.d(TAG, ""+METHOD_NAME+ " called; sessoinid: "+sessionId+" gameid: "+id);
 		
 		SoapObject response = executeSoapAction(METHOD_NAME, id, sessionId);
 	}

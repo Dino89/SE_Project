@@ -24,8 +24,8 @@ public class Customer implements Serializable {
 	private String userName;
 	private String password;
 	
-	@ManyToOne
-	private Customer zuschauer;
+//	@ManyToOne
+//	private Customer zuschauer;
 	
 	/**
 	 * Bidirektionale Eins-zu-Viele Behiehung

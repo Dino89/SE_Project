@@ -2,6 +2,9 @@ package de.mensch.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -36,9 +39,9 @@ public class Game implements Serializable {
 	private Customer spieler3 = null;
 	@OneToOne
 	private Customer spieler4 = null;
-	
+
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="zuschauer") @MapKey
-	private java.util.Map<String,Customer> zuschauer;
+	private Map<Integer, Zuschauer> zuschauer;
 	
 	@OneToOne
 	private GameField gameField;
@@ -66,14 +69,6 @@ public class Game implements Serializable {
 		this.spieler1 = spieler1;
 	}
 	
-	public java.util.Map<String, Customer> getZuschauer() {
-		return zuschauer;
-	}
-
-	public void setZuschauer(java.util.Map<String, Customer> zuschauer) {
-		this.zuschauer = zuschauer;
-	}
-
 	public Customer getSpieler2() {
 		return spieler2;
 	}
@@ -176,6 +171,14 @@ public class Game implements Serializable {
 	 */
 	public void setGameField(GameField gameField) {
 		this.gameField = gameField;
+	}
+
+	public Map<Integer, Zuschauer> getZuschauer() {
+		return zuschauer;
+	}
+
+	public void setZuschauer(Map<Integer, Zuschauer> zuschauer) {
+		this.zuschauer = zuschauer;
 	}
 
 }

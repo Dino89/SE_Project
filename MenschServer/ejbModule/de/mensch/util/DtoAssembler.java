@@ -1,7 +1,9 @@
 package de.mensch.util;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 
@@ -44,6 +46,15 @@ public class DtoAssembler {
 	  dto.setSpieler4(game.getSpieler4());
 	  dto.getOwner().setPassword(null);
 	  dto.setStarted(game.isStarted());
+	  Map<Integer,Zuschauer> mp = game.getZuschauer();
+	  ArrayList<Zuschauer> dtoZuschauer = new ArrayList<Zuschauer>();
+	  Iterator it = mp.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pairs = (Map.Entry)it.next();
+	        dtoZuschauer.add((Zuschauer) pairs.getValue());
+	     //   it.remove(); // avoids a ConcurrentModificationException
+	    }
+	  dto.setZuschauer(dtoZuschauer);
 	  return dto;
   }
   

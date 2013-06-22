@@ -38,6 +38,7 @@ import de.mensch.entities.Game;
 import de.mensch.entities.GameField;
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
+import de.mensch.entities.Zuschauer;
 
 
 /**
@@ -54,7 +55,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	/*
 	 * Diese Methode kümmert (bzw. sollte) sich um das Aufräumen alter Sessions, Spiele und Requests.
 	 */
-	@Schedule(second="*/59", minute="*",hour="*", persistent=false)
+	@Schedule(second="1", minute="1",hour="*", persistent=false)
 	public void removeOldSessions() {
 		System.out.println("Removing Sessions...");
 		ArrayList<MenschSession> sessionList = this.dao.findSessions();
@@ -206,6 +207,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		GameListResponse response = new GameListResponse();
 		ArrayList<Game> gameList = this.dao.getGameList();
 		response.setGameList(dtoAssembler.makeDTO(gameList));
+		
 //		System.out.println("getGames response: "+response.toString());
 		return response;
 	}
@@ -289,8 +291,9 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 			if(g.getSpieler4().getUserName().equals(s.getUsername())){
 				g.setSpieler4(null);
 			}
-			Map<String, Customer> z = g.getZuschauer();
-			z.remove(s.getUsername());
+			
+			Map<Integer, Zuschauer> z = g.getZuschauer();
+			z.remove(this.dao.findZuschauerByCustomerName(s.getUsername()));
 		}
 	    
 		
@@ -405,8 +408,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		Game g = r.getGameentity();
 		Customer c = this.dao.findCustomerByName(r.getUser());
 //		MenschSession session = this.dao.findSessionByUserName(c.getUserName());
-		this.dao.removeRequest(r.getId());
-		System.out.println("request"+r.getId()+" removed");
+//		this.dao.removeRequest(r.getId());
+//		System.out.println("request"+r.getId()+" removed");
 
 		if(g.getSpieler1() == null){
 			g.setSpieler1(c);
@@ -445,11 +448,16 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	}
 	
 	
-	public void spectateGame(int sessionId, int gameid){
-		HashMap <String,Customer>z = (HashMap<String, Customer>) this.dao.getGame(gameid).getZuschauer();
-		String userName = this.dao.findSessionById(sessionId).getUsername();
-		Customer c = this.dao.findCustomerByName(userName);
+	public void spectateGame(int sessionId, int gameid) throws NoSessionException{
+		MenschSession session = getSession(sessionId);
+		Map <Integer,Zuschauer>z = (Map<Integer, Zuschauer>) this.dao.getGame(gameid).getZuschauer();
+		Zuschauer zuschauer = new Zuschauer();
+		zuschauer.setGame(this.dao.getGame(gameid));
+		zuschauer.setZuschauer(this.dao.findCustomerByName(this.dao.findSessionById(sessionId).getUsername()));
 		
-		z.put(c.getUserName(), c);
+		
+		z.put(zuschauer.getId(), zuschauer);
+		
+		
 	}
 }

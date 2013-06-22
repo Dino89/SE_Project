@@ -17,6 +17,7 @@ import de.mensch.entities.Customer;
 import de.mensch.entities.Game;
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
+import de.mensch.entities.Zuschauer;
 
 /**
  * Session Bean implementation class MenschDAO
@@ -92,10 +93,10 @@ public class MenschDAO implements MenschDAOLocal {
 		em.persist(game);
 		return game;
 	}
-	//TODO: NOT FINISHED
+	
 	@Override
 	public ArrayList<Request> getRequests(int gameid) {
-		Query query = em.createQuery("SELECT e FROM Request e where gameentity="+gameid);
+		Query query = em.createQuery("SELECT e FROM Request e where gameentity="+gameid+" AND pulledByHost=false");
 		ArrayList<Request> querylist = (ArrayList<Request>) query.getResultList();
 		return (ArrayList<Request>) query.getResultList();
 		
@@ -157,5 +158,16 @@ public class MenschDAO implements MenschDAOLocal {
 		Query query = em.createQuery("SELECT e FROM MenschSession e where username="+userName);
 		return (MenschSession) query.getSingleResult();
 	}
-	
+	@Override
+	public Zuschauer findZuschauerByCustomerName(String userName){
+		Query q = em.createNamedQuery("SELECT e FROM Zuschauer where customer="+userName);
+		return (Zuschauer) q;
+	}
+	@Override
+	public ArrayList<Request> getZuschauerListe(int gameid) {
+		Query query = em.createQuery("SELECT e FROM Zuschauer e where game="+gameid);
+		ArrayList<Request> querylist = (ArrayList<Request>) query.getResultList();
+		return (ArrayList<Request>) query.getResultList();
+		
+	}
 }
