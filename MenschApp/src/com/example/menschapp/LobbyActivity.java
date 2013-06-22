@@ -98,7 +98,6 @@ public class LobbyActivity extends Activity {
 				GameListStatusView.setText(R.string.lobby_progress_gamelist);
 				listTask = new GameListTask(); 
 				listTask.execute();
-				finish();
 			}
 		});
 		

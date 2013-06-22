@@ -54,7 +54,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	/*
 	 * Diese Methode kümmert (bzw. sollte) sich um das Aufräumen alter Sessions, Spiele und Requests.
 	 */
-	@Schedule(second="*/15", minute="*",hour="*", persistent=false)
+	@Schedule(second="*/59", minute="*",hour="*", persistent=false)
 	public void removeOldSessions() {
 		System.out.println("Removing Sessions...");
 		ArrayList<MenschSession> sessionList = this.dao.findSessions();
@@ -404,7 +404,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		r.setState("accepted");
 		Game g = r.getGameentity();
 		Customer c = this.dao.findCustomerByName(r.getUser());
-		MenschSession session = this.dao.findSessionByUserName(c.getUserName());
+//		MenschSession session = this.dao.findSessionByUserName(c.getUserName());
 		this.dao.removeRequest(r.getId());
 		System.out.println("request"+r.getId()+" removed");
 

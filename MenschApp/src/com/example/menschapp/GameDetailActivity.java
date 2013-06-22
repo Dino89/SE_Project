@@ -49,7 +49,7 @@ public class GameDetailActivity extends Activity {
 	
 	private SharedPreferences prefs;
 	private MenschApplication obsApp;
-	
+	private int reqid;
 	Games gameDetail;
 	private StartGameTask startGameTask = null;
 	private GameDetailTask gameTask = null;
@@ -417,7 +417,7 @@ public class CheckForRequestsTask extends AsyncTask<String, Void, Boolean> {
 			newRequestDialogBuilder.setTitle("Your Title");
 			
 			for(Request r : requests){
-				final int reqid = r.getId();
+				reqid = r.getId();
 			// set dialog message
 			newRequestDialogBuilder
 				.setMessage(r.getUserName()+" möchte beitreten. Erlauben ?")
