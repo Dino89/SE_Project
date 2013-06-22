@@ -25,7 +25,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class GameDetailActivity extends Activity {
@@ -41,7 +43,7 @@ public class GameDetailActivity extends Activity {
 	ArrayList<Request> requests;
 	final Context context = this;
 	
-	  
+	ArrayList<String> zuschauer = new ArrayList<String>();  
 	
 	private boolean host=false;
 	private boolean joined=false;
@@ -59,6 +61,8 @@ public class GameDetailActivity extends Activity {
 	private AllowOrDeclineRequestTask aodTask=null;
 	private Timer checkForMyRequestTimer=null;
 	private Timer checkForRequestsTimer=null;
+	private ArrayAdapter arrayAdapter;
+	private ListView spectatorListView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +87,11 @@ public class GameDetailActivity extends Activity {
 		gameTask = new GameDetailTask();
 		gameTask.execute();
 		
+		   spectatorListView = (ListView) findViewById(R.id.lobbylist);
+
+
+	    arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, zuschauer);
+		
 		findViewById(R.id.mitspielen).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
@@ -102,7 +111,11 @@ public class GameDetailActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-//						zuschauen();
+						Button a = (Button) findViewById(R.id.zuschauen);
+					    a.setText("Sie sind Zuschauer");
+					    a.setEnabled(false);
+						specTask = new SpectateGameTask();
+						specTask.execute();
 						joined=true;
 					}
 				});
@@ -261,7 +274,7 @@ public class GameDetailActivity extends Activity {
 	    @Override
 		protected Boolean doInBackground(String... params) {
 	
-	    	
+	    	GameDetailActivity.this.obsApp.getObsStub().spectateGame(gameid);
 	        try {
 				// Simulate network access.
 				Thread.sleep(250);

@@ -65,4 +65,6 @@ public interface MenschOnlineIntegration {
 	public void allowPlayer(int requestId);
 	
 	public void declinePlayer(int requestId);
+	
+	public void spectateGame(int sessionId,int gameid);
 }

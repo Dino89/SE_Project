@@ -268,7 +268,16 @@ public class MenschSystemStub implements MenschSystem {
 			game.setSpieler4(String.valueOf(spieler4username));
 			}
 			
-//			game.setZuschauer(zuschauer);
+			if(soapGameEntry.toString().contains("zuschauer")){
+			SoapObject zuschauer = (SoapObject) soapGameEntry.getPropertySafely("zuschauer");
+				ArrayList<String> zliste = new ArrayList<String>();
+				for(int j=1;j<zuschauer.getPropertyCount();j++){
+				
+					zliste.add(zuschauer.getAttributeAsString(j));
+				}
+				game.setZuschauer(zliste);
+			}
+			
 			result.add(game);
 		}
 		return result;
@@ -428,6 +437,17 @@ public class MenschSystemStub implements MenschSystem {
 		Log.d(TAG, ""+METHOD_NAME+ " called");
 		
 		SoapObject response = executeSoapAction(METHOD_NAME, requestId);
+		
+	}
+
+	@Override
+	public void spectateGame(int gameid) {
+		
+		String METHOD_NAME = "spectateGame";
+		Log.d(TAG, ""+METHOD_NAME+ " called");
+		
+		SoapObject response = executeSoapAction(METHOD_NAME,sessionId, gameid);
+		
 		
 	}
 }

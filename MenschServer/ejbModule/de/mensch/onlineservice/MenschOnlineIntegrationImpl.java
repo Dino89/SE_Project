@@ -347,4 +347,13 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		r.setState("declined");
 		
 	}
+	
+	
+	public void spectateGame(int sessionId, int gameid){
+		HashMap <String,Customer>z = (HashMap<String, Customer>) this.dao.getGame(gameid).getZuschauer();
+		String userName = this.dao.findSessionById(sessionId).getUsername();
+		Customer c = this.dao.findCustomerByName(userName);
+		
+		z.put(c.getUserName(), c);
+	}
 }

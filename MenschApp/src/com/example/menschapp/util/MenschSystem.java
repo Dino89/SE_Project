@@ -67,4 +67,7 @@ public interface MenschSystem {
 
 
 	public void declinePlayer(int id);
+
+
+	public void spectateGame(int gameid);
 }

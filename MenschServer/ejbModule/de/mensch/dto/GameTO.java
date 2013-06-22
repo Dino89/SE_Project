@@ -2,6 +2,7 @@ package de.mensch.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import de.mensch.entities.Customer;
 
@@ -17,6 +18,7 @@ public class GameTO implements Serializable {
 	private Customer spieler2;
 	private Customer spieler3;
 	private Customer spieler4;
+	ArrayList <CustomerTO> zuschauer;
 	
 	public GameTO() {
 	}
