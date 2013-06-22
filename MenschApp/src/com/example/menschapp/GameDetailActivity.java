@@ -534,6 +534,12 @@ public class StartGameTask extends AsyncTask<String, Void, Boolean> {
     @Override
 	protected Boolean doInBackground(String... params) {
     	
+		Intent myIntent = new Intent(spieler1.getContext(), GameFieldActivity.class);
+		Log.d("gameid:", ""+gameDetail.getId());
+		myIntent.putExtra("gameid", gameDetail.getId());
+		Log.d("intent", ""+myIntent.getIntExtra("gameid", gameDetail.getId()));
+        startActivityForResult(myIntent, 0);
+        
     	GameDetailActivity.this.obsApp.getObsStub().startGame(gameid);
     	checkForRequestsTimer.cancel();
     	

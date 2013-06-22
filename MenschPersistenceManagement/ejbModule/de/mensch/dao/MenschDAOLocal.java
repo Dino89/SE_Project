@@ -7,6 +7,7 @@ import javax.ejb.Local;
 
 import de.mensch.entities.Account;
 import de.mensch.entities.Customer;
+import de.mensch.entities.Dice;
 import de.mensch.entities.Game;
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
@@ -58,6 +59,10 @@ public interface MenschDAOLocal {
 	public Zuschauer findZuschauerByCustomerName(String userName);
 
 	public ArrayList<Request> getZuschauerListe(int gameid);
+
+	public Game findGameById(int gameid);
+
+	public Dice createDiceNumber();
 
 		
 }

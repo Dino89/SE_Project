@@ -28,12 +28,14 @@ import de.mensch.dto.RequestListResponse;
 import de.mensch.dto.RequestResponse;
 import de.mensch.dto.Response;
 import de.mensch.dto.ReturncodeResponse;
+import de.mensch.dto.SpielzugResponse;
 import de.mensch.dto.UserLoginResponse;
 import de.mensch.dto.UserRegisterResponse;
 import de.mensch.util.DtoAssembler;
 import de.mensch.dao.MenschDAO;
 import de.mensch.dao.MenschDAOLocal;
 import de.mensch.entities.Customer;
+import de.mensch.entities.Dice;
 import de.mensch.entities.Game;
 import de.mensch.entities.GameField;
 import de.mensch.entities.MenschSession;
@@ -55,7 +57,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	/*
 	 * Diese Methode kümmert (bzw. sollte) sich um das Aufräumen alter Sessions, Spiele und Requests.
 	 */
-	@Schedule(second="1", minute="1",hour="*", persistent=false)
+	@Schedule(second="59", minute="*",hour="*", persistent=false)
 	public void removeOldSessions() {
 		System.out.println("Removing Sessions...");
 		ArrayList<MenschSession> sessionList = this.dao.findSessions();
@@ -185,10 +187,19 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	 * @see de.mensch.onlineservice.MenschOnlineIntegration#diceNumber()
 	 */
 	@Override
-	public DiceResponse diceNumber() {
+	public DiceResponse diceNumber(int sessionId, int gameId) throws NoSessionException {
+		MenschSession session = getSession(sessionId);
+		System.out.println("gameid: "+gameId);
+		Game game = this.dao.findGameById(gameId);
+		Dice dice = this.dao.createDiceNumber();
 		DiceResponse response = new DiceResponse();
-		double random = Math.round(Math.random()*100%7);
-		response.setDiceNumber(random);
+		int diceNumber = dice.getNumber();
+		response.setDiceNumber(diceNumber);
+		response.setDiceId(dice.getId());
+		System.out.println("game found: "+game.toString()+"dice number: "+diceNumber);
+		Map<Integer, Dice> dicemap = game.getDice();
+		dicemap.put(dice.getId(), dice);
+		game.setDice(dicemap);
 		System.out.println(response);
 		return response;
 	}
@@ -447,7 +458,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		System.out.println("Gestartet: "+game.isStarted());
 	}
 	
-	
+	@Override
 	public void spectateGame(int sessionId, int gameid) throws NoSessionException{
 		MenschSession session = getSession(sessionId);
 		Map <Integer,Zuschauer>z = (Map<Integer, Zuschauer>) this.dao.getGame(gameid).getZuschauer();
@@ -455,9 +466,275 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		zuschauer.setGame(this.dao.getGame(gameid));
 		zuschauer.setZuschauer(this.dao.findCustomerByName(this.dao.findSessionById(sessionId).getUsername()));
 		
-		
 		z.put(zuschauer.getId(), zuschauer);
+	}
+	
+	@Override
+	public SpielzugResponse spielen(int gameid, int sessionid, int spielfigurfeld, int diceid) throws NoSessionException {
+		System.out.println("Ich will spielen!");
+		MenschSession session = null;
+		if(sessionid!=-1) session = getSession(sessionid);
+		System.out.println("Prüfe auf verlassene Spieler");
+		spielerVerlassen(gameid);
+		SpielzugResponse response = new SpielzugResponse();
+		Game game = this.dao.findGameById(gameid);
+		if(!spielerIstDran(gameid, session)) return response;
+		System.out.println("Ziehe...");
+		ziehen(gameid, spielfigurfeld, diceid);
+		pruefeNochmalWuerfeln(gameid);
+		if(game.getWuerfelCount()<=2) { 
+			System.out.println("Nochmal dran!");
+			game.setAktuellerSpieler(game.getAktuellerSpieler());
+		} else { 
+			if(game.getSpieler2()==null) {
+				System.out.println("De Komputa speelt!");
+				computerZieht(gameid);
+			}
+			if(game.getAktuellerSpieler().equals("spieler1")) game.setAktuellerSpieler("spieler2");
+			if(game.getAktuellerSpieler().equals("spieler2")) game.setAktuellerSpieler("spieler3");
+			if(game.getAktuellerSpieler().equals("spieler3")) game.setAktuellerSpieler("spieler4");
+			if(game.getAktuellerSpieler().equals("spieler4")) game.setAktuellerSpieler("spieler1");
+		}
+		spielerGewonnen(gameid);
+		spielZuEnde(gameid);
+		response.setSuccess(true);
+		return response;
+	}
+
+	private void computerZieht(int gameid) {
+		Game game = this.dao.findGameById(gameid);
+		GameField field = game.getGameField();
+		int size = field.getSize();
+		Dice dice = new Dice();
+		int diceid = dice.getId();
 		
+		for(int i = 1; i<size;i++) {
+			if(field.getField(i)==2)
+				try {
+					spielen(gameid, -1, field.getField(i), diceid);
+				} catch (NoSessionException e) {
+					System.out.println("C0mPut3rf3h13r!");
+				}
+		}
 		
+	}
+
+	private void spielZuEnde(int gameid) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void spielerGewonnen(int gameid) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private boolean ziehen(int gameid, int spielfigurfeld, int diceid) {
+		Game game = this.dao.findGameById(gameid);
+		if(!eigeneFigur(game, spielfigurfeld)) return false;
+		setzeFigur(game, spielfigurfeld, diceid);
+		pruefeNochmalWuerfeln(gameid);
+		
+		return true;
+	}
+
+	private void spielerVerlassen(int gameid) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private boolean spielerIstDran(int gameid, MenschSession session) {
+		if(session!=null) {
+			Game g = this.dao.findGameById(gameid);
+			if(g.getAktuellerSpieler().equals(session.getUsername())) return true;
+			return false;
+		}
+		return true;
+	}
+	
+//	@Override
+//	public SpielzugResponse spielen(int gameid, int sessionId, int spielFeldNummer, int diceId) throws NoSessionException {
+//		MenschSession session = getSession(sessionId);
+//		Game game = this.dao.findGameById(gameid);
+//		SpielzugResponse response = new SpielzugResponse();
+//		game.setWuerfelCount(0);
+//		while(game.getWuerfelCount()<=3) {
+//			if(game.getSpieler2()==null) {
+//				spieleMitComputer(gameid, spielFeldNummer, diceId);
+//			} else {
+//				boolean success = Spielzug(gameid, spielFeldNummer, diceId);
+//			}
+//			pruefeNochmalWuerfeln(gameid);
+//		}
+//		response.setSuccess(true);
+//		return response;
+//	}
+//
+	private void pruefeNochmalWuerfeln(int gameid) {
+		Game game = this.dao.findGameById(gameid);
+		
+		if((game.getGameField().getField(1) == 0) & (game.getGameField().getField(2) == 0) & (game.getGameField().getField(3) == 0) & (game.getGameField().getField(4) == 0)) {
+			game.setAktuellerSpieler(game.getAktuellerSpieler());
+			game.setWuerfelCount(game.getWuerfelCount()+1);
+		} else { game.setWuerfelCount(3); }
+		if((game.getGameField().getField(1) == 0) & (game.getGameField().getField(2) == 0) & (game.getGameField().getField(3) == 0) & (game.getGameField().getField(4) == 0)) {
+			game.setAktuellerSpieler(game.getAktuellerSpieler());
+			game.setWuerfelCount(game.getWuerfelCount()+1);
+		} else { game.setWuerfelCount(3); }
+		if((game.getGameField().getField(1) == 0) & (game.getGameField().getField(2) == 0) & (game.getGameField().getField(3) == 0) & (game.getGameField().getField(4) == 0)) {
+			game.setAktuellerSpieler(game.getAktuellerSpieler());
+			game.setWuerfelCount(game.getWuerfelCount()+1);
+		} else { game.setWuerfelCount(3); }
+		if((game.getGameField().getField(1) == 0) & (game.getGameField().getField(2) == 0) & (game.getGameField().getField(3) == 0) & (game.getGameField().getField(4) == 0)) {
+			game.setAktuellerSpieler(game.getAktuellerSpieler());
+			game.setWuerfelCount(game.getWuerfelCount()+1);
+		} else { game.setWuerfelCount(3); }		
+	}
+//
+//	private boolean spieleMitComputer(int gameid, int spielFeldNummer, int diceId) {
+//		boolean success = false;
+//		Game game = this.dao.findGameById(gameid);
+//		eigeneFigur(game,spielFeldNummer);
+//		setzeFigur(game,spielFeldNummer,diceId);
+//		spielerGewonnen(game);
+//		spielZuEnde(game);
+//					
+//		if(game.getAktuellerSpieler().equals("spieler1")) game.setAktuellerSpieler("computer");
+//		if(game.getAktuellerSpieler().equals("computer")) game.setAktuellerSpieler("spieler1");
+//		
+//		return success;		
+//	}
+//
+//	private boolean Spielzug(int gameid, int spielFeldNummer, int diceId) {	
+//		boolean success = false;
+//			Game game = this.dao.findGameById(gameid);
+//			eigeneFigur(game,spielFeldNummer);
+//			setzeFigur(game,spielFeldNummer,diceId);
+//			spielerGewonnen(game);
+//			spielZuEnde(game);
+//					
+//		if(game.getAktuellerSpieler().equals("spieler1")) game.setAktuellerSpieler("spieler2");
+//		if(game.getAktuellerSpieler().equals("spieler2")) game.setAktuellerSpieler("spieler3");
+//		if(game.getAktuellerSpieler().equals("spieler3")) game.setAktuellerSpieler("spieler4");
+//		if(game.getAktuellerSpieler().equals("spieler4")) game.setAktuellerSpieler("spieler1");
+//		
+//		return success;		
+//	}
+//
+//	private void spielZuEnde(Game game) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	private void spielerGewonnen(Game game) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+	private boolean setzeFigur(Game game, int spielFeldNummer, int diceId) {
+		GameField spielfeld = game.getGameField();
+		
+		int diceNumber = game.getDice().get(diceId).getNumber();
+		
+		int zielFeldValue = spielfeld.getField(spielFeldNummer+diceNumber);
+		int zielFeld = spielFeldNummer+diceNumber;
+		
+		if(!(zielFeld>=73)) {
+			if(zielFeldValue==spielFeldNummer) {
+				return false;
+			} else {
+				if(zielFeldValue==0) { 
+					spielfeld.setField(zielFeld, zielFeldValue);
+					return true;
+				} else {
+					figurSchmeissen(game, zielFeld);
+					return true;
+				}
+			}
+		} else {
+			
+		}
+		
+		return false;		
+	}
+	
+	/*
+	 * int index 1 bis 4 startfelder blau
+	 * int index 5 bis 8 startfelder rot
+	 * int index 9 bis 12 startfelder grün
+	 * int index 13 bis 16 startfelder gelb
+	 * */
+	private void figurSchmeissen(Game game, int zielFeld) {
+		GameField spielfeld = game.getGameField();
+		int zielFeldFigur = spielfeld.getField(zielFeld);
+		
+		if(zielFeldFigur==1) {
+			if(spielfeld.getField(4)==0) {
+				spielfeld.setField(4, 1);
+			} else if(spielfeld.getField(3)==0) {
+				spielfeld.setField(3, 1);
+			} else if(spielfeld.getField(2)==0) {
+				spielfeld.setField(2, 1);
+			} else if(spielfeld.getField(1)==0) {
+				spielfeld.setField(1, 1);
+			}
+		}
+		
+		if(zielFeldFigur==2) {
+			if(spielfeld.getField(4)==0) {
+				spielfeld.setField(4, 2);
+			} else if(spielfeld.getField(3)==0) {
+				spielfeld.setField(3, 2);
+			} else if(spielfeld.getField(2)==0) {
+				spielfeld.setField(2, 2);
+			} else if(spielfeld.getField(1)==0) {
+				spielfeld.setField(1, 2);
+			}
+		}
+			
+		if(zielFeldFigur==3) {
+			if(spielfeld.getField(4)==0) {
+				spielfeld.setField(4, 3);
+			} else if(spielfeld.getField(3)==0) {
+				spielfeld.setField(3, 3);
+			} else if(spielfeld.getField(2)==0) {
+				spielfeld.setField(2, 3);
+			} else if(spielfeld.getField(1)==0) {
+				spielfeld.setField(1, 3);
+			}
+		}
+				
+		if(zielFeldFigur==4) {
+			if(spielfeld.getField(4)==0) {
+				spielfeld.setField(4, 4);
+			} else if(spielfeld.getField(3)==0) {
+				spielfeld.setField(3, 4);
+			} else if(spielfeld.getField(2)==0) {
+				spielfeld.setField(2, 4);
+			} else if(spielfeld.getField(1)==0) {
+				spielfeld.setField(1, 4);
+			}
+		}
+	}
+
+	/*
+	 * Versucht der Spieler seine eigene Figur zu bewegen?
+	 */
+	private boolean eigeneFigur(Game game, int spielFeldNummer) {
+		GameField spielfeld = game.getGameField();
+		int feld = spielfeld.getField(spielFeldNummer);
+		String spielfigurOwner = null;
+		
+		if(feld==0) return false;
+		if(feld==1) spielfigurOwner = "spieler1";
+		if(feld==2) spielfigurOwner = "spieler2";
+		if(feld==3) spielfigurOwner = "spieler3";
+		if(feld==4) spielfigurOwner = "spieler4";
+		
+		if(game.getAktuellerSpieler().equals(spielfigurOwner)) { 
+			return true;
+		}
+		
+		return false;
 	}
 }

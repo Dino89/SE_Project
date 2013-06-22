@@ -16,11 +16,7 @@ public interface MenschSystem {
 	 * Operation zum Ausloggen. Schliesst die Session des Nutzers.
 	 * @param sessionID
 	 */
-	public void logout();
-
-
-	public double diceNumber();
-	
+	public void logout();	
 
 	public String register(String username, String password);
 
@@ -74,4 +70,9 @@ public interface MenschSystem {
 	public int getSessionId();
 
 	void startGame(int id);
+
+
+	void spielen(int gameid, int spielfigurfeld, int diceid);
+
+	int diceNumber(int gameId);
 }

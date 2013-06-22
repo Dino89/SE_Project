@@ -172,14 +172,21 @@ public class MenschSystemStub implements MenschSystem {
 	}
 
 	@Override
-	public double diceNumber() {
+	public int diceNumber(int gameid) {
 		Log.d(TAG,"diceNumber called");
 		String METHOD_NAME = "diceNumber";
-		SoapObject response = executeSoapAction(METHOD_NAME);
+		SoapObject response = executeSoapAction(METHOD_NAME, sessionId, gameid);
 		Log.d(TAG, response.toString());
-		String diceString = response.getProperty("diceNumber").toString();
-		double diceNumber=Double.parseDouble(diceString);
-		return diceNumber;
+		
+		SoapObject diceObject = (SoapObject) response.getProperty(1);
+		SoapPrimitive diceNumber = (SoapPrimitive) diceObject.getProperty("diceNumber");
+		SoapPrimitive diceId = (SoapPrimitive) diceObject.getProperty("diceId");
+		
+		Dice dice = new Dice();
+		dice.setDiceId(Integer.valueOf(diceId.toString()));
+		dice.setDiceNumber(Integer.valueOf(diceNumber.toString()));
+		
+		return Integer.valueOf(diceNumber.toString());
 	}
 
 	@Override
@@ -454,6 +461,15 @@ public class MenschSystemStub implements MenschSystem {
 		
 		SoapObject response = executeSoapAction(METHOD_NAME,sessionId, gameid);
 		
+		
+	}
+	
+	@Override
+	public void spielen(int gameid, int spielfigurfeld, int diceid) {
+		String METHOD_NAME = "spielen";
+		Log.d(TAG, METHOD_NAME+" called");
+		
+		SoapObject response = executeSoapAction(METHOD_NAME, gameid, sessionId, spielfigurfeld, diceid);
 		
 	}
 }

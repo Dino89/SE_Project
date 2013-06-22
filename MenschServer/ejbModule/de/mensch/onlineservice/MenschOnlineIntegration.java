@@ -14,6 +14,7 @@ import de.mensch.dto.JoinResponse;
 import de.mensch.dto.RequestListResponse;
 import de.mensch.dto.RequestResponse;
 import de.mensch.dto.ReturncodeResponse;
+import de.mensch.dto.SpielzugResponse;
 import de.mensch.dto.UserLoginResponse;
 import de.mensch.dto.UserRegisterResponse;
 import de.mensch.entities.Request;
@@ -36,7 +37,7 @@ public interface MenschOnlineIntegration {
 	 */
 	public ReturncodeResponse logout(int sessionId);
 	
-	public DiceResponse diceNumber();
+	public DiceResponse diceNumber(int sessionId, int gameId) throws NoSessionException;
 	
 	public UserRegisterResponse register(String username, String password);
 	
@@ -70,6 +71,8 @@ public interface MenschOnlineIntegration {
 	public void spectateGame(int sessionId,int gameid) throws NoSessionException;
 	
 	public void startGame(int gameid, int sessionId) throws NoSessionException;
+
+	public SpielzugResponse spielen(int gameid, int sessionId, int spielfeld, int diceId) throws NoSessionException;
 	
 	
 }

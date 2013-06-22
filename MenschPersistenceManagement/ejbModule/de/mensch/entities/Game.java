@@ -29,17 +29,23 @@ public class Game implements Serializable {
 	
 	private int slots = 3;
 	boolean started;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="gameentity") @MapKey
+	private Map<Integer, Dice> dice;
+	
 	@OneToOne
 	private Customer owner;
 	@OneToOne
 	private Customer spieler1;
 	@OneToOne
-	private Customer spieler2 = null;
+	private Customer spieler2;
 	@OneToOne
-	private Customer spieler3 = null;
+	private Customer spieler3;
 	@OneToOne
-	private Customer spieler4 = null;
+	private Customer spieler4;
 
+	private String aktuellerSpieler;
+	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="zuschauer") @MapKey
 	private Map<Integer, Zuschauer> zuschauer;
 	
@@ -48,18 +54,18 @@ public class Game implements Serializable {
 
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="gameentity") @MapKey
 	private java.util.Map<Integer,Request> requests;
+
+	private int wuerfelCount;
 	
 	public Game() {
 		super();
 		this.started = false;
+		aktuellerSpieler = "spieler1";
+		spieler2 = null;
+		spieler3 = null;
+		spieler4 = null;
+		dice = null;;
 	}
-//	
-//	public Account(Customer owner) {
-//		this.balance = BigDecimal.ZERO;
-//		this.owner = owner;
-//		this.owner.addNewAccount(this);
-//	}
-//	
 	
 	public Customer getSpieler1() {
 		return spieler1;
@@ -108,26 +114,10 @@ public class Game implements Serializable {
 	public Customer getOwner() {
 		return owner;
 	}
-//	
-//	public void increase(BigDecimal amount) {
-//		this.balance = this.balance.add(amount);
-//	}
-//	
-//	public void decrease(BigDecimal amount) {
-//		this.balance = this.balance.subtract(amount);
-//	}
-//	
-//	public String toString() {
-//		return "Account " + this.id + " (Balance=" + this.balance + ", Owner=" + this.getOwner().getUserName() + ")";
-//	}
-//
+	
 	public void setId(int id) {
 		this.id = id;
 	}
-//
-//	public void setBalance(BigDecimal balance) {
-//		this.balance = balance;
-//	}
 
 	public void setOwner(Customer owner) {
 		this.owner = owner;
@@ -179,6 +169,48 @@ public class Game implements Serializable {
 
 	public void setZuschauer(Map<Integer, Zuschauer> zuschauer) {
 		this.zuschauer = zuschauer;
+	}
+
+	/**
+	 * @return the aktuellerSpieler
+	 */
+	public String getAktuellerSpieler() {
+		return aktuellerSpieler;
+	}
+
+	/**
+	 * @param aktuellerSpieler the aktuellerSpieler to set
+	 */
+	public void setAktuellerSpieler(String aktuellerSpieler) {
+		this.aktuellerSpieler = aktuellerSpieler;
+	}
+
+	/**
+	 * @return the dice
+	 */
+	public Map<Integer, Dice> getDice() {
+		return dice;
+	}
+
+	/**
+	 * @param dice the dice to set
+	 */
+	public void setDice(Map<Integer, Dice> dice) {
+		this.dice = dice;
+	}
+
+	/**
+	 * @return the wuerfelCount
+	 */
+	public int getWuerfelCount() {
+		return wuerfelCount;
+	}
+
+	/**
+	 * @param wuerfelCount the wuerfelCount to set
+	 */
+	public void setWuerfelCount(int wuerfelCount) {
+		this.wuerfelCount = wuerfelCount;
 	}
 
 }

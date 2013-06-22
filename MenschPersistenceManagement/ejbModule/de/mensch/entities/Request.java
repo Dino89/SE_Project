@@ -20,7 +20,7 @@ public class Request implements Serializable {
 	
 	@Id @GeneratedValue
 	private int id;
-	@ManyToOne(cascade =CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Game gameentity;
 	
 	public int getId() {

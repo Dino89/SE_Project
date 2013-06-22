@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import de.mensch.entities.Account;
 import de.mensch.entities.Customer;
+import de.mensch.entities.Dice;
 import de.mensch.entities.Game;
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
@@ -168,6 +169,16 @@ public class MenschDAO implements MenschDAOLocal {
 		Query query = em.createQuery("SELECT e FROM Zuschauer e where game="+gameid);
 		ArrayList<Request> querylist = (ArrayList<Request>) query.getResultList();
 		return (ArrayList<Request>) query.getResultList();
-		
+	}
+	@Override
+	public Game findGameById(int gameid) {
+		return em.find(Game.class, gameid);
+	}
+
+	@Override
+	public Dice createDiceNumber() {
+		Dice dice = new Dice();
+		dice.setNumber((int) Math.round(Math.random()*100%7));
+		return dice;
 	}
 }

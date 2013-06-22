@@ -29,13 +29,35 @@ import javax.persistence.Id;
 public class GameField implements Serializable {
 	
 	private static final long serialVersionUID = 12L;
+	private ArrayList<Integer> fields = new ArrayList<>();
 	
 	@Id @GeneratedValue
 	private int id;
 	
-	private ArrayList<Integer> fields = new ArrayList<>();
-// TODO: HashMap? ArrayList?
-	
+	private GameField() {
+		for(int i=0; i<=73;i++) {
+			fields.add(0);
+		}
+		
+		setField(0, 0);
+		
+		for(int i = 1; i<=4;i++) {
+			setField(i, 1);
+		}
+		for(int i = 5; i<=8;i++) {
+			setField(i, 2);
+		}
+		for(int i = 9; i<=12;i++) {
+			setField(i, 3);
+		}
+		for(int i = 13; i<=16;i++) {
+			setField(i, 4);
+		}
+		for(int i = 17; i<=72;i++) {
+			setField(i, 0);
+		}
+	}
+		
 	public void setField(int index, int value) {
 		this.fields.set(index, value);
 	}
@@ -43,8 +65,10 @@ public class GameField implements Serializable {
 	public int getField(int index) {
 		return this.fields.get(index);
 	}
-	
-	
+
+	public int getSize() {
+		return this.fields.size();
+	}
 //	private int field_blue_1;
 //	private int field_blue_2;
 //	private int field_blue_3;

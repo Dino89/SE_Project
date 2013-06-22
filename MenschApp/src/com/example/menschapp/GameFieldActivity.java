@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.example.menschapp.GameDetailActivity.GameDetailTask;
+import com.example.menschapp.GameDetailActivity.JoinGameTask;
 import com.example.menschapp.util.Games;
 import com.example.menschapp.util.MenschSystemStub;
 
@@ -14,25 +15,50 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class GameFieldActivity extends Activity {
 
 	private int gameid;
+	private int diceNumber;
+	private int diceId;
 	
 	private SharedPreferences prefs;
 	private MenschApplication obsApp;
 	
+	private WuerfelTask wuerfelTask = null;
 	private RefreshViewTask refreshView = null;
+	TextView wuerfelergebnis;
+	private Button wuerfelButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Intent myIntent = getIntent();
+		gameid = myIntent.getExtras().getInt("gameid");
+		
 		super.onCreate(savedInstanceState);
+		wuerfelButton = (Button) findViewById(R.id.wuerfeln);
 		
         /* Initialisiere den Stub zum GameServer */
         obsApp = (MenschApplication) this.getApplication();
         obsApp.setObsStub(new MenschSystemStub());
         
 		setContentView(R.layout.activity_game_field);
+		
+		findViewById(R.id.wuerfeln).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {					
+//						wuerfelButton = (Button) findViewById(R.id.wuerfeln);
+//						wuerfelButton.setText("Gewuerfelt");
+//						wuerfelButton.setEnabled(false);
+						
+					    wuerfelTask = new WuerfelTask();
+					    wuerfelTask.execute();
+					}
+				});
 //		
 //		int delay = 1000; // delay for 1 sec. 
 //		int period = 10000; // repeat every 1 sec. 
@@ -91,6 +117,34 @@ public class GameFieldActivity extends Activity {
 		@Override
 		protected void onCancelled() {
 
+		}
+	}
+
+	public class WuerfelTask extends AsyncTask<String, Void, Boolean> {
+		
+	    @Override
+		protected Boolean doInBackground(String... params) {
+	
+	    	GameFieldActivity.this.obsApp.getObsStub().diceNumber(gameid);
+	        try {
+				// Simulate network access.
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+				return false;
+			} 
+	
+			return true;
+		}
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+		wuerfelergebnis = (TextView) findViewById(R.id.wuerfelergebnis);
+		wuerfelergebnis.setText(diceNumber + " gewürfelt");
+		}
+	
+		@Override
+		protected void onCancelled() {
+	
 		}
 	}
 
