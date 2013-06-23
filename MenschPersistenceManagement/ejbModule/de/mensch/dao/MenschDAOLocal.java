@@ -61,5 +61,7 @@ public interface MenschDAOLocal {
 
 	public Dice createDiceNumber();
 
+	public ArrayList<Dice> getDiceList();
+
 		
 }

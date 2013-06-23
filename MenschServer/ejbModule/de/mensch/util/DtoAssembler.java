@@ -48,19 +48,15 @@ public class DtoAssembler {
 	  dto.setSpieler4(game.getSpieler4());
 	  dto.getOwner().setPassword(null);
 	  dto.setStarted(game.isStarted());
-	  Map<Integer,MenschSession> mp = game.getZuschauer();
-	  ArrayList<String> dtoZuschauer = new ArrayList<String>();
-	  Iterator<Entry<Integer, MenschSession>> it = mp.entrySet().iterator();
-	    while (it.hasNext()) {
-	        Map.Entry<Integer,MenschSession> pairs = (Map.Entry)it.next();
-	        dtoZuschauer.add( pairs.getValue().getUsername());
-	        System.out.println("DTO Assembler fügt zu Zuschauern hinzu "+ pairs.getValue().getUsername());
-	     //   it.remove(); // avoids a ConcurrentModificationException
-	    }
-	    SpectatorListTO kapsel = new SpectatorListTO();
-	    kapsel.setZuschauer(dtoZuschauer);
-	  dto.setSpectatorListTO(kapsel);
-	  return dto;
+	  dto.setDiceNumber((int) Math.round(Math.random()*100%7));
+
+	  ArrayList<Zuschauer> dtoZuschauer = new ArrayList<Zuschauer>();
+
+	  SpectatorListTO kapsel = new SpectatorListTO();
+	  kapsel.setZuschauer(dtoZuschauer);
+	  dto.setSpectatorListTO(kapsel);  
+	  dto.setGameField(game.getGameField());
+  	  return dto;
   }
   
   public ArrayList<GameTO> makeDTO(ArrayList<Game> gameList) {
@@ -77,4 +73,21 @@ public class DtoAssembler {
 	  dto.setUserName(customer.getUserName());
 	  return dto;
   }
+
+//  public Object makeDiceDTO(ArrayList<Dice> diceList) {
+//	ArrayList<DiceTO> dtoList = new ArrayList<>();
+//	for( Dice d: diceList) {
+//		dtoList.add(this.makeDTO(d));
+//	}
+//	return dtoList;
+//  }
+
+//	public DiceTO makeDTO(Dice d) {
+//		DiceTO dto = new DiceTO();
+//		dto.setDiceId(dto.getDiceId());
+//		dto.setDiceNumber((int) Math.round(Math.random()*100%7));
+//		return dto;
+//	}
+
+
 }

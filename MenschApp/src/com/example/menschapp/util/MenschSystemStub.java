@@ -177,16 +177,28 @@ public class MenschSystemStub implements MenschSystem {
 		String METHOD_NAME = "diceNumber";
 		SoapObject response = executeSoapAction(METHOD_NAME, sessionId, gameid);
 		Log.d(TAG, response.toString());
+		Games game = new Games();
 		
-		SoapObject diceObject = (SoapObject) response.getProperty(1);
-		SoapPrimitive diceNumber = (SoapPrimitive) diceObject.getProperty("diceNumber");
-		SoapPrimitive diceId = (SoapPrimitive) diceObject.getProperty("diceId");
-		
-		Dice dice = new Dice();
-		dice.setDiceId(Integer.valueOf(diceId.toString()));
-		dice.setDiceNumber(Integer.valueOf(diceNumber.toString()));
-		
-		return Integer.valueOf(diceNumber.toString());
+		for (int i=1; i<response.getPropertyCount(); i++) {
+			SoapObject soapGameEntry = (SoapObject) response.getProperty(i);
+			SoapPrimitive soapGameNr = (SoapPrimitive) soapGameEntry.getProperty("id");
+			SoapPrimitive soapSlots = (SoapPrimitive) soapGameEntry.getProperty("slots");
+			SoapPrimitive soapDiceNr = (SoapPrimitive) soapGameEntry.getProperty("diceNumber");
+			
+			SoapObject soapOwnerObj = (SoapObject) soapGameEntry.getProperty("owner");
+			SoapPrimitive soapOwnerName = (SoapPrimitive) soapOwnerObj.getProperty("userName");
+			SoapPrimitive started = (SoapPrimitive) soapGameEntry.getProperty("started");
+			System.out.println(started);
+			
+			
+			game.setDiceNumber(Integer.valueOf(soapDiceNr.toString()));
+			
+			game.setId(Integer.valueOf(soapGameNr.toString()));
+			game.setSlots(Integer.valueOf(soapSlots.toString()));
+			game.setOwner(soapOwnerName.toString());
+			game.setSpieler1(soapOwnerName.toString());
+		}
+		return game.getDiceNumber();
 	}
 
 	@Override
@@ -381,7 +393,7 @@ public class MenschSystemStub implements MenschSystem {
 		Log.d(TAG, ""+METHOD_NAME+ " called");
 		
 		SoapObject response = executeSoapAction(METHOD_NAME, gameid);
-		
+		Log.d(response.toString(),response.toString());
 		GameField gameField = new GameField();
 		
 		for(int i=1;i<73;i++){ 
@@ -471,7 +483,7 @@ public class MenschSystemStub implements MenschSystem {
 		String METHOD_NAME = "spielen";
 		Log.d(TAG, METHOD_NAME+" called");
 		
-		SoapObject response = executeSoapAction(METHOD_NAME, gameid, sessionId, spielfigurfeld, diceid);
-		
+		SoapObject response = executeSoapAction(METHOD_NAME, gameid, sessionId, spielfigurfeld, diceid);	
 	}
+
 }

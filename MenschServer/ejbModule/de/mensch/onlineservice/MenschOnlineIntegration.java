@@ -37,7 +37,7 @@ public interface MenschOnlineIntegration {
 	 */
 	public ReturncodeResponse logout(int sessionId);
 	
-	public DiceResponse diceNumber(int sessionId, int gameId) throws NoSessionException;
+	public GameListResponse diceNumber(int sessionId, int gameId) throws NoSessionException;
 	
 	public UserRegisterResponse register(String username, String password);
 	
@@ -45,7 +45,7 @@ public interface MenschOnlineIntegration {
 	
 	public GameDetailResponse getGameDetails(int id);
 	
-	public GameFieldResponse getGameFields(int id);
+	public GameListResponse getGameFields(int id);
 
 //	public AttemptToJoinResponse joinGame(int id, int sessionId) throws NoSessionException;
 	

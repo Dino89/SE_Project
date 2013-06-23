@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import de.mensch.entities.Customer;
 
+import de.mensch.entities.GameField;
 
 public class GameTO implements Serializable {
 	
@@ -14,6 +15,7 @@ public class GameTO implements Serializable {
 	private int id;
 	private int slots;
 	boolean started;
+	private int diceNumber;
 	
 	private Customer owner;
 	private Customer spieler1;
@@ -21,6 +23,8 @@ public class GameTO implements Serializable {
 	private Customer spieler3;
 	private Customer spieler4;
 	SpectatorListTO zuschauerListe;
+
+	private GameField gameField;
 	
 	public GameTO() {
 	}
@@ -117,5 +121,21 @@ public class GameTO implements Serializable {
 
 	public void setSpectatorListTO(SpectatorListTO SpectatorListTO) {
 		this.zuschauerListe = SpectatorListTO;
+	}
+
+	public int getDiceNumber() {
+		return diceNumber;
+	}
+
+	public void setDiceNumber(int diceNumber) {
+		this.diceNumber = diceNumber;
+	}
+
+	public GameField getGameField() {
+		return gameField;
+	}
+
+	public void setGameField(GameField gameField) {
+		this.gameField = gameField;
 	}
 }

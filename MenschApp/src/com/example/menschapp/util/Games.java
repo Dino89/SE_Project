@@ -12,7 +12,7 @@ public class Games implements Serializable {
 	private int slots;
 	private int success;
 	private boolean started;
-	
+	private int diceNumber;
 	private String spieler1;
 	private String spieler2;
 	private String spieler3;
@@ -118,6 +118,14 @@ public class Games implements Serializable {
 	 */
 	public void setStarted(boolean started) {
 		this.started = started;
+	}
+
+	public int getDiceNumber() {
+		return diceNumber;
+	}
+
+	public void setDiceNumber(int diceNumber) {
+		this.diceNumber = diceNumber;
 	}
 
 }
