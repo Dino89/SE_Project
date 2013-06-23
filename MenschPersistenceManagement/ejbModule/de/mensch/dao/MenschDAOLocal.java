@@ -5,20 +5,17 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import de.mensch.entities.Account;
 import de.mensch.entities.Customer;
 import de.mensch.entities.Dice;
 import de.mensch.entities.Game;
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
-import de.mensch.entities.Zuschauer;
+
 
 @Local
 public interface MenschDAOLocal {
 
 	public Customer findCustomerByName(String userName);
-	
-	public Account findAccountById(int id);
 	
 	public MenschSession findSessionById(int id);
 	
@@ -56,7 +53,7 @@ public interface MenschDAOLocal {
 
 	public ArrayList<Request> getAllRequests();
 
-	public Zuschauer findZuschauerByCustomerName(String userName);
+	public ArrayList<MenschSession> getZuschauer(int gameid);
 
 	public ArrayList<Request> getZuschauerListe(int gameid);
 

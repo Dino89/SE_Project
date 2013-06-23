@@ -46,8 +46,8 @@ public class Game implements Serializable {
 
 	private String aktuellerSpieler;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="zuschauer") @MapKey
-	private Map<Integer, Zuschauer> zuschauer;
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="currentGame") @MapKey
+	private Map<Integer, MenschSession> zuschauer;
 	
 	@OneToOne
 	private GameField gameField;
@@ -163,11 +163,11 @@ public class Game implements Serializable {
 		this.gameField = gameField;
 	}
 
-	public Map<Integer, Zuschauer> getZuschauer() {
+	public Map<Integer, MenschSession> getZuschauer() {
 		return zuschauer;
 	}
 
-	public void setZuschauer(Map<Integer, Zuschauer> zuschauer) {
+	public void setZuschauer(Map<Integer, MenschSession> zuschauer) {
 		this.zuschauer = zuschauer;
 	}
 

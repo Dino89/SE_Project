@@ -12,13 +12,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.xml.bind.annotation.XmlTransient;
 
-import de.mensch.entities.Account;
+
 import de.mensch.entities.Customer;
 import de.mensch.entities.Dice;
 import de.mensch.entities.Game;
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
-import de.mensch.entities.Zuschauer;
+
 
 /**
  * Session Bean implementation class MenschDAO
@@ -33,9 +33,6 @@ public class MenschDAO implements MenschDAOLocal {
 		return em.find(Customer.class, userName);
 	}
 	
-	public Account findAccountById(int id) {
-		return em.find(Account.class, id);
-	}
 	
 	public MenschSession findSessionById(int id) {
 		return em.find(MenschSession.class, id);
@@ -159,11 +156,8 @@ public class MenschDAO implements MenschDAOLocal {
 		Query query = em.createQuery("SELECT e FROM MenschSession e where username="+userName);
 		return (MenschSession) query.getSingleResult();
 	}
-	@Override
-	public Zuschauer findZuschauerByCustomerName(String userName){
-		Query q = em.createNamedQuery("SELECT e FROM Zuschauer where customer="+userName);
-		return (Zuschauer) q;
-	}
+	
+	
 	@Override
 	public ArrayList<Request> getZuschauerListe(int gameid) {
 		Query query = em.createQuery("SELECT e FROM Zuschauer e where game="+gameid);
@@ -180,5 +174,13 @@ public class MenschDAO implements MenschDAOLocal {
 		Dice dice = new Dice();
 		dice.setNumber((int) Math.round(Math.random()*100%7));
 		return dice;
+	}
+
+
+	@Override
+	public ArrayList<MenschSession> getZuschauer(int gameid) {
+		Query query = em.createQuery("SELECT zuschauer FROM Game e where id="+gameid);
+		ArrayList<MenschSession> querylist = (ArrayList<MenschSession>) query.getResultList();
+		return (ArrayList<MenschSession>) query.getResultList();
 	}
 }

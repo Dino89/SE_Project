@@ -7,7 +7,7 @@ import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import de.mensch.entities.Account;
+
 import de.mensch.entities.Customer;
 import de.mensch.entities.Game;
 

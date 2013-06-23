@@ -1,19 +1,23 @@
 package de.mensch.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
-public class MenschSession {
+public class MenschSession implements Serializable{
 
 	@Id @GeneratedValue
 	private int id;
 	private String username;
 	private Date creationTime;
-	
+	@OneToOne(cascade = CascadeType.ALL)
 	private Game currentGame;
 	
 	public MenschSession(Customer user) {

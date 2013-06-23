@@ -106,7 +106,7 @@ public class LobbyActivity extends Activity {
 			public void onClick(View v) {
 				newGameTask = new NewGameTask();
 				newGameTask.execute();
-				finish();
+				
 			}
 		});
 		try {

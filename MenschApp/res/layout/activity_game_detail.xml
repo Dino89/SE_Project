@@ -20,14 +20,16 @@
         android:text="@string/zuschauer" />
 
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/zuschauerListe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/zuschauer"
-        android:layout_alignRight="@+id/zuschauer"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/zuschauer" >
 
     </ListView>
+    
+    
 
     <TextView
         android:id="@+id/spielleiter"
@@ -61,7 +63,7 @@
         android:id="@+id/spieler2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/listView1"
+        android:layout_alignTop="@+id/zuschauerListe"
         android:text="@string/spieler2" />
 
     <TextView

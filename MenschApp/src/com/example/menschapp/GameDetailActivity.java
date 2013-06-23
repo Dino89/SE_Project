@@ -91,11 +91,13 @@ public class GameDetailActivity extends Activity {
 		gameTask = new GameDetailTask();
 		gameTask.execute();
 		
-		   spectatorListView = (ListView) findViewById(R.id.lobbylist);
+		   spectatorListView = (ListView) findViewById(R.id.zuschauerListe);
 
 
 	    arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, zuschauer);
 		
+	    spectatorListView.setAdapter(arrayAdapter);
+	    
 		findViewById(R.id.mitspielen).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
@@ -122,7 +124,7 @@ public class GameDetailActivity extends Activity {
 						specTask = new SpectateGameTask();
 						specTask.execute();
 						joined=true;
-						finish();
+						
 					}
 				});
 		
@@ -238,6 +240,14 @@ public class GameDetailActivity extends Activity {
 			if(gameDetail.getSpieler3()==null) spieler3.setText("Nicht besetzt");
 			if(gameDetail.getSpieler4()==null) spieler4.setText("Nicht besetzt");
 			
+			zuschauer.clear();
+			if(gameDetail.getZuschauer() !=null) {
+				
+				for(String str :gameDetail.getZuschauer()){
+					zuschauer.add(str);
+				}
+			 arrayAdapter.notifyDataSetChanged();
+			}
 			if(gameDetail.isStarted()==true) {
 				Intent myIntent = new Intent(spieler1.getContext(), GameFieldActivity.class);
 				Log.d("gameid:", ""+gameDetail.getId());

@@ -275,11 +275,13 @@ public class MenschSystemStub implements MenschSystem {
 			}
 			
 			if(soapGameEntry.toString().contains("zuschauer")){
-			SoapObject zuschauer = (SoapObject) soapGameEntry.getPropertySafely("zuschauer");
+			 SoapObject zuschauer =  (SoapObject) soapGameEntry.getPropertySafely("spectatorListTO");
+			 
+			 Log.d("zuschauer->", "zuschauer: "+zuschauer);
 				ArrayList<String> zliste = new ArrayList<String>();
 				for(int j=1;j<zuschauer.getPropertyCount();j++){
 				
-					zliste.add(zuschauer.getAttributeAsString(j));
+					zliste.add(zuschauer.getPropertyAsString(j));
 				}
 				game.setZuschauer(zliste);
 			}
