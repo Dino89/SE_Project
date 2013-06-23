@@ -30,8 +30,7 @@ public class Game implements Serializable {
 	private int slots = 3;
 	boolean started;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="gameentity") @MapKey
-	private Map<Integer, Dice> dice;
+	private int diceNumber;
 	
 	@OneToOne
 	private Customer owner;
@@ -64,7 +63,6 @@ public class Game implements Serializable {
 		spieler2 = null;
 		spieler3 = null;
 		spieler4 = null;
-		dice = null;;
 	}
 	
 	public Customer getSpieler1() {
@@ -186,17 +184,17 @@ public class Game implements Serializable {
 	}
 
 	/**
-	 * @return the dice
+	 * @return the diceNumber
 	 */
-	public Map<Integer, Dice> getDice() {
-		return dice;
+	public int getDiceNumber() {
+		return diceNumber;
 	}
 
 	/**
-	 * @param dice the dice to set
+	 * @param diceNumber the diceNumber to set
 	 */
-	public void setDice(Map<Integer, Dice> dice) {
-		this.dice = dice;
+	public void setDiceNumber(int diceNumber) {
+		this.diceNumber = diceNumber;
 	}
 
 	/**

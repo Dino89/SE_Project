@@ -179,6 +179,17 @@ public class MenschDAO implements MenschDAOLocal {
 	public Dice createDiceNumber() {
 		Dice dice = new Dice();
 		dice.setNumber((int) Math.round(Math.random()*100%7));
+		dice.setId(dice.getId());
+		em.persist(dice);
 		return dice;
+	}
+
+	@Override
+	public ArrayList<Dice> getDiceList() {
+		Query query = em.createQuery("SELECT e FROM Dice e");
+		ArrayList<Dice> querylist = (ArrayList<Dice>) query.getResultList();
+		System.out.println("menschdao querylist "+querylist);
+		System.out.println((ArrayList<Dice>) query.getResultList());
+		return (ArrayList<Dice>) query.getResultList();
 	}
 }

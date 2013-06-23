@@ -1,36 +1,27 @@
 package de.mensch.dto;
 
+import java.util.ArrayList;
+
 public class DiceResponse extends ReturncodeResponse {
 
 	private static final long serialVersionUID = -3173145682328L;
-
-	private int diceNumber;
-
-	private int diceId;
+	
+	private ArrayList<DiceTO> diceList;
 	
 	public DiceResponse() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void setDiceNumber(int random) {
-		this.diceNumber = random;
+	public void setDiceList(Object makeDiceDTO) {
+		// TODO Auto-generated method stub
 		
 	}
 	
-	public double getDiceNumber() {
-		return diceNumber;
-		
+	public ArrayList<DiceTO> getDiceList() {
+		return diceList;
 	}
 
-	public void setDiceId(int id) {
-		this.diceId = id;		
+	public void setGameList(ArrayList<DiceTO> dice) {
+		this.diceList = dice;
 	}
-
-	/**
-	 * @return the diceId
-	 */
-	public int getDiceId() {
-		return diceId;
-	}
-	
 }

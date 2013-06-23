@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GameFieldActivity extends Activity {
@@ -24,10 +25,10 @@ public class GameFieldActivity extends Activity {
 	private int gameid;
 	private int diceNumber;
 	private int diceId;
-	
+	private int spielfigurfeld;
 	private SharedPreferences prefs;
 	private MenschApplication obsApp;
-	
+	private SpielenTask spielenTask = null;
 	private WuerfelTask wuerfelTask = null;
 	private RefreshViewTask refreshView = null;
 	TextView wuerfelergebnis;
@@ -51,26 +52,73 @@ public class GameFieldActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {					
-//						wuerfelButton = (Button) findViewById(R.id.wuerfeln);
-//						wuerfelButton.setText("Gewuerfelt");
-//						wuerfelButton.setEnabled(false);
-						
 					    wuerfelTask = new WuerfelTask();
 					    wuerfelTask.execute();
 					}
 				});
-//		
-//		int delay = 1000; // delay for 1 sec. 
-//		int period = 10000; // repeat every 1 sec. 
-//		Timer timer = new Timer(); 
-//		timer.scheduleAtFixedRate(new TimerTask() 
-//		    { 
-//		        public void run() 
-//		        { 
-//		        	refreshView = new RefreshViewTask();
-//		        	refreshView.execute();  // display the data
-//		        } 
-//		    }, delay, period);
+		
+		findViewById(R.id.field_1).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=1; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		findViewById(R.id.field_2).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=2; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		findViewById(R.id.field_3).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=3; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		findViewById(R.id.field_4).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=4; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		findViewById(R.id.field_5).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=5; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		findViewById(R.id.field_6).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=6; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		findViewById(R.id.field_7).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=7; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		findViewById(R.id.field_8).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=8; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		findViewById(R.id.field_9).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=9; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		findViewById(R.id.field_10).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=10; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		int delay = 1000; // delay for 1 sec. 
+		int period = 10000; // repeat every 1 sec. 
+		Timer timer = new Timer(); 
+		timer.scheduleAtFixedRate(new TimerTask() 
+		    { 
+		        public void run() 
+		        { 
+		        	refreshView = new RefreshViewTask();
+		        	refreshView.execute();  // display the data
+		        } 
+		    }, delay, period);
 	}
 
 	@Override
@@ -99,6 +147,8 @@ public class GameFieldActivity extends Activity {
 	    @Override
 		protected Boolean doInBackground(String... params) {
 
+	    	GameFieldActivity.this.obsApp.getObsStub().getGameFields(gameid);
+	    	
 	        try {
 				// Simulate network access.
 				Thread.sleep(250);
@@ -125,7 +175,7 @@ public class GameFieldActivity extends Activity {
 	    @Override
 		protected Boolean doInBackground(String... params) {
 	
-	    	GameFieldActivity.this.obsApp.getObsStub().diceNumber(gameid);
+	    	diceNumber = GameFieldActivity.this.obsApp.getObsStub().diceNumber(gameid);
 	        try {
 				// Simulate network access.
 				Thread.sleep(250);
@@ -140,6 +190,33 @@ public class GameFieldActivity extends Activity {
 		protected void onPostExecute(final Boolean success) {
 		wuerfelergebnis = (TextView) findViewById(R.id.wuerfelergebnis);
 		wuerfelergebnis.setText(diceNumber + " gewürfelt");
+		}
+	
+		@Override
+		protected void onCancelled() {
+	
+		}
+	}
+
+	public class SpielenTask extends AsyncTask<String, Void, Boolean> {
+		
+	    @Override
+		protected Boolean doInBackground(String... params) {
+	
+	    	GameFieldActivity.this.obsApp.getObsStub().spielen(gameid, spielfigurfeld, diceNumber);
+	        try {
+				// Simulate network access.
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+				return false;
+			} 
+	
+			return true;
+		}
+		
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			
 		}
 	
 		@Override

@@ -46,6 +46,7 @@ public class DtoAssembler {
 	  dto.setSpieler4(game.getSpieler4());
 	  dto.getOwner().setPassword(null);
 	  dto.setStarted(game.isStarted());
+	  dto.setDiceNumber((int) Math.round(Math.random()*100%7));
 	  Map<Integer,Zuschauer> mp = game.getZuschauer();
 	  ArrayList<Zuschauer> dtoZuschauer = new ArrayList<Zuschauer>();
 	  Iterator it = mp.entrySet().iterator();
@@ -55,6 +56,9 @@ public class DtoAssembler {
 	     //   it.remove(); // avoids a ConcurrentModificationException
 	    }
 	  dto.setZuschauer(dtoZuschauer);
+	  
+	  dto.setGameField(game.getGameField());
+	  
 	  return dto;
   }
   
@@ -72,4 +76,21 @@ public class DtoAssembler {
 	  dto.setUserName(customer.getUserName());
 	  return dto;
   }
+
+//  public Object makeDiceDTO(ArrayList<Dice> diceList) {
+//	ArrayList<DiceTO> dtoList = new ArrayList<>();
+//	for( Dice d: diceList) {
+//		dtoList.add(this.makeDTO(d));
+//	}
+//	return dtoList;
+//  }
+
+//	public DiceTO makeDTO(Dice d) {
+//		DiceTO dto = new DiceTO();
+//		dto.setDiceId(dto.getDiceId());
+//		dto.setDiceNumber((int) Math.round(Math.random()*100%7));
+//		return dto;
+//	}
+
+
 }

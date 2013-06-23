@@ -3,27 +3,52 @@ package de.mensch.dto;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import de.mensch.entities.Customer;
+
 
 public class DiceTO implements Serializable {
 	
 	private static final long serialVersionUID = 123L;
 	
-	private String diceNumber = "";
+	public int diceNumber;
+	
+	public int diceId;
 
 	public DiceTO() {
 	}
-	
-	public DiceTO(String diceNumber) {
+
+	public DiceTO(int diceNumber, int diceId) {
 		super();
 		this.diceNumber = diceNumber;
+		this.diceId = diceId;
 	}
 
-
-	public String getDiceNumber() {
+	
+	/**
+	 * @return the diceNumber
+	 */
+	public int getDiceNumber() {
 		return diceNumber;
 	}
 
-	public void setDiceNumber(String diceNumber) {
+	/**
+	 * @return the diceId
+	 */
+	public int getDiceId() {
+		return diceId;
+	}
+
+	/**
+	 * @param diceNumber the diceNumber to set
+	 */
+	public void setDiceNumber(int diceNumber) {
 		this.diceNumber = diceNumber;
+	}
+
+	/**
+	 * @param diceId the diceId to set
+	 */
+	public void setDiceId(int diceId) {
+		this.diceId = diceId;
 	}
 }

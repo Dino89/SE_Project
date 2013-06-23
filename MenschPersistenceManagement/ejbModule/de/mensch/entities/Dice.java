@@ -20,9 +20,6 @@ public class Dice implements Serializable {
 
 	private int number;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Game gameentity;
-	
 	public Dice() {
 		super();
 		this.number = (int) Math.round(Math.random()*100%7);

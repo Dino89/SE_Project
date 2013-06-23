@@ -15,7 +15,7 @@ public class Dice implements Serializable {
 	}
 	
 	public String toString() {
-		return "Dice: " + diceNumber;
+		return "Dice: " + diceNumber + " id:"+diceId;
 	}
 
 	/**

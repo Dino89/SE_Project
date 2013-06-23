@@ -59,7 +59,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	 */
 	@Schedule(second="59", minute="*",hour="*", persistent=false)
 	public void removeOldSessions() {
-		System.out.println("Removing Sessions...");
+//		System.out.println("Removing Sessions...");
 		ArrayList<MenschSession> sessionList = this.dao.findSessions();
 		ArrayList<Game> gameList = this.dao.getGameList();
 		ArrayList<Request> requestList = this.dao.getAllRequests();
@@ -187,20 +187,19 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	 * @see de.mensch.onlineservice.MenschOnlineIntegration#diceNumber()
 	 */
 	@Override
-	public DiceResponse diceNumber(int sessionId, int gameId) throws NoSessionException {
+	public GameListResponse diceNumber(int sessionId, int gameId) throws NoSessionException {
 		MenschSession session = getSession(sessionId);
 		System.out.println("gameid: "+gameId);
 		Game game = this.dao.findGameById(gameId);
-		Dice dice = this.dao.createDiceNumber();
-		DiceResponse response = new DiceResponse();
-		int diceNumber = dice.getNumber();
-		response.setDiceNumber(diceNumber);
-		response.setDiceId(dice.getId());
-		System.out.println("game found: "+game.toString()+"dice number: "+diceNumber);
-		Map<Integer, Dice> dicemap = game.getDice();
-		dicemap.put(dice.getId(), dice);
-		game.setDice(dicemap);
-		System.out.println(response);
+		
+		GameListResponse response = new GameListResponse();
+		
+		game.setDiceNumber((int) Math.round(Math.random()*100%7));
+		System.out.println("game dice "+game.getDiceNumber());
+		
+		ArrayList<Game> gameList = this.dao.getGameList();
+		response.setGameList(dtoAssembler.makeDTO(gameList));
+		
 		return response;
 	}
 	/* @return Liste aller vorhandenen Spiele
@@ -247,10 +246,14 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	 * @see de.mensch.onlineservice.MenschOnlineIntegration#getGameFields(int)
 	 */
 	@Override
-	public GameFieldResponse getGameFields(int id) {
-		GameFieldResponse response = new GameFieldResponse();
-		Game gameFields = this.dao.getGameFields(id);
-		response.setGameFields(dtoAssembler.makeDTO(gameFields));
+	public GameListResponse getGameFields(int gameid) {
+		GameListResponse response = new GameListResponse();
+		
+		Game game = this.dao.findGameById(gameid);
+
+		ArrayList<Game> gameList = this.dao.getGameList();
+		response.setGameList(dtoAssembler.makeDTO(gameList));
+		
 		return response;
 	}
 	
@@ -470,7 +473,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	}
 	
 	@Override
-	public SpielzugResponse spielen(int gameid, int sessionid, int spielfigurfeld, int diceid) throws NoSessionException {
+	public SpielzugResponse spielen(int gameid, int sessionid, int spielfigurfeld, int diceNumber) throws NoSessionException {
 		System.out.println("Ich will spielen!");
 		MenschSession session = null;
 		if(sessionid!=-1) session = getSession(sessionid);
@@ -480,7 +483,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		Game game = this.dao.findGameById(gameid);
 		if(!spielerIstDran(gameid, session)) return response;
 		System.out.println("Ziehe...");
-		ziehen(gameid, spielfigurfeld, diceid);
+		ziehen(gameid, spielfigurfeld, diceNumber);
 		pruefeNochmalWuerfeln(gameid);
 		if(game.getWuerfelCount()<=2) { 
 			System.out.println("Nochmal dran!");
@@ -529,10 +532,10 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		
 	}
 
-	private boolean ziehen(int gameid, int spielfigurfeld, int diceid) {
+	private boolean ziehen(int gameid, int spielfigurfeld, int diceNumber) {
 		Game game = this.dao.findGameById(gameid);
 		if(!eigeneFigur(game, spielfigurfeld)) return false;
-		setzeFigur(game, spielfigurfeld, diceid);
+		setzeFigur(game, spielfigurfeld, diceNumber);
 		pruefeNochmalWuerfeln(gameid);
 		
 		return true;
@@ -631,10 +634,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 //		
 //	}
 //
-	private boolean setzeFigur(Game game, int spielFeldNummer, int diceId) {
+	private boolean setzeFigur(Game game, int spielFeldNummer, int diceNumber) {
 		GameField spielfeld = game.getGameField();
-		
-		int diceNumber = game.getDice().get(diceId).getNumber();
 		
 		int zielFeldValue = spielfeld.getField(spielFeldNummer+diceNumber);
 		int zielFeld = spielFeldNummer+diceNumber;

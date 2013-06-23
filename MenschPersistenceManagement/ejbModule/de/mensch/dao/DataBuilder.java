@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 
 import de.mensch.entities.Account;
 import de.mensch.entities.Customer;
+import de.mensch.entities.Dice;
 import de.mensch.entities.Game;
 
 /**
@@ -46,6 +47,9 @@ public class DataBuilder {
 		game2.setOwner(customer2);
 		em.persist(game2);
 		System.out.println("game + customer angelegt");
+		
+		Dice dice = new Dice();
+		em.persist(dice);
 		
 		//erzeuge ein paar Beispieldaten zu Kunden und Konten, falls sie noch nicht in der DB vorhanden sind.
 //		Customer customer1 = em.find(Customer.class, username1);
