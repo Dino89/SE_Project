@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import de.mensch.entities.Customer;
-import de.mensch.entities.Zuschauer;
+
 
 public class GameTO implements Serializable {
 	
@@ -20,7 +20,7 @@ public class GameTO implements Serializable {
 	private Customer spieler2;
 	private Customer spieler3;
 	private Customer spieler4;
-	ArrayList <Zuschauer> zuschauer;
+	SpectatorListTO zuschauerListe;
 	
 	public GameTO() {
 	}
@@ -111,11 +111,11 @@ public class GameTO implements Serializable {
 		this.started = started;
 	}
 
-	public ArrayList<Zuschauer> getZuschauer() {
-		return zuschauer;
+	public SpectatorListTO getSpectatorListTO() {
+		return zuschauerListe;
 	}
 
-	public void setZuschauer(ArrayList<Zuschauer> zuschauer) {
-		this.zuschauer = zuschauer;
+	public void setSpectatorListTO(SpectatorListTO SpectatorListTO) {
+		this.zuschauerListe = SpectatorListTO;
 	}
 }

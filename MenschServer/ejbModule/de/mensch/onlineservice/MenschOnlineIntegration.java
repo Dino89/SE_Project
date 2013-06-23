@@ -18,7 +18,7 @@ import de.mensch.dto.SpielzugResponse;
 import de.mensch.dto.UserLoginResponse;
 import de.mensch.dto.UserRegisterResponse;
 import de.mensch.entities.Request;
-import de.mensch.entities.Zuschauer;
+
 
 /**
  * Dieses Business Interface definiert die Schnittstelle zum OnlineSystem.

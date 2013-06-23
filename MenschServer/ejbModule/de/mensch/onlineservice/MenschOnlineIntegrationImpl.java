@@ -40,7 +40,7 @@ import de.mensch.entities.Game;
 import de.mensch.entities.GameField;
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
-import de.mensch.entities.Zuschauer;
+
 
 
 /**
@@ -212,9 +212,9 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	public GameListResponse getGames(int sessionId) throws NoSessionException {
 		MenschSession session = getSession(sessionId);
 		Date date = new Date();
-		System.out.println("Updating session at getGames...");
+//		System.out.println("Updating session at getGames...");
 		session.setCreationTime(date);
-		System.out.println("Session updated");
+//		System.out.println("Session updated");
 		GameListResponse response = new GameListResponse();
 		ArrayList<Game> gameList = this.dao.getGameList();
 		response.setGameList(dtoAssembler.makeDTO(gameList));
@@ -303,8 +303,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 				g.setSpieler4(null);
 			}
 			
-			Map<Integer, Zuschauer> z = g.getZuschauer();
-			z.remove(this.dao.findZuschauerByCustomerName(s.getUsername()));
+			Map<Integer, MenschSession> z = g.getZuschauer();
+			z.remove(s);
 		}
 	    
 		
@@ -461,12 +461,14 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	@Override
 	public void spectateGame(int sessionId, int gameid) throws NoSessionException{
 		MenschSession session = getSession(sessionId);
-		Map <Integer,Zuschauer>z = (Map<Integer, Zuschauer>) this.dao.getGame(gameid).getZuschauer();
-		Zuschauer zuschauer = new Zuschauer();
-		zuschauer.setGame(this.dao.getGame(gameid));
-		zuschauer.setZuschauer(this.dao.findCustomerByName(this.dao.findSessionById(sessionId).getUsername()));
+		Map <Integer,MenschSession>z = (Map<Integer, MenschSession>) this.dao.getGame(gameid).getZuschauer();
+		Game g = this.dao.findGameById(gameid);
+		session.setCurrentGame(g);
 		
-		z.put(zuschauer.getId(), zuschauer);
+		
+		
+		z.put(sessionId, session);
+		System.out.println("Neuer Zuschauer: "+z.get(sessionId).getUsername()+" bei Game "+z.get(sessionId).getCurrentGame().getId());
 	}
 	
 	@Override
@@ -634,8 +636,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	private boolean setzeFigur(Game game, int spielFeldNummer, int diceId) {
 		GameField spielfeld = game.getGameField();
 		
-		int diceNumber = game.getDice().get(diceId).getNumber();
-		
+	//	int diceNumber = game.getDice().get(diceId).getNumber();
+		int diceNumber=6;
 		int zielFeldValue = spielfeld.getField(spielFeldNummer+diceNumber);
 		int zielFeld = spielFeldNummer+diceNumber;
 		

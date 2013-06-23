@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.ejb.Stateless;
 
-import de.mensch.dto.AccountTO;
+
 import de.mensch.dto.CustomerTO;
 import de.mensch.dto.DiceResponse;
 import de.mensch.dto.DiceTO;
 import de.mensch.dto.GameTO;
 import de.mensch.dto.RequestTO;
+import de.mensch.dto.SpectatorListTO;
 import de.mensch.entities.*;
 
 @Stateless
@@ -46,15 +48,18 @@ public class DtoAssembler {
 	  dto.setSpieler4(game.getSpieler4());
 	  dto.getOwner().setPassword(null);
 	  dto.setStarted(game.isStarted());
-	  Map<Integer,Zuschauer> mp = game.getZuschauer();
-	  ArrayList<Zuschauer> dtoZuschauer = new ArrayList<Zuschauer>();
-	  Iterator it = mp.entrySet().iterator();
+	  Map<Integer,MenschSession> mp = game.getZuschauer();
+	  ArrayList<String> dtoZuschauer = new ArrayList<String>();
+	  Iterator<Entry<Integer, MenschSession>> it = mp.entrySet().iterator();
 	    while (it.hasNext()) {
-	        Map.Entry pairs = (Map.Entry)it.next();
-	        dtoZuschauer.add((Zuschauer) pairs.getValue());
+	        Map.Entry<Integer,MenschSession> pairs = (Map.Entry)it.next();
+	        dtoZuschauer.add( pairs.getValue().getUsername());
+	        System.out.println("DTO Assembler fügt zu Zuschauern hinzu "+ pairs.getValue().getUsername());
 	     //   it.remove(); // avoids a ConcurrentModificationException
 	    }
-	  dto.setZuschauer(dtoZuschauer);
+	    SpectatorListTO kapsel = new SpectatorListTO();
+	    kapsel.setZuschauer(dtoZuschauer);
+	  dto.setSpectatorListTO(kapsel);
 	  return dto;
   }
   
