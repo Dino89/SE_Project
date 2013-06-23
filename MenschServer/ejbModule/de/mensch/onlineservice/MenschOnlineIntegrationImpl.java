@@ -191,9 +191,10 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		MenschSession session = getSession(sessionId);
 		System.out.println("gameid: "+gameId);
 		Game game = this.dao.findGameById(gameId);
-		
 		GameListResponse response = new GameListResponse();
 		
+		if(game.getAktuellerSpieler()!=session.getUsername()) return response;
+	
 		game.setDiceNumber((int) Math.round(Math.random()*100%7));
 		System.out.println("game dice "+game.getDiceNumber());
 		
