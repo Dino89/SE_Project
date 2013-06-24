@@ -12,6 +12,8 @@ import javax.ejb.Stateless;
 import de.mensch.dto.CustomerTO;
 import de.mensch.dto.DiceResponse;
 import de.mensch.dto.DiceTO;
+import de.mensch.dto.FieldTO;
+import de.mensch.dto.GameFieldTO;
 import de.mensch.dto.GameTO;
 import de.mensch.dto.RequestTO;
 import de.mensch.dto.SpectatorListTO;
@@ -63,8 +65,35 @@ public class DtoAssembler {
 	  SpectatorListTO kapsel = new SpectatorListTO();
 	  kapsel.setZuschauer(dtoZuschauer);
 	  dto.setSpectatorListTO(kapsel);  
-	  dto.setGameField(game.getGameField());
+	  GameFieldTO gfTO = new GameFieldTO();
+	  
+	  gfTO.setFields(makeDTOGameFields(game.getGameField().getFields()));
+	  
+//	  gfTO.setBlue_house(makeDTOGameFields(game.getGameField().getBlue_house()));
+//	  gfTO.setRed_house(makeDTOGameFields(game.getGameField().getRed_house()));
+//	  gfTO.setGreen_house(makeDTOGameFields(game.getGameField().getGreen_house()));
+//	  gfTO.setYellow_house(makeDTOGameFields(game.getGameField().getYellow_house()));
+//	  
+//	  gfTO.setBlue_start(makeDTOGameFields(game.getGameField().getBlue_start()));
+//	  gfTO.setRed_start(makeDTOGameFields(game.getGameField().getRed_start()));
+//	  gfTO.setGreen_start(makeDTOGameFields(game.getGameField().getGreen_start()));
+//	  gfTO.setYellow_start(makeDTOGameFields(game.getGameField().getYellow_start()));
+	  
+	  dto.setGameField(gfTO);
   	  return dto;
+  }
+  
+  public ArrayList<FieldTO> makeDTOGameFields(List<Field> list){
+	  System.out.println("gamefield: "+list);
+	  ArrayList<FieldTO> result = new ArrayList<FieldTO>();
+	  for(int i=0;i<list.size();i++){
+		  int buffer = list.get(i).getState();
+		  FieldTO buffer2 = new FieldTO();
+		  buffer2.setState(buffer);
+		
+		  result.add(buffer2);
+	  }
+	  return result;
   }
   
   public ArrayList<GameTO> makeDTO(ArrayList<Game> gameList) {

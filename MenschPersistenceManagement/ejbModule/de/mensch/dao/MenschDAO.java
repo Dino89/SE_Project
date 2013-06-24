@@ -90,8 +90,9 @@ public class MenschDAO implements MenschDAOLocal {
 		game.setOwner(owner);
 		game.setSpieler1(owner);
 		GameField gf = new GameField();
-		em.persist(gf);
 		gf.init();
+		em.persist(gf);
+		
 		game.setGameField(gf);
 		
 		em.persist(game);

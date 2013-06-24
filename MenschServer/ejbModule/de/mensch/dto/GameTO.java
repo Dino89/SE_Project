@@ -24,7 +24,7 @@ public class GameTO implements Serializable {
 	private Customer spieler4;
 	SpectatorListTO zuschauerListe;
 
-	private GameField gameField;
+	private GameFieldTO gameField;
 	
 	public GameTO() {
 	}
@@ -131,11 +131,11 @@ public class GameTO implements Serializable {
 		this.diceNumber = diceNumber;
 	}
 
-	public GameField getGameField() {
+	public GameFieldTO getGameField() {
 		return gameField;
 	}
 
-	public void setGameField(GameField gameField) {
+	public void setGameField(GameFieldTO gameField) {
 		this.gameField = gameField;
 	}
 }

@@ -2,11 +2,13 @@ package de.mensch.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 
@@ -14,7 +16,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class GameField implements Serializable {
 	
-	private static final long serialVersionUID = 12L;
+	private static final long serialVersionUID = 10L;
 	
 	
 	@Id @GeneratedValue
@@ -23,11 +25,47 @@ public class GameField implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Game game;
 	
-	private ArrayList<Integer> fields;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Field> fields;
+	
+//	@OneToMany(cascade = CascadeType.ALL)
+//	private List<Field> blue_start;
+//	
+//	@OneToMany(cascade = CascadeType.ALL)
+//	private List<Field> red_start;
+//	
+//	@OneToMany(cascade = CascadeType.ALL)
+//	private List<Field> green_start;
+//	
+//	@OneToMany(cascade = CascadeType.ALL)
+//	private List<Field> yellow_start;
+//	
+//	@OneToMany(cascade = CascadeType.ALL)
+//	private List<Field> blue_house;
+//	
+//	@OneToMany(cascade = CascadeType.ALL)
+//	private List<Field> red_house;
+//	
+//	@OneToMany(cascade = CascadeType.ALL)
+//	private List<Field> green_house;
+//	
+//	@OneToMany(cascade = CascadeType.ALL)
+//	private List<Field> yellow_house;
+	
 	
 	public GameField() {
 		fields = new ArrayList<>();
-
+//		blue_start = new ArrayList<>();
+//		red_start = new ArrayList<>();
+//		yellow_start = new ArrayList<>();
+//		green_start = new ArrayList<>();
+//		
+//		blue_house = new ArrayList<>();
+//		red_house = new ArrayList<>();
+//		yellow_house = new ArrayList<>();
+//		green_house = new ArrayList<>();
+		
+	//	System.out.println("gamefield constructor called");
 //		
 //		setField(0, 0);
 //		
@@ -48,22 +86,135 @@ public class GameField implements Serializable {
 //		}
 	}
 	public void init(){
-		for(int i=0; i<=73;i++) {
-			fields.add(0);
+		for(int i=0; i<=39;i++) {
+			Field f = new Field();
+			f.setState(0);
+			
+			fields.add(f);
 		}
+	
+//		for(int i=0; i<=3;i++) {
+//			Field f = new Field();
+//			f.setState(1);
+//			
+//			blue_start.add(f);
+//		}
+//		for(int i=0; i<=3;i++) {
+//			Field f = new Field();
+//			f.setState(1);
+//			
+//			blue_house.add(f);
+//		}
+//		
+//		for(int i=0; i<=3;i++) {
+//			Field f = new Field();
+//			f.setState(2);
+//			
+//			red_start.add(f);
+//		}
+//		for(int i=0; i<=3;i++) {
+//			Field f = new Field();
+//			f.setState(2);
+//			
+//			red_house.add(f);
+//		}
+//		
+//		for(int i=0; i<=3;i++) {
+//			Field f = new Field();
+//			f.setState(3);
+//			
+//			green_start.add(f);
+//		}
+//		for(int i=0; i<=3;i++) {
+//			Field f = new Field();
+//			f.setState(3);
+//			
+//			green_house.add(f);
+//		}
+//		
+//		for(int i=0; i<=3;i++) {
+//			Field f = new Field();
+//			f.setState(4);
+//			
+//			yellow_start.add(f);
+//		}
+//		for(int i=0; i<=3;i++) {
+//			Field f = new Field();
+//			f.setState(4);
+//			
+//			yellow_house.add(f);
+//		}
+		//System.out.println("init fertig");
 	}
 		
-	public void setField(int index, int value) {
-		this.fields.set(index, value);
-	}
-	
-	public int getField(int index) {
-		return this.fields.get(index);
-	}
+
 
 	public int getSize() {
 		return this.fields.size();
 	}
+	public List<Field> getFields() {
+		return fields;
+	}
+	public void setFields(List<Field> fields) {
+		this.fields = fields;
+	}
+//	public List<Field> getBlue_start() {
+//		return blue_start;
+//	}
+//	public void setBlue_start(List<Field> blue_start) {
+//		this.blue_start = blue_start;
+//	}
+//	public List<Field> getRed_start() {
+//		return red_start;
+//	}
+//	public void setRed_start(List<Field> red_start) {
+//		this.red_start = red_start;
+//	}
+//	public List<Field> getGreen_start() {
+//		return green_start;
+//	}
+//	public void setGreen_start(List<Field> green_start) {
+//		this.green_start = green_start;
+//	}
+//	public List<Field> getYellow_start() {
+//		return yellow_start;
+//	}
+//	public void setYellow_start(List<Field> yellow_start) {
+//		this.yellow_start = yellow_start;
+//	}
+//	public List<Field> getBlue_house() {
+//		return blue_house;
+//	}
+//	public void setBlue_house(List<Field> blue_house) {
+//		this.blue_house = blue_house;
+//	}
+//	public List<Field> getRed_house() {
+//		return red_house;
+//	}
+//	public void setRed_house(List<Field> red_house) {
+//		this.red_house = red_house;
+//	}
+//	public List<Field> getGreen_house() {
+//		return green_house;
+//	}
+//	public void setGreen_house(List<Field> green_house) {
+//		this.green_house = green_house;
+//	}
+//	public List<Field> getYellow_house() {
+//		return yellow_house;
+//	}
+//	public void setYellow_house(List<Field> yellow_house) {
+//		this.yellow_house = yellow_house;
+//	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
+	
 //	private int field_blue_1;
 //	private int field_blue_2;
 //	private int field_blue_3;

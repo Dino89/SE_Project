@@ -10,6 +10,7 @@ import de.mensch.dto.DiceResponse;
 import de.mensch.dto.GameDetailResponse;
 import de.mensch.dto.GameFieldResponse;
 import de.mensch.dto.GameListResponse;
+import de.mensch.dto.GameTO;
 import de.mensch.dto.JoinResponse;
 import de.mensch.dto.RequestListResponse;
 import de.mensch.dto.RequestResponse;
@@ -43,7 +44,7 @@ public interface MenschOnlineIntegration {
 	
 	public GameListResponse getGames(int sessionid) throws NoSessionException;
 	
-	public GameDetailResponse getGameDetails(int id);
+	public GameTO getGameDetails(int id);
 	
 	public GameListResponse getGameFields(int id);
 
