@@ -1,6 +1,8 @@
 package de.mensch.highscore;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.ActivationConfigProperty;
@@ -12,9 +14,7 @@ import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 
-
-
-
+import de.mensch.dao.MenschDAOLocal;
 
 //Unter Window Server Properties die xml geändert
 //<jms-destinations>
@@ -27,32 +27,42 @@ import javax.jms.TextMessage;
 //    <entry name="java:jboss/exported/jms/topic/test"/>
 //</jms-topic>
 //</jms-destinations>
-
+/**
+ * MDB lauscht auf den Empfang der HighscoreListe vom HighscoreServer
+ * @author Christopher
+ *
+ */
 @MessageDriven(activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
         @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/sendHighscoreListToApp") })
 public class ReceivedHighscoreListFromHighscoreServer implements MessageListener  {
 	
+	@EJB(beanName = "MenschDAO", beanInterface = de.mensch.dao.MenschDAOLocal.class)
+	private MenschDAOLocal dao;
+	
+	public static String highscoreListeFromHighscoreServer = null;
+	
+	/**
+	 * 
+	 */
 	@Override
 	public void onMessage(Message message) {
 		try {
-			System.out.println("Received die verdammte LISTE!!!");
-		//ArrayList highscoreList = new ArrayList();	
+
 		ObjectMessage msg = (ObjectMessage) message;
-		String bla = msg.getStringProperty("test");
-		
+		String topTwenty = msg.getObject().toString();
 
-		System.out.println("HighscoreListe vom HighscoreServer empfangen " + bla);
-		
-
-		
-		
-		
+		highscoreListeFromHighscoreServer = topTwenty; 
 		}
 		catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
+		
+
     }
+	
+
+	
 	
 	
 	

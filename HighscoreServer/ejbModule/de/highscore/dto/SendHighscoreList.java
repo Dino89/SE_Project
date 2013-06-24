@@ -1,6 +1,7 @@
 package de.highscore.dto;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,11 +21,18 @@ import javax.jms.TextMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
+import de.highscore.dao.HighscoreDAO;
 import de.highscore.dao.HighscoreDAOLocal;
+import de.highscore.entities.Highscore;
+import de.highscore.online.HighscoreOnlineIntegrationImpl;
 
 
 
-
+/**
+ * Sendet die HighscoreListe an den MenschServer
+ * @author Christopher
+ *
+ */
 
 @Stateless
 @LocalBean
@@ -40,7 +48,7 @@ public class SendHighscoreList {
 	   
 
 
-	   public void sendHighscoreList(){
+	   public void sendHighscoreList(String topTwenty){
 		   	
 		    final String QUEUE_LOOKUP = "queue/sendHighscoreListToApp";
 		    final String CONNECTION_FACTORY = "ConnectionFactory";
@@ -53,18 +61,15 @@ public class SendHighscoreList {
 			     QueueSession session = connection.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
 			     Queue queue = (Queue) context.lookup(QUEUE_LOOKUP);
 			     QueueSender producer = session.createSender(queue);
-			     
-			     ArrayList<?> l = new ArrayList<>();
+			     System.out.println("Ich komme aus HighscoreServer und will die Liste senden an MenschSever!!!!!");
 
-			     System.out.println("Credits ausgabe test" );
+			     System.out.println("Senden an Mensch wird gestartet" );
 			     ObjectMessage msg = session.createObjectMessage();
-			      
-			 
-			     msg.setStringProperty("test", "Hallo");
-			     
+
+			     msg.setObject(topTwenty);
 
 			     producer.send(msg);
-			     System.out.println("Aus Methode sendHighscoreList: Liste gesendet! :)");
+			     System.out.println("Ich komme aus HighscoreServer und habe die Liste  an MenschSever gesendet!!!!!");
 			     session.close();
 			    } 
 		    	catch (Exception ex) {

@@ -26,30 +26,30 @@ public class HighscoreOnlineIntegrationImpl implements HighscoreOnlineIntegratio
 //	@EJB
 //	private DtoAssembler dtoAssembler;
 	
-	@EJB(beanName = "HighscoreDAO", beanInterface = de.highscore.dao.HighscoreDAO.class)
-	private HighscoreDAOLocal dao;
+//	@EJB(beanName = "HighscoreDAO", beanInterface = de.highscore.dao.HighscoreDAO.class)
+//	private HighscoreDAOLocal dao;
 
 	
 	@Override
 	public int getCredits(String username) {
-		int credits = this.dao.getCredits(username);
+		//int credits = this.dao.getCredits(username);
 		
-		return credits;
+		return 1;
 	}
 
 	@Override
 	public ArrayList<Highscore> getTopTwenty() {
 		
-		ArrayList<Highscore> highscoreList = (ArrayList<Highscore>) this.dao.getTopTwenty();
+		//ArrayList<Highscore> highscoreList = (ArrayList<Highscore>) this.dao.getTopTwenty();
 		
-		return highscoreList;
+		return null;
 		
 		
 	}
 
 	@Override
 	public void setHighscore(String user, int credits) {
-		dao.setHighscore(user, credits);
+		//dao.setHighscore(user, credits);
 		
 	}
 

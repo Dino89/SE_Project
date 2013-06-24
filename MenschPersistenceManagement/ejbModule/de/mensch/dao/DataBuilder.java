@@ -47,32 +47,7 @@ public class DataBuilder {
 		em.persist(game2);
 		System.out.println("game + customer angelegt");
 		
-		//erzeuge ein paar Beispieldaten zu Kunden und Konten, falls sie noch nicht in der DB vorhanden sind.
-//		Customer customer1 = em.find(Customer.class, username1);
-//		if (customer1 == null) {
-//			//Kunde noch nicht vorhanden, also mit neuem Konto anlegen:
-//			customer1 = new Customer(username1, password1);
-//			em.persist(customer1);
-//			Account account1 = new Account(customer1);
-//			em.persist(account1);
-//			Account account2 = new Account(customer1);
-//			em.persist(account2);
-//			System.out.println("Neu angelegt: " + account1);
-//			System.out.println("Neu angelegt: " + account2);
-//		}
-//
-//		Customer customer2 = em.find(Customer.class, username2);
-//		if (customer2 == null) {
-//			//Kunde noch nicht vorhanden, also mit neuem Konto anlegen:
-//			customer2 = new Customer(username2, password2);
-//			em.persist(customer2);
-//			Account account1 = new Account(customer2);
-//			em.persist(account1);
-//			Account account2 = new Account(customer2);
-//			em.persist(account2);
-//			System.out.println("Neu angelegt: " + account1);
-//			System.out.println("Neu angelegt: " + account2);			
-//		}
+
 	}
 	
 }

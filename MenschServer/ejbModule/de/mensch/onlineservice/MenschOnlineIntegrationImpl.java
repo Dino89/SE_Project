@@ -27,6 +27,7 @@ import de.mensch.dto.DiceTO;
 import de.mensch.dto.GameDetailResponse;
 import de.mensch.dto.GameFieldResponse;
 import de.mensch.dto.GameListResponse;
+import de.mensch.dto.HighscoreListResponse;
 import de.mensch.dto.JoinResponse;
 import de.mensch.dto.RequestResponse;
 import de.mensch.dto.ReturncodeResponse;
@@ -41,6 +42,7 @@ import de.mensch.entities.GameField;
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
 import de.mensch.highscore.GetHighscoreListFromHighscoreServer;
+import de.mensch.highscore.ReceivedHighscoreListFromHighscoreServer;
 import de.mensch.highscore.SendHighscore;
 
 
@@ -61,8 +63,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	@EJB
 	private DtoAssembler dtoAssembler;
 	
-//	@EJB
-//	private SendHighscore sendH;
+
 
 	@EJB(beanName = "MenschDAO", beanInterface = de.mensch.dao.MenschDAOLocal.class)
 	private MenschDAOLocal dao;
@@ -85,15 +86,14 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 				System.out.println("Login erfolgreich. Session=" + sessionId);
 				response.setSessionId(sessionId);
 				
-				//TEST TEMP
-				SendHighscore sh = new SendHighscore();
-				sh.highscorePoinsForLeavingGame(user);
-				
-				GetHighscoreListFromHighscoreServer ghl = new GetHighscoreListFromHighscoreServer();
-				ghl.getHighscoreListFromServer();
+				//TESTDATEN SCHREIBEN TEMP!!!!!!!
+				SendHighscore blala = new SendHighscore();
+				blala.highscorePoinsForLeavingGame(user);
 				
 				
-				//ENDE TEST EMP
+
+
+
 			}
 			else {
 				System.out.println("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
@@ -361,9 +361,25 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		
 	}
 	
+	/**
+	 * Wird von der Android App aufgerufen und holt sich die HighscoreListe
+	 */
 	@Override
-	public void getHighscoreList() {
-		System.out.println("button bla");
+	public HighscoreListResponse getHighscoreList() {
 
+		System.out.println("button bla");
+		//Befehl senden an HighscoreServer und so die Liste holen
+		GetHighscoreListFromHighscoreServer ghl = new GetHighscoreListFromHighscoreServer();
+		ghl.getHighscoreListFromServer();
+		//Warten auf Antwort vom HighscoreServer
+		try {Thread.sleep(2000);}catch(Exception ex) {System.out.println("ThreadSleep ERROR aus getHighscoreList");}
+		
+		ReceivedHighscoreListFromHighscoreServer recList = new ReceivedHighscoreListFromHighscoreServer();
+		String list = recList.highscoreListeFromHighscoreServer;
+		
+		HighscoreListResponse response = new HighscoreListResponse();
+		response.setList(list);
+		return response;
+		
 	}
 }

@@ -1,4 +1,5 @@
 package de.highscore.dto;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,9 +13,7 @@ import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 import de.highscore.*;
 import de.highscore.dao.HighscoreDAOLocal;
-
-
-
+import de.highscore.entities.Highscore;
 
 //Unter Window Server Properties die xml geändert
 //<jms-destinations>
@@ -28,10 +27,19 @@ import de.highscore.dao.HighscoreDAOLocal;
 //</jms-topic>
 //</jms-destinations>
 
+
+/**
+ * MDB lauscht auf den Empfang des Befehls vom MenschServer zum senden der HighscoreList
+ * @author Christopher
+ *
+ */
 @MessageDriven(activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
         @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/getHighscoreList") })
 public class ReceivedCommandGetHighscoreList implements MessageListener  {
+	
+	@EJB(beanName = "HighscoreDAO", beanInterface = de.highscore.dao.HighscoreDAOLocal.class)
+	private HighscoreDAOLocal dao;
 	
 	SendHighscoreList shList = new SendHighscoreList();
 	@Override
@@ -41,15 +49,17 @@ public class ReceivedCommandGetHighscoreList implements MessageListener  {
 
 		ObjectMessage msg = (ObjectMessage) message;
 		if(msg.getStringProperty("befehl").equals("getList")) {
-			shList.sendHighscoreList();
-			System.out.println("Vergleich OK");
+			
+			System.out.println("Vergleich OK, starte Senden der Liste");
+			String topTwenty = null;
+			topTwenty = dao.getTopTwenty().toString();
+			
+			System.out.println("aus receivedCommand der String:  " + topTwenty);
+			shList.sendHighscoreList(topTwenty);
+			
+	
 		}
-		
-		
 
-		
-		
-		
 		}
 		catch(Exception ex) {
 			System.out.println(ex.getMessage());

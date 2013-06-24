@@ -10,6 +10,7 @@ import de.mensch.dto.DiceResponse;
 import de.mensch.dto.GameDetailResponse;
 import de.mensch.dto.GameFieldResponse;
 import de.mensch.dto.GameListResponse;
+import de.mensch.dto.HighscoreListResponse;
 import de.mensch.dto.JoinResponse;
 import de.mensch.dto.RequestResponse;
 import de.mensch.dto.ReturncodeResponse;
@@ -65,5 +66,5 @@ public interface MenschOnlineIntegration {
 	
 	public void declinePlayer(int requestId);
 
-	public void getHighscoreList();
+	public HighscoreListResponse getHighscoreList();
 }

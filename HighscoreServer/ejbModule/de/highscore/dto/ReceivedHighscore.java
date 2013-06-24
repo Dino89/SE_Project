@@ -16,26 +16,19 @@ import de.highscore.online.*;
 
 
 
-
-//Unter Window Server Properties die xml geändert
-//<jms-destinations>
-//<jms-queue name="testQueue">
-//    <entry name="queue/Pretech"/>
-//    <entry name="java:jboss/exported/jms/queue/test"/>
-//</jms-queue>
-//<jms-topic name="testTopic">
-//    <entry name="topic/test"/>
-//    <entry name="java:jboss/exported/jms/topic/test"/>
-//</jms-topic>
-//</jms-destinations>
-
+/**
+ * MDB lauscht auf den Empfang der Highscore Daten die in die Datenbank geschrieben werden sollen.
+ * @author Christopher
+ *
+ */
 @MessageDriven(activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
         @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/Pretech") })
 public class ReceivedHighscore implements MessageListener  {
 	
-//	@EJB(beanName = "HighscoreDAO", beanInterface = de.highscore.dao.HighscoreDAOLocal.class)
-//	private HighscoreDAOLocal dao;
+	@EJB(beanName = "HighscoreDAO", beanInterface = de.highscore.dao.HighscoreDAOLocal.class)
+	private HighscoreDAOLocal dao;
+	
 	
 	
 	@Override
@@ -49,9 +42,18 @@ public class ReceivedHighscore implements MessageListener  {
 		credits = msg.getIntProperty("credits");
 		
 		
-		setHighscore(user, credits);
+		dao.setHighscore(user, credits);
 		
-		System.out.println("Ausgabe aus DB"));
+		//Testdaten
+		dao.setHighscore("Max", 2);
+		dao.setHighscore("Paul", 4);
+		dao.setHighscore("Dino", 2);
+		dao.setHighscore("Krimi", 1);
+		dao.setHighscore("Matz", 5);
+		dao.setHighscore("Malte", 7);
+		//Ende Testdaten
+		
+		System.out.println("Ausgabe aus DB erfolgreich! -->" + dao.getCredits(user));
 		
 		}
 		catch(Exception ex) {

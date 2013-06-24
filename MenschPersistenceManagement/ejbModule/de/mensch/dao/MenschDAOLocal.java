@@ -47,6 +47,9 @@ public interface MenschDAOLocal {
 	public Game findGameByOwnerUserName(Customer owner);
 
 	public void removeRequest(int requestId);
+	
+
+	
 
 		
 }

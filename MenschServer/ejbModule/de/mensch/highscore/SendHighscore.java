@@ -21,7 +21,11 @@ import javax.naming.InitialContext;
 
 import de.mensch.entities.Customer;
 
-
+/**
+ * Schreibe Highscoreeinträge in die HighscoreDatenbank
+ * @author Christopher
+ *
+ */
 
 @Stateless
 @LocalBean
@@ -35,14 +39,28 @@ public class SendHighscore {
 	   QueueSender sender = null;
 	   QueueSession session = null;
 	   
+	   /**
+	    * Wenn ein Spieler das Spiel vorzeitig verlässt.
+	    * @param user
+	    */
 	   public void highscorePoinsForLeavingGame(Customer user) {
 		   sendHighscoreList(user.getUserName(), -1); 
 	   }
 	   
+	   /**
+	    * Wenn ein Spieler fertig ist(alle Figuren stehen im Haus).
+	    * @param finishingPlayer
+	    * @param remainingPlayers
+	    */
 	   public void highscorePointsForFinishingGame(Customer finishingPlayer, int remainingPlayers) {
 		   sendHighscoreList(finishingPlayer.getUserName(), remainingPlayers);
 	   }
-
+	   
+	   /**
+	    * 
+	    * @param userName
+	    * @param credits
+	    */
 	   public void sendHighscoreList(String userName, Integer credits){
 		   
 		    System.out.println("in methode der lokalen Bean");

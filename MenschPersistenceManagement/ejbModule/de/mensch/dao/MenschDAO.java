@@ -14,6 +14,7 @@ import javax.persistence.Query;
 import de.mensch.entities.Account;
 import de.mensch.entities.Customer;
 import de.mensch.entities.Game;
+
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
 
@@ -134,6 +135,8 @@ public class MenschDAO implements MenschDAOLocal {
 		// TODO Auto-generated method stub
 		em.remove(getRequest(requestId));
 	}
+
+
 	
 }
 

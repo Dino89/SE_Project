@@ -1,10 +1,16 @@
 package de.highscore.dao;
+import java.sql.Array;
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import de.highscore.entities.*;
 
@@ -15,13 +21,13 @@ public class HighscoreDAO implements HighscoreDAOLocal {
 	private EntityManager em;
 	
 	@Override
-	public ArrayList getTopTwenty() {
+	public ArrayList<Highscore> getTopTwenty() {
 		System.out.println("Methode get Top Twenty");
-		Query query = em.createQuery("SELECT e.username, e.credits FROM Highscore e ORDER_BY credits LIMIT 20");
-		System.out.println(query.getResultList().toString());
-		return (ArrayList) query.getResultList();
-
+		Query query = em.createQuery("SELECT e FROM Highscore e"); //ORDER_BY credits LIMIT 20
 		
+		
+		return (ArrayList<Highscore>) query.getResultList();
+
 	}
 
 	@Override
