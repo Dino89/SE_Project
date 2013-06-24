@@ -27,7 +27,7 @@ public class GameField implements Serializable {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Field> fields;
-	
+	//asoidfjoialsdjifo
 //	@OneToMany(cascade = CascadeType.ALL)
 //	private List<Field> blue_start;
 //	
