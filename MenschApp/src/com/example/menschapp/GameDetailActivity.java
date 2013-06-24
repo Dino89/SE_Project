@@ -210,14 +210,14 @@ public class GameDetailActivity extends Activity {
 		protected Boolean doInBackground(String... params) {
 			// TODO: attempt authentication against a network service.
 			
-//		    gameDetail = GameDetailActivity.this.obsApp.getObsStub().getGameDetails(gameid);
-			gamesArray = GameDetailActivity.this.obsApp.getObsStub().getGames();
+		    gameDetail = GameDetailActivity.this.obsApp.getObsStub().getGameDetails(gameid);
+//			gamesArray = GameDetailActivity.this.obsApp.getObsStub().getGames();
 			
-			for(Games game : gamesArray) {
-				if(game.getId()==gameid) {
-					gameDetail = game;
-				}
-			}
+//			for(Games game : gamesArray) {
+//				if(game.getId()==gameid) {
+//					gameDetail = game;
+//				}
+//			}
 	        try {
 				// Simulate network access.
 				Thread.sleep(250);

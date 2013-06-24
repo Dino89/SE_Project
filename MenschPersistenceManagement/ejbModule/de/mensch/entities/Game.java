@@ -63,6 +63,7 @@ public class Game implements Serializable {
 		spieler2 = null;
 		spieler3 = null;
 		spieler4 = null;
+		//gameField=new GameField();
 	}
 	
 	public Customer getSpieler1() {

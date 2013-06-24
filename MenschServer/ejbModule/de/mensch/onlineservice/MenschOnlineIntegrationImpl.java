@@ -232,10 +232,10 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	public GameDetailResponse getGameDetails(int id) {
 		System.out.println(id);
 		GameDetailResponse response = new GameDetailResponse();
-		Game gameDetail = this.dao.getGameDetails(id);
-		response.setGameDetails(dtoAssembler.makeDTO(gameDetail));
+		Game game = this.dao.getGame(id);
+		response.setGameDetails(dtoAssembler.makeDTO(game));
 		System.out.println("GameDetailResponse getGameDetails toString: " + response.getGameDetails(id).toString());
-		response.setReturnCode(1);
+		
 		return response;
 	}
 	

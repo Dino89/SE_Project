@@ -3,58 +3,53 @@ package de.mensch.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
-/*
- * int value 0 leeres feld
- * int value 1 blau
- * int value 2 rot
- * int value 3 grün
- * int value 4 gelb
- * 
- * int index 1 bis 4 startfelder blau
- * int index 5 bis 8 startfelder rot
- * int index 9 bis 12 startfelder grün
- * int index 13 bis 16 startfelder gelb
- * int index 17 bis 20 endfelder blau
- * int index 21 bis 24 endfelder rot
- * int index 25 bis 28 endfelder grün
- * int index 29 bis 32 endfelder gelb
- * int index 33 bis 72 spielfelder, startend mit dem blauen feld (auf der grafik field_1);
-*/
+
 
 @Entity
 public class GameField implements Serializable {
 	
 	private static final long serialVersionUID = 12L;
-	private ArrayList<Integer> fields = new ArrayList<>();
+	
 	
 	@Id @GeneratedValue
 	private int id;
 	
-	private GameField() {
+	@OneToOne(cascade = CascadeType.ALL)
+	private Game game;
+	
+	private ArrayList<Integer> fields;
+	
+	public GameField() {
+		fields = new ArrayList<>();
+
+//		
+//		setField(0, 0);
+//		
+//		for(int i = 1; i<=4;i++) {
+//			setField(i, 1);
+//		}
+//		for(int i = 5; i<=8;i++) {
+//			setField(i, 2);
+//		}
+//		for(int i = 9; i<=12;i++) {
+//			setField(i, 3);
+//		}
+//		for(int i = 13; i<=16;i++) {
+//			setField(i, 4);
+//		}
+//		for(int i = 17; i<=72;i++) {
+//			setField(i, 0);
+//		}
+	}
+	public void init(){
 		for(int i=0; i<=73;i++) {
 			fields.add(0);
-		}
-		
-		setField(0, 0);
-		
-		for(int i = 1; i<=4;i++) {
-			setField(i, 1);
-		}
-		for(int i = 5; i<=8;i++) {
-			setField(i, 2);
-		}
-		for(int i = 9; i<=12;i++) {
-			setField(i, 3);
-		}
-		for(int i = 13; i<=16;i++) {
-			setField(i, 4);
-		}
-		for(int i = 17; i<=72;i++) {
-			setField(i, 0);
 		}
 	}
 		

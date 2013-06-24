@@ -49,8 +49,16 @@ public class DtoAssembler {
 	  dto.getOwner().setPassword(null);
 	  dto.setStarted(game.isStarted());
 	  dto.setDiceNumber((int) Math.round(Math.random()*100%7));
-
-	  ArrayList<Zuschauer> dtoZuschauer = new ArrayList<Zuschauer>();
+	  
+		Map<Integer,MenschSession> mp = game.getZuschauer();
+		ArrayList<String> dtoZuschauer = new ArrayList<String>();
+		Iterator<Entry<Integer, MenschSession>> it = mp.entrySet().iterator();
+		while (it.hasNext()) {
+		Map.Entry<Integer,MenschSession> pairs = (Map.Entry)it.next();
+		dtoZuschauer.add( pairs.getValue().getUsername());
+		System.out.println("DTO Assembler fügt zu Zuschauern hinzu "+ pairs.getValue().getUsername());
+	
+		}
 
 	  SpectatorListTO kapsel = new SpectatorListTO();
 	  kapsel.setZuschauer(dtoZuschauer);

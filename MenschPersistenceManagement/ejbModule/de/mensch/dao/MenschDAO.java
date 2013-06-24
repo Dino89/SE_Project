@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import de.mensch.entities.Customer;
 import de.mensch.entities.Dice;
 import de.mensch.entities.Game;
+import de.mensch.entities.GameField;
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
 
@@ -88,6 +89,11 @@ public class MenschDAO implements MenschDAOLocal {
 		Game game = new Game();
 		game.setOwner(owner);
 		game.setSpieler1(owner);
+		GameField gf = new GameField();
+		em.persist(gf);
+		gf.init();
+		game.setGameField(gf);
+		
 		em.persist(game);
 		return game;
 	}
@@ -183,7 +189,7 @@ public class MenschDAO implements MenschDAOLocal {
 		Query query = em.createQuery("SELECT zuschauer FROM Game e where id="+gameid);
 		ArrayList<MenschSession> querylist = (ArrayList<MenschSession>) query.getResultList();
 		return (ArrayList<MenschSession>) query.getResultList();
-
+	}
 
 	@Override
 	public ArrayList<Dice> getDiceList() {
