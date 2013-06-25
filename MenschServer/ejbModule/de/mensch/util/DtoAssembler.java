@@ -124,7 +124,7 @@ public class DtoAssembler {
   }
   
   public ArrayList<FieldTO> makeDTOGameFields(List<Field> list){
-	  System.out.println("gamefield: "+list);
+//	  System.out.println("gamefield: "+list);
 	  ArrayList<FieldTO> result = new ArrayList<FieldTO>();
 	  for(int i=0;i<list.size();i++){
 		  int buffer = list.get(i).getState();

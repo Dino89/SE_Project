@@ -179,6 +179,7 @@ public class MenschDAO implements MenschDAOLocal {
 	@Override
 	public Dice createDiceNumber() {
 		Dice dice = new Dice();
+		System.out.println("Zufallszahl aus MenschDAO");
 		dice.setNumber((int) Math.round(Math.random()*100%7));
 		dice.setId(dice.getId());
 		em.persist(dice);
