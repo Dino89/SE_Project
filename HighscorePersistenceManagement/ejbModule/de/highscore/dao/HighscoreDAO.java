@@ -23,7 +23,7 @@ public class HighscoreDAO implements HighscoreDAOLocal {
 	@Override
 	public ArrayList<Highscore> getTopTwenty() {
 		System.out.println("Methode get Top Twenty");
-		Query query = em.createQuery("SELECT e FROM Highscore e"); //ORDER_BY credits LIMIT 20
+		Query query = em.createQuery("SELECT e FROM Highscore e ORDER BY credits DESC"); //ORDER_BY credits LIMIT 20
 		
 		
 		return (ArrayList<Highscore>) query.getResultList();

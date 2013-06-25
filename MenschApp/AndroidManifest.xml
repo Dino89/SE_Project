@@ -31,6 +31,10 @@
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
+            android:name="com.example.menschapp.HighscoreActivity"
+            android:label="@string/title_activity_highscore" >
+        </activity>
+        <activity
             android:name="com.example.menschapp.LobbyActivity"
             android:label="@string/title_activity_lobby" >
         </activity>
