@@ -69,6 +69,8 @@ public class GameFieldActivity extends Activity {
 	private ImageView field_yellow_house_3;
 	private ImageView field_yellow_house_4;
 	
+	private TextView stateMessage;
+	
 	ArrayList<ImageView> spielfeld = new ArrayList<ImageView>();
 	
 	@Override
@@ -86,7 +88,7 @@ public class GameFieldActivity extends Activity {
 		setContentView(R.layout.activity_game_field);
 		
 		
-		
+		stateMessage = (TextView) findViewById(R.id.textView2);
 		
 		 field_blue_1 = (ImageView) findViewById(R.id.field_blue_1);
 		 field_blue_2 = (ImageView) findViewById(R.id.field_blue_2);
@@ -446,7 +448,7 @@ public class GameFieldActivity extends Activity {
 		@Override
 		protected void onPostExecute(final Boolean success) {
 
-			
+			stateMessage.setText(gameDetail.getStateMessage());
 			for(int i=0;i<spielfeld.size();i++){
 				if(gameDetail.getSpielfeld().get(i) ==0)
 				spielfeld.get(i).setImageResource(R.drawable.circle_low2);

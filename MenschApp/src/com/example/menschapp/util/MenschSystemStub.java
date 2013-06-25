@@ -298,6 +298,11 @@ public class MenschSystemStub implements MenschSystem {
 				game.setZuschauer(zliste);
 			}
 			
+			if(soapGameEntry.toString().contains("stateMessage")){
+				game.setStateMessage(soapGameEntry.getPropertySafelyAsString("stateMessage"));
+			}
+			
+			
 			if(soapGameEntry.toString().contains("fields")){
 				
 				//Log.d("fields", soapGameEntry.getPropertySafely("fields")+" fields");

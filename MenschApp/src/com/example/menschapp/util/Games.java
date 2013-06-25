@@ -22,6 +22,8 @@ public class Games implements Serializable {
 	
 	private String owner;
 	
+	private String stateMessage;
+	
 	public Games() {
 		super();
 	}
@@ -44,6 +46,15 @@ public class Games implements Serializable {
 
 	public int getSlots() {
 		return slots;
+	}
+
+	
+	public String getStateMessage() {
+		return stateMessage;
+	}
+
+	public void setStateMessage(String stateMessage) {
+		this.stateMessage = stateMessage;
 	}
 
 	public void setSlots(int slots) {

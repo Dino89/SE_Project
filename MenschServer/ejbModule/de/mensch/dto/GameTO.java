@@ -24,6 +24,8 @@ public class GameTO implements Serializable {
 	private Customer spieler4;
 	SpectatorListTO zuschauerListe;
 
+	String stateMessage;
+	
 	private GameFieldTO gameField;
 	
 	public GameTO() {
@@ -138,4 +140,14 @@ public class GameTO implements Serializable {
 	public void setGameField(GameFieldTO gameField) {
 		this.gameField = gameField;
 	}
+
+	public String getStateMessage() {
+		return stateMessage;
+	}
+
+	public void setStateMessage(String stateMessage) {
+		this.stateMessage = stateMessage;
+	}
+	
+	
 }

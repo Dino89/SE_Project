@@ -32,6 +32,10 @@ public class Game implements Serializable {
 	
 	private int diceNumber;
 	
+	String stateMessage="Spiel gestartet";
+	
+
+
 	@OneToOne
 	private Customer owner;
 	@OneToOne
@@ -212,4 +216,11 @@ public class Game implements Serializable {
 		this.wuerfelCount = wuerfelCount;
 	}
 
+	public String getStateMessage() {
+		return stateMessage;
+	}
+
+	public void setStateMessage(String stateMessage) {
+		this.stateMessage = stateMessage;
+	}
 }
