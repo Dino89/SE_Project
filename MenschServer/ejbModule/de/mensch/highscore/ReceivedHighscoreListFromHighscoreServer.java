@@ -29,7 +29,7 @@ import de.mensch.dao.MenschDAOLocal;
 //</jms-destinations>
 /**
  * MDB lauscht auf den Empfang der HighscoreListe vom HighscoreServer
- * @author Christopher
+ * @author 
  *
  */
 @MessageDriven(activationConfig = {
@@ -37,8 +37,7 @@ import de.mensch.dao.MenschDAOLocal;
         @ActivationConfigProperty(propertyName = "destination", propertyValue = "queue/sendHighscoreListToApp") })
 public class ReceivedHighscoreListFromHighscoreServer implements MessageListener  {
 	
-	@EJB(beanName = "MenschDAO", beanInterface = de.mensch.dao.MenschDAOLocal.class)
-	private MenschDAOLocal dao;
+
 	
 	public static String highscoreListeFromHighscoreServer = null;
 	

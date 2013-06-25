@@ -30,7 +30,7 @@ import de.highscore.entities.Highscore;
 
 /**
  * MDB lauscht auf den Empfang des Befehls vom MenschServer zum senden der HighscoreList
- * @author Christopher
+ * @author 
  *
  */
 @MessageDriven(activationConfig = {
@@ -50,14 +50,10 @@ public class ReceivedCommandGetHighscoreList implements MessageListener  {
 		ObjectMessage msg = (ObjectMessage) message;
 		if(msg.getStringProperty("befehl").equals("getList")) {
 			
-			System.out.println("Vergleich OK, starte Senden der Liste");
 			String topTwenty = null;
 			topTwenty = dao.getTopTwenty().toString();
-			
-			System.out.println("aus receivedCommand der String:  " + topTwenty);
+
 			shList.sendHighscoreList(topTwenty);
-			
-	
 		}
 
 		}

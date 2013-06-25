@@ -757,7 +757,6 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	@Override
 	public HighscoreListResponse getHighscoreList() {
 
-		System.out.println("button bla");
 		//Befehl senden an HighscoreServer und so die Liste holen
 		GetHighscoreListFromHighscoreServer ghl = new GetHighscoreListFromHighscoreServer();
 		ghl.getHighscoreListFromServer();

@@ -12,13 +12,13 @@ import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 import de.highscore.*;
 import de.highscore.dao.HighscoreDAOLocal;
-import de.highscore.online.*;
+
 
 
 
 /**
  * MDB lauscht auf den Empfang der Highscore Daten die in die Datenbank geschrieben werden sollen.
- * @author Christopher
+ * @author 
  *
  */
 @MessageDriven(activationConfig = {
@@ -52,8 +52,6 @@ public class ReceivedHighscore implements MessageListener  {
 		dao.setHighscore("Matz", 5);
 		dao.setHighscore("Malte", 7);
 		//Ende Testdaten
-		
-		System.out.println("Ausgabe aus DB erfolgreich! -->" + dao.getCredits(user));
 		
 		}
 		catch(Exception ex) {

@@ -25,7 +25,7 @@ import de.mensch.entities.Customer;
  * Diese Methode sendet den Befehl zum erzeugen der HighscoreListe an den HighscoreServer.
  * Der HighscoreServer antwortet dann mit der HighscoreListe
  *  
- * @author Christopher
+ * @author 
  *
  */
 
