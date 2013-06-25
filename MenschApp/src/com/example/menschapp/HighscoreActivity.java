@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.example.menschapp.GameDetailActivity.AllowOrDeclineRequestTask;
 import com.example.menschapp.LoginActivity.UserLoginTask;
 import com.example.menschapp.util.Games;
 import com.example.menschapp.util.HighscoreList;
@@ -18,6 +19,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +31,8 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.ArrayAdapter;
@@ -37,7 +41,7 @@ import android.widget.ListView;
 
 public class HighscoreActivity extends Activity {
 	
-
+	final Context context = this;
     ListView highscoreListView;
     ArrayAdapter arrayAdapter;
 	String[] valueList;
@@ -137,12 +141,16 @@ public class HighscoreActivity extends Activity {
 		    
 		    
 		    highscoreList = hl.getList();
-//		    for(int i=0; i<highscoreList.length; i++) {
-//		    	listHighscore.add(highscoreList[i]);
-//		    }
-	  
+		    
+		    
+		    
 	        	
 	        try {
+	        	
+	        	
+	        	
+	        	
+	        	
 				// Simulate network access.
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -158,6 +166,31 @@ public class HighscoreActivity extends Activity {
 		    	listHighscore.add(highscoreList[i]);
 		    }
 		    arrayAdapter.notifyDataSetChanged();
+		    
+		    
+		    
+		    
+		   try{ Thread.sleep(5000);}catch(Exception ex){System.out.println(ex.getMessage());}
+        	if(listHighscore.size() == 0) {
+        		Log.d("kk", "sleep called");
+        		AlertDialog.Builder newRequestDialogBuilder = new AlertDialog.Builder(context);
+        		newRequestDialogBuilder
+				.setMessage("HighscoreServer zur Zeit nicht erreichbar! :(")
+				.setCancelable(false)
+				.setNeutralButton("OK",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						// if this button is clicked, just close
+						// the dialog box and do nothing
+
+						//dialog.cancel();
+					}
+				});
+        		
+        		AlertDialog alertDialog = newRequestDialogBuilder.create();
+        		 
+				// show it
+				alertDialog.show();
+        	}else {Log.d("kk", "nicht drin!" + listHighscore.get(0).toString());}
 			
 		}
 	
