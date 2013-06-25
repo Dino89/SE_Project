@@ -1,4 +1,4 @@
-package de.highscore.dto;
+package de.highscore.management;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
