@@ -75,4 +75,7 @@ public interface MenschSystem {
 	void spielen(int gameid, int spielfigurfeld, int diceid);
 
 	int diceNumber(int gameId);
+	
+	public HighscoreList getHighscoreList();
 }
+

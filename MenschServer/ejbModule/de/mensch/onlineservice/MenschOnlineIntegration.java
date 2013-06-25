@@ -11,6 +11,7 @@ import de.mensch.dto.GameDetailResponse;
 import de.mensch.dto.GameFieldResponse;
 import de.mensch.dto.GameListResponse;
 import de.mensch.dto.GameTO;
+import de.mensch.dto.HighscoreListResponse;
 import de.mensch.dto.JoinResponse;
 import de.mensch.dto.RequestListResponse;
 import de.mensch.dto.RequestResponse;
@@ -75,5 +76,5 @@ public interface MenschOnlineIntegration {
 
 	public SpielzugResponse spielen(int gameid, int sessionId, int spielfeld, int diceId) throws NoSessionException;
 	
-	
+	public HighscoreListResponse getHighscoreList();
 }

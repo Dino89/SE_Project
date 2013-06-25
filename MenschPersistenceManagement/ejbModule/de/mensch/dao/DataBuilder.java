@@ -74,6 +74,4 @@ public class DataBuilder {
 //			System.out.println("Neu angelegt: " + account2);			
 //		}
 	}
-
-
 }

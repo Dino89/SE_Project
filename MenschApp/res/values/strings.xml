@@ -13,5 +13,5 @@
     <string name="title_activity_game_field">GameFieldActivity</string>
     <string name="update_gamelist">Spieleliste aktualisieren</string>
     <string name="create_game">Spiel eröffnen</string>
-
+    <string name="title_activity_highscore">Spiel eröffnen</string>
 </resources>

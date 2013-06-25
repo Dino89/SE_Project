@@ -101,6 +101,15 @@ public class LobbyActivity extends Activity {
 			}
 		});
 		
+		//HighscoreButton 
+		findViewById(R.id.highscore).setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+				Intent intent = new Intent(gameListView.getContext(),HighscoreActivity.class);
+				startActivityForResult(intent, 0);
+			}
+		});
+		
 		findViewById(R.id.create_game).setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {

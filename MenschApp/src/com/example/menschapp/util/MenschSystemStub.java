@@ -547,4 +547,16 @@ public class MenschSystemStub implements MenschSystem {
 		SoapObject response = executeSoapAction(METHOD_NAME, gameid, sessionId, spielfigurfeld, diceid);	
 	}
 
+	@Override
+	public HighscoreList getHighscoreList() {
+		String METHOD_NAME = "getHighscoreList";
+		Log.d(TAG, ""+METHOD_NAME+ " called");
+		
+		SoapObject response = executeSoapAction(METHOD_NAME);
+		Log.d(TAG, ""+response.toString());
+		String[] list = response.toString().split(",");
+		HighscoreList bla = new HighscoreList();
+		bla.setList(list);
+		return bla;		
+	}
 }

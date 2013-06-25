@@ -3,6 +3,7 @@
 	<name>HighscoreServer</name>
 	<comment></comment>
 	<projects>
+		<project>HighscorePersistenceManagement</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
