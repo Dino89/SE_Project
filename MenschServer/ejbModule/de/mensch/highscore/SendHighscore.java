@@ -23,7 +23,7 @@ import de.mensch.entities.Customer;
 
 /**
  * Schreibe Highscoreeinträge in die HighscoreDatenbank
- * @author Christopher
+ * @author 
  *
  */
 

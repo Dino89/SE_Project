@@ -1,4 +1,4 @@
-package de.highscore.dto;
+package de.highscore.management;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,13 +24,13 @@ import javax.naming.InitialContext;
 import de.highscore.dao.HighscoreDAO;
 import de.highscore.dao.HighscoreDAOLocal;
 import de.highscore.entities.Highscore;
-import de.highscore.online.HighscoreOnlineIntegrationImpl;
+//import de.highscore.online.HighscoreOnlineIntegrationImpl;
 
 
 
 /**
  * Sendet die HighscoreListe an den MenschServer
- * @author Christopher
+ * @author 
  *
  */
 
@@ -61,15 +61,12 @@ public class SendHighscoreList {
 			     QueueSession session = connection.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
 			     Queue queue = (Queue) context.lookup(QUEUE_LOOKUP);
 			     QueueSender producer = session.createSender(queue);
-			     System.out.println("Ich komme aus HighscoreServer und will die Liste senden an MenschSever!!!!!");
 
-			     System.out.println("Senden an Mensch wird gestartet" );
 			     ObjectMessage msg = session.createObjectMessage();
 
 			     msg.setObject(topTwenty);
 
 			     producer.send(msg);
-			     System.out.println("Ich komme aus HighscoreServer und habe die Liste  an MenschSever gesendet!!!!!");
 			     session.close();
 			    } 
 		    	catch (Exception ex) {
