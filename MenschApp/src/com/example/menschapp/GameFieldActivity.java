@@ -135,7 +135,8 @@ public class GameFieldActivity extends Activity {
 		findViewById(R.id.wuerfeln).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
-					public void onClick(View view) {					
+					public void onClick(View view) {
+						findViewById(R.id.wuerfeln).setEnabled(false);
 					    wuerfelTask = new WuerfelTask();
 					    wuerfelTask.execute();
 					}
@@ -344,6 +345,102 @@ public class GameFieldActivity extends Activity {
 					public void onClick(View view) { spielfigurfeld=40; spielenTask = new SpielenTask(); spielenTask.execute(); } 
 		});
 		
+		findViewById(R.id.field_blue_1).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=101; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_blue_2).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=102; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_blue_3).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=103; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_blue_4).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=104; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_red_1).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=105; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_red_2).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=106; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_red_3).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=107; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_red_4).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=108; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_green_1).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=109; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_green_2).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=110; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_green_3).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=111; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_green_4).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=112; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_yellow_1).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=113; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_yellow_2).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=114; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_yellow_3).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=115; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
+		findViewById(R.id.field_yellow_4).setOnClickListener(
+				new View.OnClickListener() { 
+					@Override
+					public void onClick(View view) { spielfigurfeld=116; spielenTask = new SpielenTask(); spielenTask.execute(); } 
+		});
+		
 		spielfeld.add((ImageView) findViewById(R.id.field_1));
 		spielfeld.add((ImageView) findViewById(R.id.field_2));
 		spielfeld.add((ImageView) findViewById(R.id.field_3));
@@ -391,7 +488,7 @@ public class GameFieldActivity extends Activity {
 //		spielfeld.get(3).setImageResource(R.drawable.circle_low2_green_filled);
 		
 		int delay = 1000; // delay for 1 sec. 
-		int period = 10000; // repeat every 1 sec. 
+		int period = 5000; // repeat every 1 sec. 
 		Timer timer = new Timer(); 
 		timer.scheduleAtFixedRate(new TimerTask() 
 		    { 
@@ -711,6 +808,7 @@ public class GameFieldActivity extends Activity {
 		protected void onPostExecute(final Boolean success) {
 		wuerfelergebnis = (TextView) findViewById(R.id.wuerfelergebnis);
 		wuerfelergebnis.setText(diceNumber + " gewürfelt");
+		findViewById(R.id.wuerfeln).setEnabled(true);
 		}
 	
 		@Override

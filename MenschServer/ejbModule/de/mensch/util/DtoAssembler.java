@@ -51,7 +51,8 @@ public class DtoAssembler {
 	  dto.setSpieler4(game.getSpieler4());
 	  dto.getOwner().setPassword(null);
 	  dto.setStarted(game.isStarted());
-	  dto.setDiceNumber((int) Math.round(Math.random()*100%7));
+	  dto.setDiceNumber(game.getDiceNumber());
+	  dto.setStateMessage(game.getStateMessage());
 	  
 		Map<Integer,MenschSession> mp = game.getZuschauer();
 		ArrayList<String> dtoZuschauer = new ArrayList<String>();
@@ -124,7 +125,7 @@ public class DtoAssembler {
   }
   
   public ArrayList<FieldTO> makeDTOGameFields(List<Field> list){
-	  System.out.println("gamefield: "+list);
+//	  System.out.println("gamefield: "+list);
 	  ArrayList<FieldTO> result = new ArrayList<FieldTO>();
 	  for(int i=0;i<list.size();i++){
 		  int buffer = list.get(i).getState();

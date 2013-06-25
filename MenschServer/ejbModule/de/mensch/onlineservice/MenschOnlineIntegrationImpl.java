@@ -64,7 +64,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	 */
 	@Schedule(second="59", minute="*",hour="*", persistent=false)
 	public void removeOldSessions() {
-//		System.out.println("Removing Sessions...");
+		System.out.println("Removing Sessions...");
 		ArrayList<MenschSession> sessionList = this.dao.findSessions();
 		ArrayList<Game> gameList = this.dao.getGameList();
 		ArrayList<Request> requestList = this.dao.getAllRequests();
@@ -196,17 +196,31 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		MenschSession session = getSession(sessionId);
 		System.out.println("gameid: "+gameId);
 		Game game = this.dao.findGameById(gameId);
+		if(game.getSpieler1().getUserName().equals(session.getUsername())) game.setWuerfelCount(game.getWuerfelCount()+1);
 		GameListResponse response = new GameListResponse();
 		
-		if(game.getAktuellerSpieler()!=session.getUsername()) return response;
+//		if(game.getAktuellerSpieler()!=session.getUsername()) return response;
 	
-		game.setDiceNumber((int) Math.round(Math.random()*100%7));
-		System.out.println("game dice "+game.getDiceNumber());
+		game.setDiceNumber(random());
+//		System.out.println("game dice "+game.getDiceNumber());
 		
 		ArrayList<Game> gameList = this.dao.getGameList();
 		response.setGameList(dtoAssembler.makeDTO(gameList));
 		
 		return response;
+	}
+	private int random() {
+		System.out.println("Erzeuge Zufallszahl...");
+		double random = Math.round(Math.random()*100%7);
+		if(random == 1) return (int) random;
+		if(random == 2) return (int) random;
+		if(random == 3) return (int) random;
+		if(random == 4) return (int) random;
+		if(random == 5) return (int) random;
+		if(random == 6) return (int) random;
+		if(random == 0) return random();
+		if(random == 7) return random();
+		return random();
 	}
 	/* @return Liste aller vorhandenen Spiele
 	 * @param sessionId sessionId des Anfragenden, damit nur eingeloggte Benutzer eine Liste einsehen können.
@@ -489,62 +503,95 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		spielerVerlassen(gameid);
 		SpielzugResponse response = new SpielzugResponse();
 		Game game = this.dao.findGameById(gameid);
+		game.setStateMessage("Warte auf Spieler "+game.getAktuellerSpieler());
 		if(!spielerIstDran(gameid, session)) return response;
 		System.out.println("Ziehe...");
 		ziehen(gameid, spielfigurfeld, diceNumber);
 		pruefeNochmalWuerfeln(gameid);
+		
 		if(game.getWuerfelCount()<=2) { 
 			System.out.println("Nochmal dran!");
 			game.setAktuellerSpieler(game.getAktuellerSpieler());
-		} else { 
-			if(game.getSpieler2()==null) {
-				System.out.println("De Komputa speelt!");
-				computerZieht(gameid);
-			}
-			if(game.getAktuellerSpieler().equals("spieler1")) game.setAktuellerSpieler("spieler2");
-			if(game.getAktuellerSpieler().equals("spieler2")) game.setAktuellerSpieler("spieler3");
-			if(game.getAktuellerSpieler().equals("spieler3")) game.setAktuellerSpieler("spieler4");
-			if(game.getAktuellerSpieler().equals("spieler4")) game.setAktuellerSpieler("spieler1");
+		}  else {
+			game.setWuerfelCount(0);
 		}
+		
+		if(game.getSpieler2()!=null) {
+			if(game.getSpieler3()!=null) {
+				game.setAktuellerSpieler("spieler3"); 
+			}
+			else game.setAktuellerSpieler("spieler2");
+		} else {
+			computerZieht(gameid);
+		}
+		
+		if(game.getSpieler3()!=null) {
+			if(game.getSpieler4()!=null) {
+				game.setAktuellerSpieler("spieler4");
+			}
+			else game.setAktuellerSpieler("spieler1");
+		}
+		
 		spielerGewonnen(gameid);
-		spielZuEnde(gameid);
+
 		response.setSuccess(true);
 		return response;
 	}
 
-	private void computerZieht(int gameid) {
-//		Game game = this.dao.findGameById(gameid);
-//		GameField field = game.getGameField();
-//		int size = field.getSize();
-//		Dice dice = new Dice();
-//		int diceid = dice.getId();
-//		
-//		for(int i = 1; i<size;i++) {
-//			if(field.getField(i)==2)
-//				try {
-//					spielen(gameid, -1, field.getField(i), diceid);
-//				} catch (NoSessionException e) {
-//					System.out.println("C0mPut3rf3h13r!");
-//				}
-//		}
+	private void computerZieht(int gameid) throws NoSessionException {
+		System.out.println("Der Computer zieht!");
+		Game game = this.dao.findGameById(gameid);
+		int spielfigurenfeld = 0;
+		int random = random();
+		System.out.println("Computer hat gewürfelt: "+random);
+		for(int i=0;i<game.getGameField().getFields().size();i++) {
+			if(game.getGameField().getFields().get(i).getState()==2) spielen(gameid, -1, i, random);			
+		}
 		
+		if(spielfigurenfeld==0) {
+			if(game.getGameField().getField_red_4()==2) { 
+				spielen(gameid, -1, game.getGameField().getField_red_4(), random); 
+			} else {
+				if(game.getGameField().getField_red_3()==2) { 
+					spielen(gameid, -1, game.getGameField().getField_red_3(), random);
+				} else {
+					if(game.getGameField().getField_red_2()==2) { 
+						spielen(gameid, -1, game.getGameField().getField_red_2(), random);
+				} else {
+					if(game.getGameField().getField_red_1()==2) { 
+						spielen(gameid, -1, game.getGameField().getField_red_1(), random);
+					}
+				} 
+			}
+		}
 	}
-
+	}
 	private void spielZuEnde(int gameid) {
-		// TODO Auto-generated method stub
-		
+		Game g = this.dao.findGameById(gameid);
+		g.setStateMessage("Spiel zu Ende");
 	}
 
 	private void spielerGewonnen(int gameid) {
-		// TODO Auto-generated method stub
-		
+		SendHighscore score = new SendHighscore();
+		Game g = this.dao.findGameById(gameid);
+		GameField feld = g.getGameField();
+		int remainingPlayers = 3;
+		if(g.getSpieler4()==null) remainingPlayers=-1;
+		if(g.getSpieler3()==null) remainingPlayers=-1;
+		if(g.getSpieler2()==null) remainingPlayers=-1;
+
+		if((feld.getField_blue_house_1()==1)&(feld.getField_blue_house_2()==1)&(feld.getField_blue_house_3()==1)&(feld.getField_blue_house_4()==1)) score.highscorePointsForFinishingGame(g.getSpieler1(), remainingPlayers); 
+		if((feld.getField_red_house_1()==1)&(feld.getField_red_house_2()==1)&(feld.getField_red_house_3()==1)&(feld.getField_red_house_4()==1)) score.highscorePointsForFinishingGame(g.getSpieler2(), remainingPlayers);
+		if((feld.getField_green_house_1()==1)&(feld.getField_green_house_2()==1)&(feld.getField_green_house_3()==1)&(feld.getField_green_house_4()==1)) score.highscorePointsForFinishingGame(g.getSpieler3(), remainingPlayers);
+		if((feld.getField_yellow_house_1()==1)&(feld.getField_yellow_house_2()==1)&(feld.getField_yellow_house_3()==1)&(feld.getField_yellow_house_4()==1)) score.highscorePointsForFinishingGame(g.getSpieler4(), remainingPlayers);
+		if(remainingPlayers==1) spielZuEnde(gameid);
 	}
 
 	private boolean ziehen(int gameid, int spielfigurfeld, int diceNumber) {
 		Game game = this.dao.findGameById(gameid);
 		if(!eigeneFigur(game, spielfigurfeld)) return false;
+		System.out.println("Figur setzten..");
 		setzeFigur(game, spielfigurfeld, diceNumber);
-		pruefeNochmalWuerfeln(gameid);
 		
 		return true;
 	}
@@ -557,10 +604,25 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	private boolean spielerIstDran(int gameid, MenschSession session) {
 		if(session!=null) {
 			Game g = this.dao.findGameById(gameid);
-			if(g.getAktuellerSpieler().equals(session.getUsername())) return true;
-			return false;
+			System.out.println("spielerIstDran" + g.getAktuellerSpieler());
+			if(g.getAktuellerSpieler().equals("spieler1"))
+			{
+				if(g.getSpieler1().getUserName().equals(session.getUsername())) return true;
+			}
+			if(g.getAktuellerSpieler().equals("spieler2"))
+			{
+				if(g.getSpieler2().getUserName().equals(session.getUsername())) return true;
+			}
+			if(g.getAktuellerSpieler().equals("spieler3"))
+			{
+				if(g.getSpieler3().getUserName().equals(session.getUsername())) return true;
+			}
+			if(g.getAktuellerSpieler().equals("spieler4"))
+			{
+				if(g.getSpieler4().getUserName().equals(session.getUsername())) return true;
+			}
 		}
-		return true;
+		return false;
 	}
 	
 //	@Override
@@ -584,22 +646,33 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	private void pruefeNochmalWuerfeln(int gameid) {
 		Game game = this.dao.findGameById(gameid);
 		
-//		if((game.getGameField().getField(1) == 0) & (game.getGameField().getField(2) == 0) & (game.getGameField().getField(3) == 0) & (game.getGameField().getField(4) == 0)) {
-//			game.setAktuellerSpieler(game.getAktuellerSpieler());
-//			game.setWuerfelCount(game.getWuerfelCount()+1);
-//		} else { game.setWuerfelCount(3); }
-//		if((game.getGameField().getField(1) == 0) & (game.getGameField().getField(2) == 0) & (game.getGameField().getField(3) == 0) & (game.getGameField().getField(4) == 0)) {
-//			game.setAktuellerSpieler(game.getAktuellerSpieler());
-//			game.setWuerfelCount(game.getWuerfelCount()+1);
-//		} else { game.setWuerfelCount(3); }
-//		if((game.getGameField().getField(1) == 0) & (game.getGameField().getField(2) == 0) & (game.getGameField().getField(3) == 0) & (game.getGameField().getField(4) == 0)) {
-//			game.setAktuellerSpieler(game.getAktuellerSpieler());
-//			game.setWuerfelCount(game.getWuerfelCount()+1);
-//		} else { game.setWuerfelCount(3); }
-//		if((game.getGameField().getField(1) == 0) & (game.getGameField().getField(2) == 0) & (game.getGameField().getField(3) == 0) & (game.getGameField().getField(4) == 0)) {
-//			game.setAktuellerSpieler(game.getAktuellerSpieler());
-//			game.setWuerfelCount(game.getWuerfelCount()+1);
-//		} else { game.setWuerfelCount(3); }		
+		if(game.getAktuellerSpieler().equals("spieler1")) {
+			if((game.getGameField().getField_blue_1() != 0) & (game.getGameField().getField_blue_2() != 0) & (game.getGameField().getField_blue_3() != 0) & (game.getGameField().getField_blue_4() != 0) & (game.getWuerfelCount()<3)) {
+				game.setWuerfelCount(game.getWuerfelCount()+1);
+				game.setAktuellerSpieler(game.getAktuellerSpieler());
+			} else { game.setWuerfelCount(3); }	
+		}
+		
+		if(game.getAktuellerSpieler().equals("spieler2")) {
+			if((game.getGameField().getField_red_1() != 0) & (game.getGameField().getField_red_2() != 0) & (game.getGameField().getField_red_3() != 0) & (game.getGameField().getField_red_4() != 0) & (game.getWuerfelCount()<3)) {
+				game.setWuerfelCount(game.getWuerfelCount()+1);
+				game.setAktuellerSpieler(game.getAktuellerSpieler());
+			} else { game.setWuerfelCount(3); }	
+		}
+		
+		if(game.getAktuellerSpieler().equals("spieler3")) {
+			if((game.getGameField().getField_green_1() != 0) & (game.getGameField().getField_green_2() != 0) & (game.getGameField().getField_green_3() != 0) & (game.getGameField().getField_green_4() != 0) & (game.getWuerfelCount()<3)) {
+				game.setWuerfelCount(game.getWuerfelCount()+1);
+				game.setAktuellerSpieler(game.getAktuellerSpieler());
+			} else { game.setWuerfelCount(3); }	
+		}
+		
+		if(game.getAktuellerSpieler().equals("spieler4")) {
+			if((game.getGameField().getField_yellow_1() != 0) & (game.getGameField().getField_yellow_2() != 0) & (game.getGameField().getField_yellow_3() != 0) & (game.getGameField().getField_yellow_4() != 0) & (game.getWuerfelCount()<3)) {
+				game.setWuerfelCount(game.getWuerfelCount()+1);
+				game.setAktuellerSpieler(game.getAktuellerSpieler());
+			} else { game.setWuerfelCount(3); }	
+		}	
 	}
 //
 //	private boolean spieleMitComputer(int gameid, int spielFeldNummer, int diceId) {
@@ -645,26 +718,75 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	private boolean setzeFigur(Game game, int spielFeldNummer, int diceNumber) {
 		GameField spielfeld = game.getGameField();
 		
-//		int zielFeldValue = spielfeld.getField(spielFeldNummer+diceNumber);
-//		int zielFeld = spielFeldNummer+diceNumber;
-//		
-//		if(!(zielFeld>=73)) {
-//			if(zielFeldValue==spielFeldNummer) {
-//				return false;
-//			} else {
-//				if(zielFeldValue==0) { 
-//					spielfeld.setField(zielFeld, zielFeldValue);
-//					return true;
-//				} else {
-//					figurSchmeissen(game, zielFeld);
-//					return true;
-//				}
-//			}
-//		} else {
-//			
-//		}
+		if(spielFeldNummer<100) {
+			if((spielFeldNummer+diceNumber-1>39)) spielFeldNummer=-39;
+			
+			int zielFeldValue = spielfeld.getFields().get(spielFeldNummer-1+diceNumber).getState();
+			int zielFeld = spielFeldNummer+diceNumber-1;
+			
+			
+			
+			if(zielFeldValue==spielfeld.getFields().get(spielFeldNummer-1).getState()) return false;
+			if(zielFeldValue==0) {
+				spielfeld.getFields().get(zielFeld).setState(spielfeld.getFields().get(spielFeldNummer-1).getState());
+				spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+				return true;
+			} else {
+				figurSchmeissen(game, zielFeld);
+				spielfeld.getFields().get(zielFeld).setState(spielfeld.getFields().get(spielFeldNummer-1).getState());
+				spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+				return true;
+			}		
+		} else {
+			if(diceNumber!=6) return false;	
+			if(spielFeldNummer<=104) {
+					if(spielfeld.getFields().get(0).getState()==1) { 
+						return false;
+					} else {
+						if(spielfeld.getFields().get(0).getState()>0) figurSchmeissen(game, 0);
+						spielfeld.getFields().get(0).setState(1);
+						if(spielfeld.getField_blue_4()==1) {
+							spielfeld.setField_blue_4(0); }
+								else {
+								if(spielfeld.getField_blue_3()==1) {
+									spielfeld.setField_blue_3(0); }
+									else {
+										if(spielfeld.getField_blue_2()==1) {
+											spielfeld.setField_blue_2(0); }
+											else {
+												if(spielfeld.getField_blue_1()==1) {
+													spielfeld.setField_blue_1(0);
+													}
+												}
+											}
+										}
+				if(spielFeldNummer<=108&spielFeldNummer>=105) {
+					if(spielfeld.getFields().get(10).getState()==2) { 
+						return false;
+					}
+						if(spielfeld.getField_red_4()==2) {
+							spielfeld.setField_red_4(0); }
+								else {
+									if(spielfeld.getFields().get(10).getState()>0) figurSchmeissen(game, 10);
+									spielfeld.getFields().get(10).setState(2);
+									if(spielfeld.getField_red_3()==1) {
+										spielfeld.setField_red_3(0); }
+										else {
+											if(spielfeld.getField_red_2()==1) {
+												spielfeld.setField_red_2(0); }
+												else {
+													if(spielfeld.getField_red_1()==1) {
+														spielfeld.setField_red_1(0);
+														}
+													}
+										}
+									}
+								}
+							}
+					}
+			}
 		
-		return false;		
+		return true;
 	}
 	
 	/*
@@ -730,20 +852,34 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	 * Versucht der Spieler seine eigene Figur zu bewegen?
 	 */
 	private boolean eigeneFigur(Game game, int spielFeldNummer) {
-//		GameField spielfeld = game.getGameField();
-//		int feld = spielfeld.getField(spielFeldNummer);
-//		String spielfigurOwner = null;
-//		
-//		if(feld==0) return false;
-//		if(feld==1) spielfigurOwner = "spieler1";
-//		if(feld==2) spielfigurOwner = "spieler2";
-//		if(feld==3) spielfigurOwner = "spieler3";
-//		if(feld==4) spielfigurOwner = "spieler4";
-//		
-//		if(game.getAktuellerSpieler().equals(spielfigurOwner)) { 
-//			return true;
-//		}
-//		
+		GameField spielfeld = game.getGameField();
+		if(spielFeldNummer>99) {
+			if(game.getAktuellerSpieler().equals("spieler1")) {
+				if(spielFeldNummer>=100&spielFeldNummer<=104) return true;
+			}
+			if(game.getAktuellerSpieler().equals("spieler2")) {
+				if(spielFeldNummer>=105&spielFeldNummer<=108) return true;
+			}
+			if(game.getAktuellerSpieler().equals("spieler3")) {
+				if(spielFeldNummer>=109&spielFeldNummer<=112) return true;
+			}
+			if(game.getAktuellerSpieler().equals("spieler4")) {
+				if(spielFeldNummer>=116&spielFeldNummer<=119) return true;
+			} else { return false; }
+		}
+		int feld2 = spielfeld.getFields().get(spielFeldNummer-1).getState();
+		String spielfigurOwner = null;
+		
+		if(feld2==0) return false;
+		if(feld2==1) spielfigurOwner = "spieler1";
+		if(feld2==2) spielfigurOwner = "spieler2";
+		if(feld2==3) spielfigurOwner = "spieler3";
+		if(feld2==4) spielfigurOwner = "spieler4";
+		
+		if(game.getAktuellerSpieler().equals(spielfigurOwner)) { 
+			return true;
+		}
+		
 		return false;
 	}
 	

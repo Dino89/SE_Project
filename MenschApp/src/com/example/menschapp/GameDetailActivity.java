@@ -460,7 +460,7 @@ public class CheckForRequestsTask extends AsyncTask<String, Void, Boolean> {
 						// current activity
 						
 						aodTask=new AllowOrDeclineRequestTask();
-						aodTask.execute("allow "+reqid);
+						aodTask.execute("allow ,"+reqid);
 					}
 				  })
 				.setNegativeButton("Nein",new DialogInterface.OnClickListener() {
@@ -468,7 +468,7 @@ public class CheckForRequestsTask extends AsyncTask<String, Void, Boolean> {
 						// if this button is clicked, just close
 						// the dialog box and do nothing
 						aodTask=new AllowOrDeclineRequestTask();
-						aodTask.execute("decline "+reqid);
+						aodTask.execute("decline ,"+reqid);
 						
 						
 						//dialog.cancel();
@@ -498,7 +498,8 @@ public class AllowOrDeclineRequestTask extends AsyncTask<String, Void, Boolean> 
     @Override
 	protected Boolean doInBackground(String... params) {
     	
-    	int reqid = Integer.parseInt(String.valueOf(params[0].charAt(params[0].length()-1)));
+    	//int reqid = Integer.parseInt(String.valueOf(params[0].charAt(params[0].length()-1)));
+    	int reqid = Integer.parseInt(String.valueOf(params[0].substring(params[0].indexOf(',')+1)));
     	String allowOrDecline=params[0];
     	Log.d("allowOrdeclineARGs", reqid+" "+allowOrDecline);
     	if(allowOrDecline.startsWith("allow")){
