@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.example.menschapp.util;
 
 import java.math.BigDecimal;

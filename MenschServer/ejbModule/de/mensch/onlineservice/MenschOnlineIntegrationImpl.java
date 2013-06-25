@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package de.mensch.onlineservice;
 
 import java.math.BigDecimal;
@@ -25,6 +24,7 @@ import de.mensch.dto.GameDetailResponse;
 import de.mensch.dto.GameFieldResponse;
 import de.mensch.dto.GameListResponse;
 import de.mensch.dto.GameTO;
+import de.mensch.dto.HighscoreListResponse;
 import de.mensch.dto.JoinResponse;
 import de.mensch.dto.RequestListResponse;
 import de.mensch.dto.RequestResponse;
@@ -42,6 +42,9 @@ import de.mensch.entities.Game;
 import de.mensch.entities.GameField;
 import de.mensch.entities.MenschSession;
 import de.mensch.entities.Request;
+import de.mensch.highscore.GetHighscoreListFromHighscoreServer;
+import de.mensch.highscore.ReceivedHighscoreListFromHighscoreServer;
+import de.mensch.highscore.SendHighscore;
 
 
 

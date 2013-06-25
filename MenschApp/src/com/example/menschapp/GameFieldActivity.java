@@ -9,6 +9,7 @@ import com.example.menschapp.GameDetailActivity.JoinGameTask;
 import com.example.menschapp.util.Games;
 import com.example.menschapp.util.MenschSystemStub;
 
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -70,6 +71,7 @@ public class GameFieldActivity extends Activity {
 	private ImageView field_yellow_house_4;
 	
 	private TextView stateMessage;
+	MediaPlayer mp;
 	
 	ArrayList<ImageView> spielfeld = new ArrayList<ImageView>();
 	
@@ -81,11 +83,14 @@ public class GameFieldActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		wuerfelButton = (Button) findViewById(R.id.wuerfeln);
 		
+//		mp = MediaPlayer.create(GameFieldActivity.this, R.);
+		
         /* Initialisiere den Stub zum GameServer */
         obsApp = (MenschApplication) this.getApplication();
         obsApp.setObsStub(new MenschSystemStub());
         
 		setContentView(R.layout.activity_game_field);
+		
 		
 		
 		stateMessage = (TextView) findViewById(R.id.textView2);

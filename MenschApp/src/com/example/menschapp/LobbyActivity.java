@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.example.menschapp;
 
 import java.util.ArrayList;
