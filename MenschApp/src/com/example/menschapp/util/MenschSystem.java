@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.example.menschapp.util;
 
 import java.math.BigDecimal;
@@ -75,4 +76,7 @@ public interface MenschSystem {
 	void spielen(int gameid, int spielfigurfeld, int diceid);
 
 	int diceNumber(int gameId);
+	
+	public HighscoreList getHighscoreList();
 }
+

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package de.mensch.dao;
 
 import java.util.ArrayList;

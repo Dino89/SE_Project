@@ -3,43 +3,53 @@ package de.highscore.online;
 import java.util.ArrayList;
 
 import javax.ejb.EJB;
+import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 
 import de.highscore.dao.HighscoreDAOLocal;
+//import de.highscore.dao.HighscoreDAOLocal;
 import de.highscore.dto.HighscoreListResponse;
 import de.highscore.dto.HighscoreTO;
+//import de.highscore.entities.Highscore;
+//import de.highscore.util.DtoAssembler;
 import de.highscore.entities.Highscore;
-import de.highscore.util.DtoAssembler;
 
 
-@WebService
+
+
 @Stateless
 @Remote(HighscoreOnlineIntegration.class)
-
 public class HighscoreOnlineIntegrationImpl implements HighscoreOnlineIntegration{
 
-	@EJB
-	private DtoAssembler dtoAssembler;
+//	@EJB
+//	private DtoAssembler dtoAssembler;
 	
-	@EJB(beanName = "HighscoreDAO", beanInterface = de.highscore.dao.HighscoreDAO.class)
-	private HighscoreDAOLocal dao;
+//	@EJB(beanName = "HighscoreDAO", beanInterface = de.highscore.dao.HighscoreDAO.class)
+//	private HighscoreDAOLocal dao;
 
 	
 	@Override
-	public HighscoreTO getScore(String username) {
-		Highscore h = this.dao.getScore(username);
-		return dtoAssembler.makeDTO(h);
+	public int getCredits(String username) {
+		//int credits = this.dao.getCredits(username);
+		
+		return 1;
 	}
 
 	@Override
-	public HighscoreListResponse getTopTwenty() {
-		HighscoreListResponse response = new HighscoreListResponse();
-		ArrayList<Highscore> highscoreList = this.dao.getTopTwenty();
-		response.setHighscoreList( dtoAssembler.makeDTO(highscoreList));
-		return response;
+	public ArrayList<Highscore> getTopTwenty() {
 		
+		//ArrayList<Highscore> highscoreList = (ArrayList<Highscore>) this.dao.getTopTwenty();
+		
+		return null;
+		
+		
+	}
+
+	@Override
+	public void setHighscore(String user, int credits) {
+		//dao.setHighscore(user, credits);
 		
 	}
 

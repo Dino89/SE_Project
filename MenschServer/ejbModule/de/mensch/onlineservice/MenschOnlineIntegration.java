@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package de.mensch.onlineservice;
 
 import java.math.BigDecimal;
@@ -75,5 +76,5 @@ public interface MenschOnlineIntegration {
 
 	public SpielzugResponse spielen(int gameid, int sessionId, int spielfeld, int diceId) throws NoSessionException;
 	
-	
+	public HighscoreListResponse getHighscoreList();
 }

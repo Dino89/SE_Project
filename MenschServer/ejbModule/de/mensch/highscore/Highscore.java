@@ -1,18 +1,15 @@
-package de.highscore.entities;
+package de.mensch.highscore;
 
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
-
-@Entity
-public class Highscore implements Serializable {
-
+/**
+ * 
+ * @author Christopher
+ *
+ */
+public class Highscore {
 	private static final long serialVersionUID = 1L;
-	@Id
+
 	private String username;
 
 	private int credits;
@@ -53,7 +50,8 @@ public class Highscore implements Serializable {
 	}
 	
 	public String toString() {
-		return (this.username + " " + this.credits + ",");
+		return (this.username + " - " + this.credits);
 	}
+
 
 }

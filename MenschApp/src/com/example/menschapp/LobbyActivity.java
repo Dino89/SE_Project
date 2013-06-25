@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.example.menschapp;
 
 import java.util.ArrayList;
@@ -98,6 +99,15 @@ public class LobbyActivity extends Activity {
 				GameListStatusView.setText(R.string.lobby_progress_gamelist);
 				listTask = new GameListTask(); 
 				listTask.execute();
+			}
+		});
+		
+		//HighscoreButton 
+		findViewById(R.id.highscore).setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+				Intent intent = new Intent(gameListView.getContext(),HighscoreActivity.class);
+				startActivityForResult(intent, 0);
 			}
 		});
 		

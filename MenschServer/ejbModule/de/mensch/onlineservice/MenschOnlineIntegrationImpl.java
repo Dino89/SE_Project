@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package de.mensch.onlineservice;
 
 import java.math.BigDecimal;
@@ -150,6 +151,10 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 				int sessionId = dao.createSession(user);
 				System.out.println("Login erfolgreich. Session=" + sessionId);
 				response.setSessionId(sessionId);
+				
+				//TESTDATEN SCHREIBEN TEMP!!!!!!!
+				SendHighscore blala = new SendHighscore();
+				blala.highscorePoinsForLeavingGame(user);
 			}
 			else {
 				System.out.println("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
@@ -741,5 +746,27 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 //		}
 //		
 		return false;
+	}
+	
+		/**
+	 * Wird von der Android App aufgerufen und holt sich die HighscoreListe
+	 */
+	@Override
+	public HighscoreListResponse getHighscoreList() {
+
+		System.out.println("button bla");
+		//Befehl senden an HighscoreServer und so die Liste holen
+		GetHighscoreListFromHighscoreServer ghl = new GetHighscoreListFromHighscoreServer();
+		ghl.getHighscoreListFromServer();
+		//Warten auf Antwort vom HighscoreServer
+		try {Thread.sleep(2000);}catch(Exception ex) {System.out.println("ThreadSleep ERROR aus getHighscoreList");}
+		
+		ReceivedHighscoreListFromHighscoreServer recList = new ReceivedHighscoreListFromHighscoreServer();
+		String list = recList.highscoreListeFromHighscoreServer;
+		
+		HighscoreListResponse response = new HighscoreListResponse();
+		response.setList(list);
+		return response;
+		
 	}
 }
