@@ -524,7 +524,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 			if(game.getSpieler3()!=null) {
 				game.setAktuellerSpieler("spieler3"); 
 			}
-			else game.setAktuellerSpieler("spieler1");
+			else game.setAktuellerSpieler("spieler2");
 		} else {
 			computerZieht(gameid);
 		}
@@ -764,9 +764,32 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 												}
 											}
 										}
+				if(spielFeldNummer<=108&spielFeldNummer>=105) {
+					if(spielfeld.getFields().get(10).getState()==2) { 
+						return false;
+					}
+						if(spielfeld.getField_red_4()==2) {
+							spielfeld.setField_red_4(0); }
+								else {
+									if(spielfeld.getFields().get(10).getState()>0) figurSchmeissen(game, 10);
+									spielfeld.getFields().get(10).setState(2);
+									if(spielfeld.getField_red_3()==1) {
+										spielfeld.setField_red_3(0); }
+										else {
+											if(spielfeld.getField_red_2()==1) {
+												spielfeld.setField_red_2(0); }
+												else {
+													if(spielfeld.getField_red_1()==1) {
+														spielfeld.setField_red_1(0);
+														}
+													}
+										}
 									}
 								}
-		}
+							}
+					}
+			}
+		
 		return true;
 	}
 	

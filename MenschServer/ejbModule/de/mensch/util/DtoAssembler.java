@@ -51,7 +51,8 @@ public class DtoAssembler {
 	  dto.setSpieler4(game.getSpieler4());
 	  dto.getOwner().setPassword(null);
 	  dto.setStarted(game.isStarted());
-	  dto.setDiceNumber((int) Math.round(Math.random()*100%7));
+	  dto.setDiceNumber(game.getDiceNumber());
+	  dto.setStateMessage(game.getStateMessage());
 	  
 		Map<Integer,MenschSession> mp = game.getZuschauer();
 		ArrayList<String> dtoZuschauer = new ArrayList<String>();
