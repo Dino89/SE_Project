@@ -154,10 +154,6 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 				int sessionId = dao.createSession(user);
 				System.out.println("Login erfolgreich. Session=" + sessionId);
 				response.setSessionId(sessionId);
-				
-				//TESTDATEN SCHREIBEN TEMP!!!!!!!
-				SendHighscore blala = new SendHighscore();
-				blala.highscorePoinsForLeavingGame(user);
 			}
 			else {
 				System.out.println("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);

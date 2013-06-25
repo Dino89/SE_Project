@@ -45,12 +45,24 @@ public class ReceivedHighscore implements MessageListener  {
 		dao.setHighscore(user, credits);
 		
 		//Testdaten
-		dao.setHighscore("Max", 2);
-		dao.setHighscore("Paul", 4);
-		dao.setHighscore("Dino", 2);
-		dao.setHighscore("Krimi", 1);
+		dao.setHighscore("Max", 1);
+		dao.setHighscore("Paul", 2);
+		dao.setHighscore("Dino", 3);
+		dao.setHighscore("Krimi", 4);
 		dao.setHighscore("Matz", 5);
-		dao.setHighscore("Malte", 7);
+		dao.setHighscore("Malte", 6);
+		dao.setHighscore("Beno", 1);
+		dao.setHighscore("Krampe", 2);
+		dao.setHighscore("Rex", 1);
+		dao.setHighscore("Sense", 3);
+		dao.setHighscore("Lukas", 2);
+		dao.setHighscore("Tech", 1);
+		dao.setHighscore("Viktor", 5);
+		dao.setHighscore("Memmet", 2);
+		dao.setHighscore("Blümchen88", 4);
+		dao.setHighscore("Baum03", 2);
+		dao.setHighscore("David", 7);
+		dao.setHighscore("Thorsten", 2);
 		//Ende Testdaten
 		
 		}
