@@ -15,37 +15,39 @@ public class GameFieldTO implements Serializable {
 	/**
 	 *  Die Felder sind durch Zahlen abggebildet
 	 *  0: Nicht besetzt
-	 *  1: Rot
-	 *  2: Grün
-	 *  3: Gelb
-	 *  4: Blau
+	 *  1: Blau
+	 *  2: Rot
+	 *  3: Grün
+	 *  4: Gelb
 	 */
 	
 	
 	private static final long serialVersionUID = 1L;
 
-	private ArrayList<FieldTO> fields = new ArrayList<>();
+	private FieldsTO fields = new FieldsTO();
 	
-	private ArrayList<FieldTO> blue_start = new ArrayList<>();
-	
-	private ArrayList<FieldTO> red_start = new ArrayList<>();
-	
-	private ArrayList<FieldTO> green_start = new ArrayList<>();
-	
-	private ArrayList<FieldTO> yellow_start = new ArrayList<>();
-	
-	private ArrayList<FieldTO> blue_house = new ArrayList<>();
-	
-	private ArrayList<FieldTO> red_house = new ArrayList<>();
-	
-	private ArrayList<FieldTO> green_house = new ArrayList<>();
-	
-	private ArrayList<FieldTO> yellow_house = new ArrayList<>();
+//	private ArrayList<FieldTO> blue_start = new ArrayList<>();
+//	
+//	private ArrayList<FieldTO> red_start = new ArrayList<>();
+//	
+//	private ArrayList<FieldTO> green_start = new ArrayList<>();
+//	
+//	private ArrayList<FieldTO> yellow_start = new ArrayList<>();
+//	
+//	private ArrayList<FieldTO> blue_house = new ArrayList<>();
+//	
+//	private ArrayList<FieldTO> red_house = new ArrayList<>();
+//	
+//	private ArrayList<FieldTO> green_house = new ArrayList<>();
+//	
+//	private ArrayList<FieldTO> yellow_house = new ArrayList<>();
 	
 	private int id;
 	
 	public GameFieldTO() {
 	}
+	
+	
 		
 //	public void setField(int index, Field value) {
 //		this.fields.set(index, value);
@@ -55,90 +57,96 @@ public class GameFieldTO implements Serializable {
 //		return this.fields.get(index);
 //	}
 
-	public int getSize() {
-		return this.fields.size();
-	}
 
-	public ArrayList<FieldTO> getFields() {
+
+
+
+	public FieldsTO getFields() {
 		return fields;
 	}
+
+
+
+	public void setFields(FieldsTO fields) {
+		this.fields = fields;
+	}
+
+
 
 	public int getId() {
 		return id;
 	}
 
-	public void setFields(ArrayList<FieldTO> arrayList) {
-		this.fields = arrayList;
-	}
+
 
 	public void setId(int id) {
 		this.id = id;
 	}
 	
 	
-public ArrayList<FieldTO> getBlue_start() {
-		return blue_start;
-	}
+//public ArrayList<FieldTO> getBlue_start() {
+//		return blue_start;
+//	}
+//
+//	public void setBlue_start(ArrayList<FieldTO> blue_start) {
+//		this.blue_start = blue_start;
+//	}
+//
+//	public ArrayList<FieldTO> getRed_start() {
+//		return red_start;
+//	}
+//
+//	public void setRed_start(ArrayList<FieldTO> red_start) {
+//		this.red_start = red_start;
+//	}
+//
+//	public ArrayList<FieldTO> getGreen_start() {
+//		return green_start;
+//	}
+//
+//	public void setGreen_start(ArrayList<FieldTO> green_start) {
+//		this.green_start = green_start;
+//	}
+//
+//	public ArrayList<FieldTO> getYellow_start() {
+//		return yellow_start;
+//	}
+//
+//	public void setYellow_start(ArrayList<FieldTO> yellow_start) {
+//		this.yellow_start = yellow_start;
+//	}
 
-	public void setBlue_start(ArrayList<FieldTO> blue_start) {
-		this.blue_start = blue_start;
-	}
-
-	public ArrayList<FieldTO> getRed_start() {
-		return red_start;
-	}
-
-	public void setRed_start(ArrayList<FieldTO> red_start) {
-		this.red_start = red_start;
-	}
-
-	public ArrayList<FieldTO> getGreen_start() {
-		return green_start;
-	}
-
-	public void setGreen_start(ArrayList<FieldTO> green_start) {
-		this.green_start = green_start;
-	}
-
-	public ArrayList<FieldTO> getYellow_start() {
-		return yellow_start;
-	}
-
-	public void setYellow_start(ArrayList<FieldTO> yellow_start) {
-		this.yellow_start = yellow_start;
-	}
-
-	public ArrayList<FieldTO> getBlue_house() {
-		return blue_house;
-	}
-
-	public void setBlue_house(ArrayList<FieldTO> blue_house) {
-		this.blue_house = blue_house;
-	}
-
-	public ArrayList<FieldTO> getRed_house() {
-		return red_house;
-	}
-
-	public void setRed_house(ArrayList<FieldTO> red_house) {
-		this.red_house = red_house;
-	}
-
-	public ArrayList<FieldTO> getGreen_house() {
-		return green_house;
-	}
-
-	public void setGreen_house(ArrayList<FieldTO> green_house) {
-		this.green_house = green_house;
-	}
-
-	public ArrayList<FieldTO> getYellow_house() {
-		return yellow_house;
-	}
-
-	public void setYellow_house(ArrayList<FieldTO> yellow_house) {
-		this.yellow_house = yellow_house;
-	}
+//	public ArrayList<FieldTO> getBlue_house() {
+//		return blue_house;
+//	}
+//
+//	public void setBlue_house(ArrayList<FieldTO> blue_house) {
+//		this.blue_house = blue_house;
+//	}
+//
+//	public ArrayList<FieldTO> getRed_house() {
+//		return red_house;
+//	}
+//
+//	public void setRed_house(ArrayList<FieldTO> red_house) {
+//		this.red_house = red_house;
+//	}
+//
+//	public ArrayList<FieldTO> getGreen_house() {
+//		return green_house;
+//	}
+//
+//	public void setGreen_house(ArrayList<FieldTO> green_house) {
+//		this.green_house = green_house;
+//	}
+//
+//	public ArrayList<FieldTO> getYellow_house() {
+//		return yellow_house;
+//	}
+//
+//	public void setYellow_house(ArrayList<FieldTO> yellow_house) {
+//		this.yellow_house = yellow_house;
+//	}
 
 
 	//	private int id;

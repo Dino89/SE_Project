@@ -298,6 +298,62 @@ public class MenschSystemStub implements MenschSystem {
 				game.setZuschauer(zliste);
 			}
 			
+			if(soapGameEntry.toString().contains("fields")){
+				
+				//Log.d("fields", soapGameEntry.getPropertySafely("fields")+" fields");
+				 SoapObject gameField =  (SoapObject) soapGameEntry.getPropertySafely("gameField");
+				 SoapObject fields =  (SoapObject) gameField.getPropertySafely("fields");
+				 
+					 
+				// Log.d("zuschauer->", "zuschauer: "+zuschauer);
+					ArrayList<Integer> fliste = new ArrayList<Integer>();
+					for(int j=1;j<fields.getPropertyCount();j++){
+						SoapObject innerfields =  (SoapObject) fields.getProperty(j);
+						fliste.add(Integer.parseInt(innerfields.getPropertyAsString("state")));
+					}
+					game.setSpielfeld(fliste);
+					
+					game.setField_blue_1(Integer.parseInt(gameField.getPropertyAsString("field_blue_1")));
+					game.setField_blue_2(Integer.parseInt(gameField.getPropertyAsString("field_blue_2")));
+					game.setField_blue_3(Integer.parseInt(gameField.getPropertyAsString("field_blue_3")));
+					game.setField_blue_4(Integer.parseInt(gameField.getPropertyAsString("field_blue_4")));
+					
+					game.setField_blue_house_1(Integer.parseInt(gameField.getPropertyAsString("field_blue_house_1")));
+					game.setField_blue_house_2(Integer.parseInt(gameField.getPropertyAsString("field_blue_house_2")));
+					game.setField_blue_house_3(Integer.parseInt(gameField.getPropertyAsString("field_blue_house_3")));
+					game.setField_blue_house_4(Integer.parseInt(gameField.getPropertyAsString("field_blue_house_4")));
+					
+					game.setField_green_1(Integer.parseInt(gameField.getPropertyAsString("field_green_1")));
+					game.setField_green_2(Integer.parseInt(gameField.getPropertyAsString("field_green_2")));
+					game.setField_green_3(Integer.parseInt(gameField.getPropertyAsString("field_green_3")));
+					game.setField_green_4(Integer.parseInt(gameField.getPropertyAsString("field_green_4")));
+					
+					game.setField_green_house_1(Integer.parseInt(gameField.getPropertyAsString("field_green_house_1")));
+					game.setField_green_house_2(Integer.parseInt(gameField.getPropertyAsString("field_green_house_2")));
+					game.setField_green_house_3(Integer.parseInt(gameField.getPropertyAsString("field_green_house_3")));
+					game.setField_green_house_4(Integer.parseInt(gameField.getPropertyAsString("field_green_house_4")));
+					
+					game.setField_red_1(Integer.parseInt(gameField.getPropertyAsString("field_red_1")));
+					game.setField_red_2(Integer.parseInt(gameField.getPropertyAsString("field_red_2")));
+					game.setField_red_3(Integer.parseInt(gameField.getPropertyAsString("field_red_3")));
+					game.setField_red_4(Integer.parseInt(gameField.getPropertyAsString("field_red_4")));
+					
+					game.setField_red_house_1(Integer.parseInt(gameField.getPropertyAsString("field_red_house_1")));
+					game.setField_red_house_2(Integer.parseInt(gameField.getPropertyAsString("field_red_house_2")));
+					game.setField_red_house_3(Integer.parseInt(gameField.getPropertyAsString("field_red_house_3")));
+					game.setField_red_house_4(Integer.parseInt(gameField.getPropertyAsString("field_red_house_4")));
+					
+					game.setField_yellow_1(Integer.parseInt(gameField.getPropertyAsString("field_yellow_1")));
+					game.setField_yellow_2(Integer.parseInt(gameField.getPropertyAsString("field_yellow_2")));
+					game.setField_yellow_3(Integer.parseInt(gameField.getPropertyAsString("field_yellow_3")));
+					game.setField_yellow_4(Integer.parseInt(gameField.getPropertyAsString("field_yellow_4")));
+					
+					game.setField_yellow_house_1(Integer.parseInt(gameField.getPropertyAsString("field_yellow_house_1")));
+					game.setField_yellow_house_2(Integer.parseInt(gameField.getPropertyAsString("field_yellow_house_2")));
+					game.setField_yellow_house_3(Integer.parseInt(gameField.getPropertyAsString("field_yellow_house_3")));
+					game.setField_yellow_house_4(Integer.parseInt(gameField.getPropertyAsString("field_yellow_house_4")));
+				}
+			
 			result.add(game);
 		}
 		return result;

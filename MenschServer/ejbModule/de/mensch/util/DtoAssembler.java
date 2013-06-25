@@ -13,6 +13,7 @@ import de.mensch.dto.CustomerTO;
 import de.mensch.dto.DiceResponse;
 import de.mensch.dto.DiceTO;
 import de.mensch.dto.FieldTO;
+import de.mensch.dto.FieldsTO;
 import de.mensch.dto.GameFieldTO;
 import de.mensch.dto.GameTO;
 import de.mensch.dto.RequestTO;
@@ -67,8 +68,47 @@ public class DtoAssembler {
 	  dto.setSpectatorListTO(kapsel);  
 	  GameFieldTO gfTO = new GameFieldTO();
 	  
-	  gfTO.setFields(makeDTOGameFields(game.getGameField().getFields()));
+	  gfTO.setFields(new FieldsTO(makeDTOGameFields(game.getGameField().getFields())));
 	  
+	  gfTO.setField_blue_1(game.getGameField().getField_blue_1());
+	  gfTO.setField_blue_2(game.getGameField().getField_blue_2());
+	  gfTO.setField_blue_3(game.getGameField().getField_blue_3());
+	  gfTO.setField_blue_4(game.getGameField().getField_blue_4());
+	  
+	  gfTO.setField_blue_house_1(game.getGameField().getField_blue_house_1());
+	  gfTO.setField_blue_house_2(game.getGameField().getField_blue_house_2());
+	  gfTO.setField_blue_house_3(game.getGameField().getField_blue_house_3());
+	  gfTO.setField_blue_house_4(game.getGameField().getField_blue_house_4());
+	  
+	  gfTO.setField_green_1(game.getGameField().getField_green_1());
+	  gfTO.setField_green_2(game.getGameField().getField_green_2());
+	  gfTO.setField_green_3(game.getGameField().getField_green_3());
+	  gfTO.setField_green_4(game.getGameField().getField_green_4());
+	  
+	  gfTO.setField_green_house_1(game.getGameField().getField_green_house_1());
+	  gfTO.setField_green_house_2(game.getGameField().getField_green_house_2());
+	  gfTO.setField_green_house_3(game.getGameField().getField_green_house_3());
+	  gfTO.setField_green_house_4(game.getGameField().getField_green_house_4());
+	  
+	  gfTO.setField_red_1(game.getGameField().getField_red_1());
+	  gfTO.setField_red_2(game.getGameField().getField_red_2());
+	  gfTO.setField_red_3(game.getGameField().getField_red_3());
+	  gfTO.setField_red_4(game.getGameField().getField_red_4());
+	  
+	  gfTO.setField_red_house_1(game.getGameField().getField_red_house_1());
+	  gfTO.setField_red_house_2(game.getGameField().getField_red_house_2());
+	  gfTO.setField_red_house_3(game.getGameField().getField_red_house_3());
+	  gfTO.setField_red_house_4(game.getGameField().getField_red_house_4());
+	  
+	  gfTO.setField_yellow_1(game.getGameField().getField_yellow_1());
+	  gfTO.setField_yellow_2(game.getGameField().getField_yellow_2());
+	  gfTO.setField_yellow_3(game.getGameField().getField_yellow_3());
+	  gfTO.setField_yellow_4(game.getGameField().getField_yellow_4());
+	  
+	  gfTO.setField_yellow_house_1(game.getGameField().getField_yellow_house_1());
+	  gfTO.setField_yellow_house_2(game.getGameField().getField_yellow_house_2());
+	  gfTO.setField_yellow_house_3(game.getGameField().getField_yellow_house_3());
+	  gfTO.setField_yellow_house_4(game.getGameField().getField_yellow_house_4());
 //	  gfTO.setBlue_house(makeDTOGameFields(game.getGameField().getBlue_house()));
 //	  gfTO.setRed_house(makeDTOGameFields(game.getGameField().getRed_house()));
 //	  gfTO.setGreen_house(makeDTOGameFields(game.getGameField().getGreen_house()));

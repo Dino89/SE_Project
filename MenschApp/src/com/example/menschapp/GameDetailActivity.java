@@ -135,7 +135,7 @@ public class GameDetailActivity extends Activity {
 						startGameTask = new StartGameTask();
 						startGameTask.execute();
 //						TODO: ACTIVITY BEENDEN BEIM WECHSEL AUFS SPIELFELD
-						finish();
+						//finish();
 					}
 				});
 		
@@ -156,7 +156,8 @@ public class GameDetailActivity extends Activity {
 		 period = 10000; // repeat every 1 sec. 
 		
 		if(host==true){  //if is host
-			//findViewById(R.id.mitspielen).setVisibility(0);
+			findViewById(R.id.mitspielen).setEnabled(false);
+			findViewById(R.id.zuschauen).setEnabled(false);
 			joined=true;
 			checkForRequestsTimer=new Timer();
 			checkForRequestsTimer.scheduleAtFixedRate(new TimerTask() 
@@ -552,6 +553,7 @@ public class StartGameTask extends AsyncTask<String, Void, Boolean> {
         
     	GameDetailActivity.this.obsApp.getObsStub().startGame(gameid);
     	checkForRequestsTimer.cancel();
+    	gameDetailsTimer.cancel();
     	
     	
     try {
