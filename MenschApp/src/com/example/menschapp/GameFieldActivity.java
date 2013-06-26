@@ -73,6 +73,8 @@ public class GameFieldActivity extends Activity {
 	private TextView stateMessage;
 	MediaPlayer mp;
 	
+	private boolean gewurfelt;
+	
 	ArrayList<ImageView> spielfeld = new ArrayList<ImageView>();
 	
 	@Override
@@ -551,6 +553,15 @@ public class GameFieldActivity extends Activity {
 		protected void onPostExecute(final Boolean success) {
 
 			stateMessage.setText(gameDetail.getStateMessage());
+			if(gameDetail.getStateMessage().contains("Warte auf") && gameDetail.getStateMessage().contains(GameFieldActivity.this.obsApp.getObsStub().getUserName())){
+				wuerfelButton = (Button) findViewById(R.id.wuerfeln);
+				wuerfelButton.setEnabled(true);
+				stateMessage.setText("Sie sind dran");
+			}else{
+				wuerfelButton = (Button) findViewById(R.id.wuerfeln);
+				wuerfelButton.setEnabled(false);
+			}
+			
 			for(int i=0;i<spielfeld.size();i++){
 				if(gameDetail.getSpielfeld().get(i) ==0)
 				spielfeld.get(i).setImageResource(R.drawable.circle_low2);
@@ -809,6 +820,7 @@ public class GameFieldActivity extends Activity {
 		wuerfelergebnis = (TextView) findViewById(R.id.wuerfelergebnis);
 		wuerfelergebnis.setText(diceNumber + " gewürfelt");
 		findViewById(R.id.wuerfeln).setEnabled(true);
+		gewurfelt=true;
 		}
 	
 		@Override
@@ -821,8 +833,10 @@ public class GameFieldActivity extends Activity {
 		
 	    @Override
 		protected Boolean doInBackground(String... params) {
-	
-	    	GameFieldActivity.this.obsApp.getObsStub().spielen(gameid, spielfigurfeld, diceNumber);
+	    	
+	    	if(gewurfelt ==true)
+	    	GameFieldActivity.this.obsApp.getObsStub().spielen(gameid, spielfigurfeld);
+	    	
 	        try {
 				// Simulate network access.
 				Thread.sleep(250);

@@ -169,6 +169,8 @@ public class GameDetailActivity extends Activity {
 		        	
 		        } 
 		    }, delay, period);
+		}else{
+			findViewById(R.id.startknopf).setEnabled(false);
 		}
 		
 	}
@@ -446,7 +448,7 @@ public class CheckForRequestsTask extends AsyncTask<String, Void, Boolean> {
 			AlertDialog.Builder newRequestDialogBuilder = new AlertDialog.Builder(context);
 			
 			
-			newRequestDialogBuilder.setTitle("Your Title");
+			newRequestDialogBuilder.setTitle("Neuer Mitspieler");
 			
 			for(Request r : requests){
 				reqid = r.getId();

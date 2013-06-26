@@ -74,7 +74,7 @@ public interface MenschOnlineIntegration {
 	
 	public void startGame(int gameid, int sessionId) throws NoSessionException;
 
-	public SpielzugResponse spielen(int gameid, int sessionId, int spielfeld, int diceId) throws NoSessionException;
+	public SpielzugResponse spielen(int gameid, int sessionId, int spielfeld) throws NoSessionException;
 	
 	public HighscoreListResponse getHighscoreList();
 }

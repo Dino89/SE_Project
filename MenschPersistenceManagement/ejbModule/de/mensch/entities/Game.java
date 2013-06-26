@@ -2,6 +2,7 @@ package de.mensch.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,8 +47,10 @@ public class Game implements Serializable {
 	private Customer spieler3;
 	@OneToOne
 	private Customer spieler4;
+	
+	ArrayList<String> players = new ArrayList<String>();
 
-	private String aktuellerSpieler;
+	private int aktuellerSpieler;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="currentGame") @MapKey
 	private Map<Integer, MenschSession> zuschauer;
@@ -63,7 +66,8 @@ public class Game implements Serializable {
 	public Game() {
 		super();
 		this.started = false;
-		aktuellerSpieler = "spieler1";
+		aktuellerSpieler = 0;
+		
 		spieler2 = null;
 		spieler3 = null;
 		spieler4 = null;
@@ -76,6 +80,7 @@ public class Game implements Serializable {
 	
 	public void setSpieler1(Customer spieler1) {
 		this.spieler1 = spieler1;
+		stateMessage="Warte auf "+spieler1.getUserName();
 	}
 	
 	public Customer getSpieler2() {
@@ -124,6 +129,7 @@ public class Game implements Serializable {
 
 	public void setOwner(Customer owner) {
 		this.owner = owner;
+		players.add(owner.getUserName());
 	}
 	
 	public int getGameList() {
@@ -177,14 +183,14 @@ public class Game implements Serializable {
 	/**
 	 * @return the aktuellerSpieler
 	 */
-	public String getAktuellerSpieler() {
+	public int getAktuellerSpieler() {
 		return aktuellerSpieler;
 	}
 
 	/**
 	 * @param aktuellerSpieler the aktuellerSpieler to set
 	 */
-	public void setAktuellerSpieler(String aktuellerSpieler) {
+	public void setAktuellerSpieler(int aktuellerSpieler) {
 		this.aktuellerSpieler = aktuellerSpieler;
 	}
 
@@ -223,4 +229,14 @@ public class Game implements Serializable {
 	public void setStateMessage(String stateMessage) {
 		this.stateMessage = stateMessage;
 	}
+
+	public ArrayList<String> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(ArrayList<String> players) {
+		this.players = players;
+	}
+	
+	
 }

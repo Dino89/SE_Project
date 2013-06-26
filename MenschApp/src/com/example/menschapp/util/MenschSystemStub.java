@@ -47,11 +47,17 @@ public class MenschSystemStub implements MenschSystem {
      */
 	private static int sessionId;
 	
+	private static String userName;
+	
 	/**
 	 * @return the sessionId
 	 */
 	public int getSessionId() {
 		return sessionId;
+	}
+	
+	public String getUserName(){
+		return userName;
 	}
 
 	@Override
@@ -236,6 +242,7 @@ public class MenschSystemStub implements MenschSystem {
 		}
 		this.sessionId = Integer.parseInt(response.getPrimitivePropertySafelyAsString("sessionId"));
 		result = new Kunde(username, password);
+		userName=username;
 		return result;
 	}		
 	
@@ -540,11 +547,11 @@ public class MenschSystemStub implements MenschSystem {
 	}
 	
 	@Override
-	public void spielen(int gameid, int spielfigurfeld, int diceid) {
+	public void spielen(int gameid, int spielfigurfeld) {
 		String METHOD_NAME = "spielen";
 		Log.d(TAG, METHOD_NAME+" called");
 		
-		SoapObject response = executeSoapAction(METHOD_NAME, gameid, sessionId, spielfigurfeld, diceid);	
+		SoapObject response = executeSoapAction(METHOD_NAME, gameid, sessionId, spielfigurfeld);	
 	}
 
 	@Override

@@ -62,72 +62,72 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	/*
 	 * Diese Methode kümmert (bzw. sollte) sich um das Aufräumen alter Sessions, Spiele und Requests.
 	 */
-	@Schedule(second="59", minute="*",hour="*", persistent=false)
-	public void removeOldSessions() {
-		System.out.println("Removing Sessions...");
-		ArrayList<MenschSession> sessionList = this.dao.findSessions();
-		ArrayList<Game> gameList = this.dao.getGameList();
-		ArrayList<Request> requestList = this.dao.getAllRequests();
-		
-		for(MenschSession s : sessionList) {
-			Date currentTime = new Date();
-			
-//			System.out.println(currentTime);
-			String servertime = currentTime.toString();
-			
-			String[] serverTimeMinutes = servertime.split(":");
-			String[] serverTimeHour = serverTimeMinutes[0].split(" ");
-//			System.out.println("server time 1:");
-//			for(String string : serverTimeMinutes) {
-//				System.out.print(string+ " ### ");
+//	@Schedule(second="59", minute="*",hour="*", persistent=false)
+//	public void removeOldSessions() {
+//		System.out.println("Removing Sessions...");
+//		ArrayList<MenschSession> sessionList = this.dao.findSessions();
+//		ArrayList<Game> gameList = this.dao.getGameList();
+//		ArrayList<Request> requestList = this.dao.getAllRequests();
+//		
+//		for(MenschSession s : sessionList) {
+//			Date currentTime = new Date();
+//			
+////			System.out.println(currentTime);
+//			String servertime = currentTime.toString();
+//			
+//			String[] serverTimeMinutes = servertime.split(":");
+//			String[] serverTimeHour = serverTimeMinutes[0].split(" ");
+////			System.out.println("server time 1:");
+////			for(String string : serverTimeMinutes) {
+////				System.out.print(string+ " ### ");
+////			}
+////			System.out.println("server time 2:");
+////			for(String string : serverTimeHour) {
+////				System.out.print(string+ " ### ");
+////			}
+//			int currentTimeStamp = Integer.valueOf(serverTimeHour[3]+serverTimeMinutes[1]);
+//			
+////			System.out.println("serverzeit:" +servertime);
+//			
+//			String result = s.getCreationTime().toString();
+//			String[] sessionTimeMinutes = result.split(":");
+//			String[] sessionTimeHour = sessionTimeMinutes[0].split(" ");
+////			System.out.println("Session time 1:");
+////			for(String string : sessionTimeMinutes) {
+////				System.out.print(string+ " ### ");
+////			}
+////			System.out.println("Session time 2:");
+////			for(String string : sessionTimeHour) {
+////				System.out.print(string+ " ### ");
+////			}
+//			
+//			int timestamp = Integer.valueOf(sessionTimeHour[1]+sessionTimeMinutes[1]);
+//			
+//			if(timestamp+1<currentTimeStamp) {
+//				System.out.println("timestamp: "+timestamp +" < "+ currentTimeStamp);
+//				System.out.println("Session removed: "+s.getUsername());
+//				this.dao.closeSession(s.getId());
+//				Customer c = this.dao.findCustomerByName(s.getUsername());
+//				for(Request q : requestList) {
+//					if(q.getUser().equals(c)) this.dao.removeRequest(q.getId());
+//					System.out.println("Request "+q.getId()+" "+q.getUser()+" entfernt");
+//				}
+//
 //			}
-//			System.out.println("server time 2:");
-//			for(String string : serverTimeHour) {
-//				System.out.print(string+ " ### ");
+//		}
+//		
+//		for(Game g : gameList) {
+//			String gameOwnerName = g.getOwner().getUserName();
+//			int counter = 0;
+//			for(MenschSession s : sessionList) {
+//				if(gameOwnerName.equals(s.getUsername())) counter++;
 //			}
-			int currentTimeStamp = Integer.valueOf(serverTimeHour[3]+serverTimeMinutes[1]);
-			
-//			System.out.println("serverzeit:" +servertime);
-			
-			String result = s.getCreationTime().toString();
-			String[] sessionTimeMinutes = result.split(":");
-			String[] sessionTimeHour = sessionTimeMinutes[0].split(" ");
-//			System.out.println("Session time 1:");
-//			for(String string : sessionTimeMinutes) {
-//				System.out.print(string+ " ### ");
+//			if(counter==0) {
+//				this.dao.removeGame(g.getId());
+//				System.out.println("Game "+g.getId()+" "+g.getOwner().getUserName()+" removed");
 //			}
-//			System.out.println("Session time 2:");
-//			for(String string : sessionTimeHour) {
-//				System.out.print(string+ " ### ");
-//			}
-			
-			int timestamp = Integer.valueOf(sessionTimeHour[1]+sessionTimeMinutes[1]);
-			
-			if(timestamp+1<currentTimeStamp) {
-				System.out.println("timestamp: "+timestamp +" < "+ currentTimeStamp);
-				System.out.println("Session removed: "+s.getUsername());
-				this.dao.closeSession(s.getId());
-				Customer c = this.dao.findCustomerByName(s.getUsername());
-				for(Request q : requestList) {
-					if(q.getUser().equals(c)) this.dao.removeRequest(q.getId());
-					System.out.println("Request "+q.getId()+" "+q.getUser()+" entfernt");
-				}
-
-			}
-		}
-		
-		for(Game g : gameList) {
-			String gameOwnerName = g.getOwner().getUserName();
-			int counter = 0;
-			for(MenschSession s : sessionList) {
-				if(gameOwnerName.equals(s.getUsername())) counter++;
-			}
-			if(counter==0) {
-				this.dao.removeGame(g.getId());
-				System.out.println("Game "+g.getId()+" "+g.getOwner().getUserName()+" removed");
-			}
-		}
-	}
+//		}
+//	}
 	/**
 	 * EJB zur Erzeugung von DataTransferObjects
 	 */
@@ -325,7 +325,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 			if(g.getSpieler4().getUserName().equals(s.getUsername())){
 				g.setSpieler4(null);
 			}
-			
+			g.getPlayers().remove(s.getUsername());
 			Map<Integer, MenschSession> z = g.getZuschauer();
 			z.remove(s);
 		}
@@ -383,7 +383,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		System.out.println("checkrequest reqID:"+requestId+" "+result);
 		if(r.getState().equals("declined") || r.getState().equals("accepted")){
 			System.out.println("Request removed");
-			this.dao.removeRequest(requestId);
+		//	this.dao.removeRequest(requestId); //DAS HÄTTE DAS SPIEL MITGELÖSCHT
 		}
 		return result;
 		
@@ -444,7 +444,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 //		MenschSession session = this.dao.findSessionByUserName(c.getUserName());
 //		this.dao.removeRequest(r.getId());
 //		System.out.println("request"+r.getId()+" removed");
-
+		g.getPlayers().add(c.getUserName());
 		if(g.getSpieler1() == null){
 			g.setSpieler1(c);
 		}else{
@@ -474,7 +474,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	
 	@Override
 	public void startGame(int gameid, int sessionId) throws NoSessionException {
-		System.out.println(sessionId);
+		System.out.println("Starte Spiel "+gameid);
 		MenschSession session = getSession(sessionId);
 		Game game = this.dao.getGame(gameid);
 		game.setStarted(true);
@@ -494,46 +494,64 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		System.out.println("Neuer Zuschauer: "+z.get(sessionId).getUsername()+" bei Game "+z.get(sessionId).getCurrentGame().getId());
 	}
 	
+	
+	
+	
+	
+	
 	@Override
-	public SpielzugResponse spielen(int gameid, int sessionid, int spielfigurfeld, int diceNumber) throws NoSessionException {
+	public SpielzugResponse spielen(int gameid, int sessionid, int spielfigurfeld) throws NoSessionException {
+		
 		System.out.println("Ich will spielen!");
 		MenschSession session = null;
 		if(sessionid!=-1) session = getSession(sessionid);
+		
 		System.out.println("Prüfe auf verlassene Spieler");
 		spielerVerlassen(gameid);
+		
 		SpielzugResponse response = new SpielzugResponse();
+		
 		Game game = this.dao.findGameById(gameid);
-		game.setStateMessage("Warte auf Spieler "+game.getAktuellerSpieler());
+		
+		
 		if(!spielerIstDran(gameid, session)) return response;
+		
 		System.out.println("Ziehe...");
-		ziehen(gameid, spielfigurfeld, diceNumber);
-		pruefeNochmalWuerfeln(gameid);
+		boolean successful = ziehen(gameid, spielfigurfeld, game.getDiceNumber());
+		if(!successful) return response;
+//		pruefeNochmalWuerfeln(gameid);
+//		
+//		if(game.getWuerfelCount()<=2) { 
+//			System.out.println("Nochmal dran!");
+//			game.setAktuellerSpieler(game.getAktuellerSpieler());
+//		}  else {
+//			game.setWuerfelCount(0);
+//		}
 		
-		if(game.getWuerfelCount()<=2) { 
-			System.out.println("Nochmal dran!");
-			game.setAktuellerSpieler(game.getAktuellerSpieler());
-		}  else {
-			game.setWuerfelCount(0);
+//		if(game.getSpieler2()!=null) {
+//			if(game.getSpieler3()!=null) {
+//				game.setAktuellerSpieler("spieler3"); 
+//			}
+//			else game.setAktuellerSpieler("spieler2");
+//		} else {
+//			computerZieht(gameid);
+//		}
+		if(game.getAktuellerSpieler() == game.getPlayers().size()-1){
+			game.setAktuellerSpieler(0);
+		}else{
+			game.setAktuellerSpieler(game.getAktuellerSpieler()+1);
 		}
 		
-		if(game.getSpieler2()!=null) {
-			if(game.getSpieler3()!=null) {
-				game.setAktuellerSpieler("spieler3"); 
-			}
-			else game.setAktuellerSpieler("spieler2");
-		} else {
-			computerZieht(gameid);
-		}
 		
-		if(game.getSpieler3()!=null) {
-			if(game.getSpieler4()!=null) {
-				game.setAktuellerSpieler("spieler4");
-			}
-			else game.setAktuellerSpieler("spieler1");
-		}
+//		if(game.getSpieler3()!=null) {
+//			if(game.getSpieler4()!=null) {
+//				game.setAktuellerSpieler("spieler4");
+//			}
+//			else game.setAktuellerSpieler("spieler1");
+//		}
 		
 		spielerGewonnen(gameid);
-
+		game.setStateMessage("Warte auf Spieler "+game.getPlayers().get(game.getAktuellerSpieler()));
 		response.setSuccess(true);
 		return response;
 	}
@@ -545,21 +563,21 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		int random = random();
 		System.out.println("Computer hat gewürfelt: "+random);
 		for(int i=0;i<game.getGameField().getFields().size();i++) {
-			if(game.getGameField().getFields().get(i).getState()==2) spielen(gameid, -1, i, random);			
+			if(game.getGameField().getFields().get(i).getState()==2) spielen(gameid, -1, i);			
 		}
 		
 		if(spielfigurenfeld==0) {
 			if(game.getGameField().getField_red_4()==2) { 
-				spielen(gameid, -1, game.getGameField().getField_red_4(), random); 
+				spielen(gameid, -1, game.getGameField().getField_red_4()); 
 			} else {
 				if(game.getGameField().getField_red_3()==2) { 
-					spielen(gameid, -1, game.getGameField().getField_red_3(), random);
+					spielen(gameid, -1, game.getGameField().getField_red_3());
 				} else {
 					if(game.getGameField().getField_red_2()==2) { 
-						spielen(gameid, -1, game.getGameField().getField_red_2(), random);
+						spielen(gameid, -1, game.getGameField().getField_red_2());
 				} else {
 					if(game.getGameField().getField_red_1()==2) { 
-						spielen(gameid, -1, game.getGameField().getField_red_1(), random);
+						spielen(gameid, -1, game.getGameField().getField_red_1());
 					}
 				} 
 			}
@@ -589,7 +607,10 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 
 	private boolean ziehen(int gameid, int spielfigurfeld, int diceNumber) {
 		Game game = this.dao.findGameById(gameid);
-		if(!eigeneFigur(game, spielfigurfeld)) return false;
+		if(!eigeneFigur(game, spielfigurfeld)){ 
+			System.out.println("Nicht eigene Figur "+spielfigurfeld);
+			return false;
+		}
 		System.out.println("Figur setzten..");
 		setzeFigur(game, spielfigurfeld, diceNumber);
 		
@@ -605,21 +626,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		if(session!=null) {
 			Game g = this.dao.findGameById(gameid);
 			System.out.println("spielerIstDran" + g.getAktuellerSpieler());
-			if(g.getAktuellerSpieler().equals("spieler1"))
-			{
-				if(g.getSpieler1().getUserName().equals(session.getUsername())) return true;
-			}
-			if(g.getAktuellerSpieler().equals("spieler2"))
-			{
-				if(g.getSpieler2().getUserName().equals(session.getUsername())) return true;
-			}
-			if(g.getAktuellerSpieler().equals("spieler3"))
-			{
-				if(g.getSpieler3().getUserName().equals(session.getUsername())) return true;
-			}
-			if(g.getAktuellerSpieler().equals("spieler4"))
-			{
-				if(g.getSpieler4().getUserName().equals(session.getUsername())) return true;
+			if(g.getPlayers().get(g.getAktuellerSpieler()).equals(session.getUsername())){
+				return true;
 			}
 		}
 		return false;
@@ -643,37 +651,37 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 //		return response;
 //	}
 //
-	private void pruefeNochmalWuerfeln(int gameid) {
-		Game game = this.dao.findGameById(gameid);
-		
-		if(game.getAktuellerSpieler().equals("spieler1")) {
-			if((game.getGameField().getField_blue_1() != 0) & (game.getGameField().getField_blue_2() != 0) & (game.getGameField().getField_blue_3() != 0) & (game.getGameField().getField_blue_4() != 0) & (game.getWuerfelCount()<3)) {
-				game.setWuerfelCount(game.getWuerfelCount()+1);
-				game.setAktuellerSpieler(game.getAktuellerSpieler());
-			} else { game.setWuerfelCount(3); }	
-		}
-		
-		if(game.getAktuellerSpieler().equals("spieler2")) {
-			if((game.getGameField().getField_red_1() != 0) & (game.getGameField().getField_red_2() != 0) & (game.getGameField().getField_red_3() != 0) & (game.getGameField().getField_red_4() != 0) & (game.getWuerfelCount()<3)) {
-				game.setWuerfelCount(game.getWuerfelCount()+1);
-				game.setAktuellerSpieler(game.getAktuellerSpieler());
-			} else { game.setWuerfelCount(3); }	
-		}
-		
-		if(game.getAktuellerSpieler().equals("spieler3")) {
-			if((game.getGameField().getField_green_1() != 0) & (game.getGameField().getField_green_2() != 0) & (game.getGameField().getField_green_3() != 0) & (game.getGameField().getField_green_4() != 0) & (game.getWuerfelCount()<3)) {
-				game.setWuerfelCount(game.getWuerfelCount()+1);
-				game.setAktuellerSpieler(game.getAktuellerSpieler());
-			} else { game.setWuerfelCount(3); }	
-		}
-		
-		if(game.getAktuellerSpieler().equals("spieler4")) {
-			if((game.getGameField().getField_yellow_1() != 0) & (game.getGameField().getField_yellow_2() != 0) & (game.getGameField().getField_yellow_3() != 0) & (game.getGameField().getField_yellow_4() != 0) & (game.getWuerfelCount()<3)) {
-				game.setWuerfelCount(game.getWuerfelCount()+1);
-				game.setAktuellerSpieler(game.getAktuellerSpieler());
-			} else { game.setWuerfelCount(3); }	
-		}	
-	}
+//	private void pruefeNochmalWuerfeln(int gameid) {
+//		Game game = this.dao.findGameById(gameid);
+//		
+//		if(game.getAktuellerSpieler().equals("spieler1")) {
+//			if((game.getGameField().getField_blue_1() != 0) & (game.getGameField().getField_blue_2() != 0) & (game.getGameField().getField_blue_3() != 0) & (game.getGameField().getField_blue_4() != 0) & (game.getWuerfelCount()<3)) {
+//				game.setWuerfelCount(game.getWuerfelCount()+1);
+//				game.setAktuellerSpieler(game.getAktuellerSpieler());
+//			} else { game.setWuerfelCount(3); }	
+//		}
+//		
+//		if(game.getAktuellerSpieler().equals("spieler2")) {
+//			if((game.getGameField().getField_red_1() != 0) & (game.getGameField().getField_red_2() != 0) & (game.getGameField().getField_red_3() != 0) & (game.getGameField().getField_red_4() != 0) & (game.getWuerfelCount()<3)) {
+//				game.setWuerfelCount(game.getWuerfelCount()+1);
+//				game.setAktuellerSpieler(game.getAktuellerSpieler());
+//			} else { game.setWuerfelCount(3); }	
+//		}
+//		
+//		if(game.getAktuellerSpieler().equals("spieler3")) {
+//			if((game.getGameField().getField_green_1() != 0) & (game.getGameField().getField_green_2() != 0) & (game.getGameField().getField_green_3() != 0) & (game.getGameField().getField_green_4() != 0) & (game.getWuerfelCount()<3)) {
+//				game.setWuerfelCount(game.getWuerfelCount()+1);
+//				game.setAktuellerSpieler(game.getAktuellerSpieler());
+//			} else { game.setWuerfelCount(3); }	
+//		}
+//		
+//		if(game.getAktuellerSpieler().equals("spieler4")) {
+//			if((game.getGameField().getField_yellow_1() != 0) & (game.getGameField().getField_yellow_2() != 0) & (game.getGameField().getField_yellow_3() != 0) & (game.getGameField().getField_yellow_4() != 0) & (game.getWuerfelCount()<3)) {
+//				game.setWuerfelCount(game.getWuerfelCount()+1);
+//				game.setAktuellerSpieler(game.getAktuellerSpieler());
+//			} else { game.setWuerfelCount(3); }	
+//		}	
+//	}
 //
 //	private boolean spieleMitComputer(int gameid, int spielFeldNummer, int diceId) {
 //		boolean success = false;
@@ -719,10 +727,13 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		GameField spielfeld = game.getGameField();
 		
 		if(spielFeldNummer<100) {
-			if((spielFeldNummer+diceNumber-1>39)) spielFeldNummer=-39;
-			
-			int zielFeldValue = spielfeld.getFields().get(spielFeldNummer-1+diceNumber).getState();
 			int zielFeld = spielFeldNummer+diceNumber-1;
+			if((zielFeld>39)){
+				zielFeld=zielFeld-40;
+			}
+			
+			int zielFeldValue = spielfeld.getFields().get(zielFeld).getState();
+			
 			
 			
 			
@@ -738,78 +749,292 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 				return true;
 			}		
 		} else {
-			if(diceNumber!=6) return false;	
+			if(diceNumber!=6) return false;
 			if(spielFeldNummer<=104) {
-					if(spielfeld.getFields().get(0).getState()==1) { 
-						return false;
-					} else {
-						if(spielfeld.getFields().get(0).getState()>0) figurSchmeissen(game, 0);
+				
+				if(spielfeld.getFields().get(0).getState()==1) { //startfeld hat schon eigenen figur?
+					return false;
+				} else {
+					
+					if(spielfeld.getField_blue_4() ==1){
+						if(spielfeld.getFields().get(0).getState() !=0){
+							figurSchmeissen(game, 0);
+						}
 						spielfeld.getFields().get(0).setState(1);
-						if(spielfeld.getField_blue_4()==1) {
-							spielfeld.setField_blue_4(0); }
-								else {
-								if(spielfeld.getField_blue_3()==1) {
-									spielfeld.setField_blue_3(0); }
-									else {
-										if(spielfeld.getField_blue_2()==1) {
-											spielfeld.setField_blue_2(0); }
-											else {
-												if(spielfeld.getField_blue_1()==1) {
-													spielfeld.setField_blue_1(0);
-													}
-												}
-											}
-										}
-				if(spielFeldNummer<=108&spielFeldNummer>=105) {
-					if(spielfeld.getFields().get(10).getState()==2) { 
-						return false;
-					}
-						if(spielfeld.getField_red_4()==2) {
-							spielfeld.setField_red_4(0); }
-								else {
-									if(spielfeld.getFields().get(10).getState()>0) figurSchmeissen(game, 10);
-									spielfeld.getFields().get(10).setState(2);
-									if(spielfeld.getField_red_3()==1) {
-										spielfeld.setField_red_3(0); }
-										else {
-											if(spielfeld.getField_red_2()==1) {
-												spielfeld.setField_red_2(0); }
-												else {
-													if(spielfeld.getField_red_1()==1) {
-														spielfeld.setField_red_1(0);
-														}
-													}
-										}
+						spielfeld.setField_blue_4(0);
+					}else{
+						if(spielfeld.getField_blue_3() ==1){
+							if(spielfeld.getFields().get(0).getState() !=0){
+								figurSchmeissen(game, 0);
+							}
+							spielfeld.getFields().get(0).setState(1);
+							spielfeld.setField_blue_3(0);
+						}else{
+							if(spielfeld.getField_blue_2() ==1){
+								if(spielfeld.getFields().get(0).getState() !=0){
+									figurSchmeissen(game, 0);
+								}
+								spielfeld.getFields().get(0).setState(1);
+								spielfeld.setField_blue_2(0);
+							}else{
+								if(spielfeld.getField_blue_1() ==1){
+									if(spielfeld.getFields().get(0).getState() !=0){
+										figurSchmeissen(game, 0);
 									}
+									spielfeld.getFields().get(0).setState(1);
+									spielfeld.setField_blue_1(0);
+								}
+							}	
+						}
+					}
+				}
+			}
+		
+			
+						
+						
+					if(spielFeldNummer<=108&spielFeldNummer>=105) {
+						
+						if(spielfeld.getFields().get(10).getState()==2) { //startfeld hat schon eigenen figur?
+							return false;
+						} else {
+							
+							if(spielfeld.getField_red_4() ==2){
+								if(spielfeld.getFields().get(10).getState() !=0){
+									figurSchmeissen(game, 10);
+								}
+								spielfeld.getFields().get(10).setState(2);
+								spielfeld.setField_red_4(0);
+							}else{
+								if(spielfeld.getField_red_3() ==2){
+									if(spielfeld.getFields().get(10).getState() !=0){
+										figurSchmeissen(game, 10);
+									}
+									spielfeld.getFields().get(10).setState(2);
+									spielfeld.setField_red_3(0);
+								}else{
+									if(spielfeld.getField_red_2() ==2){
+										if(spielfeld.getFields().get(10).getState() !=0){
+											figurSchmeissen(game, 10);
+										}
+										spielfeld.getFields().get(10).setState(2);
+										spielfeld.setField_red_2(0);
+									}else{
+										if(spielfeld.getField_red_1() ==2){
+											if(spielfeld.getFields().get(10).getState() !=0){
+												figurSchmeissen(game, 10);
+											}
+											spielfeld.getFields().get(10).setState(2);
+											spielfeld.setField_red_1(0);
+										}
+									}	
 								}
 							}
+						}
 					}
-			}
+					
+					
+					
+					if(spielFeldNummer<=109&spielFeldNummer>=112) {
+						
+						if(spielfeld.getFields().get(20).getState()==3) { //startfeld hat schon eigenen figur?
+							return false;
+						} else {
+							
+							if(spielfeld.getField_green_4() ==3){
+								if(spielfeld.getFields().get(20).getState() !=0){
+									figurSchmeissen(game, 20);
+								}
+								spielfeld.getFields().get(20).setState(3);
+								spielfeld.setField_green_4(0);
+							}else{
+								if(spielfeld.getField_green_3() ==3){
+									if(spielfeld.getFields().get(20).getState() !=0){
+										figurSchmeissen(game, 20);
+									}
+									spielfeld.getFields().get(20).setState(3);
+									spielfeld.setField_green_3(0);
+								}else{
+									if(spielfeld.getField_green_2() ==3){
+										if(spielfeld.getFields().get(20).getState() !=0){
+											figurSchmeissen(game, 20);
+										}
+										spielfeld.getFields().get(20).setState(3);
+										spielfeld.setField_green_2(0);
+									}else{
+										if(spielfeld.getField_green_1() ==3){
+											if(spielfeld.getFields().get(20).getState() !=0){
+												figurSchmeissen(game, 20);
+											}
+											spielfeld.getFields().get(20).setState(3);
+											spielfeld.setField_green_1(0);
+										}
+									}	
+								}
+							}
+						}
+					}
+					
+					if(spielfeld.getField_yellow_4() ==4){
+						if(spielfeld.getFields().get(30).getState() !=0){
+							figurSchmeissen(game, 30);
+						}
+						spielfeld.getFields().get(30).setState(4);
+						spielfeld.setField_yellow_4(0);
+					}else{
+						if(spielfeld.getField_yellow_3() ==4){
+							if(spielfeld.getFields().get(30).getState() !=0){
+								figurSchmeissen(game, 30);
+							}
+							spielfeld.getFields().get(30).setState(4);
+							spielfeld.setField_yellow_3(0);
+						}else{
+							if(spielfeld.getField_yellow_2() ==4){
+								if(spielfeld.getFields().get(30).getState() !=0){
+									figurSchmeissen(game, 30);
+								}
+								spielfeld.getFields().get(30).setState(4);
+								spielfeld.setField_yellow_2(0);
+							}else{
+								if(spielfeld.getField_yellow_1() ==4){
+									if(spielfeld.getFields().get(30).getState() !=0){
+										figurSchmeissen(game, 30);
+									}
+									spielfeld.getFields().get(30).setState(4);
+									spielfeld.setField_yellow_1(0);
+								}
+							}	
+						}
+					}
+				
+	
+					
+					
+					
+					
+		}
+							
+			
+//			if(diceNumber!=6) return false;	
+//			if(spielFeldNummer<=104) {
+//					if(spielfeld.getFields().get(0).getState()==1) { //startfeld leer?
+//						return false;
+//					} else {
+//						
+//						
+//						
+//						
+//					
+//						if(spielfeld.getFields().get(0).getState()>0) figurSchmeissen(game, 0);
+//						spielfeld.getFields().get(0).setState(1);
+//						if(spielfeld.getField_blue_4()==1) {
+//							spielfeld.setField_blue_4(0); }
+//								else {
+//								if(spielfeld.getField_blue_3()==1) {
+//									spielfeld.setField_blue_3(0); }
+//									else {
+//										if(spielfeld.getField_blue_2()==1) {
+//											spielfeld.setField_blue_2(0); }
+//											else {
+//												if(spielfeld.getField_blue_1()==1) {
+//													spielfeld.setField_blue_1(0);
+//													}
+//												}
+//											}
+//										}
+//				if(spielFeldNummer<=108&spielFeldNummer>=105) {
+//					if(spielfeld.getFields().get(10).getState()==2) { //startfeld leer?
+//						return false;
+//					}else {
+//							if(spielfeld.getFields().get(10).getState()!=2 && spielfeld.getFields().get(10).getState() !=0 ) figurSchmeissen(game, 10);
+//									spielfeld.getFields().get(10).setState(2);
+//								if(spielfeld.getField_red_4()==2) {
+//									spielfeld.setField_red_4(0); }
+//								else{
+//									if(spielfeld.getField_red_3()==2) {
+//										spielfeld.setField_red_3(0); }
+//										else {
+//											if(spielfeld.getField_red_2()==2) {
+//												spielfeld.setField_red_2(0); }
+//												else {
+//													if(spielfeld.getField_red_1()==2) {
+//														spielfeld.setField_red_1(0);
+//														}
+//													}
+//										}
+//									}
+//								}
+//							}
+//						}
+//					}
+//			}
 		
 		return true;
 	}
 	
-	/*
-	 * int index 1 bis 4 startfelder blau
-	 * int index 5 bis 8 startfelder rot
-	 * int index 9 bis 12 startfelder grün
-	 * int index 13 bis 16 startfelder gelb
-	 * */
+
 	private void figurSchmeissen(Game game, int zielFeld) {
+		
+		System.out.println("Figurschmeissen Feld:"+zielFeld);
+		
 		GameField spielfeld = game.getGameField();
-//		int zielFeldFigur = spielfeld.getField(zielFeld);
+		int zielFeldValue = spielfeld.getFields().get(zielFeld).getState();
 //		
-//		if(zielFeldFigur==1) {
-//			if(spielfeld.getField(4)==0) {
-//				spielfeld.setField(4, 1);
-//			} else if(spielfeld.getField(3)==0) {
-//				spielfeld.setField(3, 1);
-//			} else if(spielfeld.getField(2)==0) {
-//				spielfeld.setField(2, 1);
-//			} else if(spielfeld.getField(1)==0) {
-//				spielfeld.setField(1, 1);
-//			}
-//		}
+		if(zielFeldValue==1) {
+			if(spielfeld.getField_blue_1() ==0){
+				spielfeld.setField_blue_1(1);
+			}else{
+			if(spielfeld.getField_blue_2() ==0){
+				spielfeld.setField_blue_2(1);
+			}else{
+			if(spielfeld.getField_blue_3() ==0){
+				spielfeld.setField_blue_3(1);
+			}else{
+			if(spielfeld.getField_blue_4() ==0){
+				spielfeld.setField_blue_4(1);
+		}}}}}
+		
+		if(zielFeldValue==2) {
+			if(spielfeld.getField_red_1() ==0){
+				spielfeld.setField_red_1(2);
+		}else{
+			if(spielfeld.getField_red_2() ==0){
+				spielfeld.setField_red_2(2);
+		}else{
+			if(spielfeld.getField_red_3() ==0){
+				spielfeld.setField_red_3(2);
+		}else{
+			if(spielfeld.getField_red_4() ==0){
+				spielfeld.setField_red_4(2);
+		}}}}}
+		
+		if(zielFeldValue==3) {
+			if(spielfeld.getField_green_1() ==0){
+				spielfeld.setField_green_1(3);
+		}else{
+			if(spielfeld.getField_green_2() ==0){
+				spielfeld.setField_green_2(3);
+		}else{
+			if(spielfeld.getField_green_3() ==0){
+				spielfeld.setField_green_3(3);
+		}else{
+			if(spielfeld.getField_green_4() ==0){
+				spielfeld.setField_green_4(3);
+		}}}}}
+		
+		if(zielFeldValue==4) {
+			if(spielfeld.getField_yellow_1() ==0){
+				spielfeld.setField_yellow_1(4);
+		}else{
+			if(spielfeld.getField_yellow_2() ==0){
+				spielfeld.setField_yellow_2(4);
+		}else{
+			if(spielfeld.getField_yellow_3() ==0){
+				spielfeld.setField_yellow_3(4);
+		}else{
+			if(spielfeld.getField_yellow_4() ==0){
+				spielfeld.setField_yellow_4(4);
+		}}}}}
 //		
 //		if(zielFeldFigur==2) {
 //			if(spielfeld.getField(4)==0) {
@@ -854,29 +1079,31 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	private boolean eigeneFigur(Game game, int spielFeldNummer) {
 		GameField spielfeld = game.getGameField();
 		if(spielFeldNummer>99) {
-			if(game.getAktuellerSpieler().equals("spieler1")) {
+			if(game.getAktuellerSpieler()==0) {
 				if(spielFeldNummer>=100&spielFeldNummer<=104) return true;
 			}
-			if(game.getAktuellerSpieler().equals("spieler2")) {
+			if(game.getAktuellerSpieler()==1) {
 				if(spielFeldNummer>=105&spielFeldNummer<=108) return true;
 			}
-			if(game.getAktuellerSpieler().equals("spieler3")) {
+			if(game.getAktuellerSpieler()==2) {
 				if(spielFeldNummer>=109&spielFeldNummer<=112) return true;
 			}
-			if(game.getAktuellerSpieler().equals("spieler4")) {
+			if(game.getAktuellerSpieler()==3) {
 				if(spielFeldNummer>=116&spielFeldNummer<=119) return true;
-			} else { return false; }
+			} 
 		}
-		int feld2 = spielfeld.getFields().get(spielFeldNummer-1).getState();
-		String spielfigurOwner = null;
+
 		
-		if(feld2==0) return false;
-		if(feld2==1) spielfigurOwner = "spieler1";
-		if(feld2==2) spielfigurOwner = "spieler2";
-		if(feld2==3) spielfigurOwner = "spieler3";
-		if(feld2==4) spielfigurOwner = "spieler4";
 		
-		if(game.getAktuellerSpieler().equals(spielfigurOwner)) { 
+		if(spielfeld.getFields().get(spielFeldNummer-1).getState() == 0){
+			System.out.println("Keine Spielfigur auf angeklickter Stelle");
+			return false;
+		}
+		
+
+		
+		if(game.getAktuellerSpieler()+1 == spielfeld.getFields().get(spielFeldNummer-1).getState()) { 
+	//		System.out.println("Spieler "+ game.getAktuellerSpieler()+1+" setzt eigene Figur mit Farbe "+spielfeld.getFields().get(spielFeldNummer-1).getState());
 			return true;
 		}
 		

@@ -68,11 +68,13 @@ public interface MenschSystem {
 	public void spectateGame(int gameid);
 	
 	public int getSessionId();
+	
+	public String getUserName();
 
 	void startGame(int id);
 
 
-	void spielen(int gameid, int spielfigurfeld, int diceid);
+	public void spielen(int gameid, int spielfigurfeld);
 
 	int diceNumber(int gameId);
 	
