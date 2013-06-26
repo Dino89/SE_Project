@@ -4,15 +4,22 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.example.menschapp.GameDetailActivity.AllowOrDeclineRequestTask;
 import com.example.menschapp.GameDetailActivity.GameDetailTask;
 import com.example.menschapp.GameDetailActivity.JoinGameTask;
+import com.example.menschapp.GameDetailActivity.LeaveGameTask;
+import com.example.menschapp.util.GameField;
 import com.example.menschapp.util.Games;
 import com.example.menschapp.util.MenschSystemStub;
+import com.example.menschapp.util.Request;
 
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -34,6 +41,7 @@ public class GameFieldActivity extends Activity {
 	private SpielenTask spielenTask = null;
 	private WuerfelTask wuerfelTask = null;
 	private RefreshViewTask refreshView = null;
+	private LeaveGameTask leaveGame=null;
 	TextView wuerfelergebnis;
 	private Button wuerfelButton;
 	private Games gameDetail;
@@ -70,6 +78,7 @@ public class GameFieldActivity extends Activity {
 	private ImageView field_yellow_house_3;
 	private ImageView field_yellow_house_4;
 	
+	final Context context = this;
 	private TextView stateMessage;
 	MediaPlayer mp;
 	
@@ -523,7 +532,52 @@ public class GameFieldActivity extends Activity {
 		return true;
 	}
 	
-	
+	public void onBackPressed(){
+		
+		
+		AlertDialog.Builder newRequestDialogBuilder = new AlertDialog.Builder(context);
+		
+		
+		newRequestDialogBuilder.setTitle("Spiel verlassen");
+		
+			
+		// set dialog message
+		newRequestDialogBuilder
+			.setMessage("Wirklich Spiel verlassen ?")
+			.setCancelable(false)
+			.setPositiveButton("Ja",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,int id) {
+					// if this button is clicked, close
+					// current activity
+					
+					leaveGame= new LeaveGameTask();
+					leaveGame.execute();
+					
+					GameFieldActivity.this.finish();
+					Intent myIntent = new Intent(context, LobbyActivity.class);
+					Log.d("gameid:", ""+gameDetail.getId());
+					Log.d("intent", ""+myIntent.getIntExtra("gameid", gameDetail.getId()));
+			        startActivity(myIntent);
+				}
+			  })
+			.setNegativeButton("Nein",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,int id) {
+					// if this button is clicked, just close
+					// the dialog box and do nothing
+					
+					
+					dialog.cancel();
+				}
+			});
+
+			// create alert dialog
+			AlertDialog alertDialog = newRequestDialogBuilder.create();
+
+			// show it
+			alertDialog.show();
+		
+		
+	}
 	
 	public class RefreshViewTask extends AsyncTask<String, Void, Boolean> {
 		
@@ -860,6 +914,24 @@ public class GameFieldActivity extends Activity {
 		}
 	}
 
-
-
+	
+	public class LeaveGameTask extends AsyncTask<String, Void, Boolean> {
+			
+		    @Override
+			protected Boolean doInBackground(String... params) {
+		    	
+		    	GameFieldActivity.this.obsApp.getObsStub().leaveGame(gameid);
+		    	
+		        try {
+					// Simulate network access.
+					Thread.sleep(250);
+				} catch (InterruptedException e) {
+					return false;
+				}
+		
+				return true;
+			}
+	
+	
+	}
 }

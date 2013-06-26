@@ -307,24 +307,47 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		if(g.getOwner().getUserName().equals(s.getUsername())){
 			System.out.println("Spielleiter "+g.getOwner().getUserName()+" schlieﬂt sein Spiel");
 			this.closeGame(gameid);
+			if(g.isStarted()){
+				SendHighscore score = new SendHighscore();
+				score.highscorePoinsForLeavingGame(this.dao.findCustomerByName(s.getUsername()));
+			}
 		}else{
 			if(g.getSpieler1().getUserName().equals(s.getUsername())){
 				g.setSpieler1(null);
+				if(g.isStarted()){
+					SendHighscore score = new SendHighscore();
+					score.highscorePoinsForLeavingGame(this.dao.findCustomerByName(s.getUsername()));
+				}
 			}
 			System.out.println(s.getUsername()+" verl‰sst Spiel als Spieler 2: "+g.getSpieler2().getUserName());
 			if(g.getSpieler2() != null)
 			if(g.getSpieler2().getUserName().equals(s.getUsername())){
 				g.setSpieler2(null);
+				if(g.isStarted()){
+					SendHighscore score = new SendHighscore();
+					score.highscorePoinsForLeavingGame(this.dao.findCustomerByName(s.getUsername()));
+				}
 				
 			}
 			if(g.getSpieler3() != null)
 			if(g.getSpieler3().getUserName().equals(s.getUsername())){
 				g.setSpieler3(null);
+				if(g.isStarted()){
+					SendHighscore score = new SendHighscore();
+					score.highscorePoinsForLeavingGame(this.dao.findCustomerByName(s.getUsername()));
+				}
 			}
 			if(g.getSpieler4() != null)
 			if(g.getSpieler4().getUserName().equals(s.getUsername())){
 				g.setSpieler4(null);
+				if(g.isStarted()){
+					SendHighscore score = new SendHighscore();
+					score.highscorePoinsForLeavingGame(this.dao.findCustomerByName(s.getUsername()));
+				}
 			}
+			
+			
+			
 			g.getPlayers().remove(s.getUsername());
 			Map<Integer, MenschSession> z = g.getZuschauer();
 			z.remove(s);
@@ -594,14 +617,49 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		Game g = this.dao.findGameById(gameid);
 		GameField feld = g.getGameField();
 		int remainingPlayers = 3;
-		if(g.getSpieler4()==null) remainingPlayers=-1;
-		if(g.getSpieler3()==null) remainingPlayers=-1;
-		if(g.getSpieler2()==null) remainingPlayers=-1;
 
-		if((feld.getField_blue_house_1()==1)&(feld.getField_blue_house_2()==1)&(feld.getField_blue_house_3()==1)&(feld.getField_blue_house_4()==1)){ System.out.println("Gewonnen Spieler1"); score.highscorePointsForFinishingGame(g.getSpieler1(), remainingPlayers);} 
-		if((feld.getField_red_house_1()==1)&(feld.getField_red_house_2()==1)&(feld.getField_red_house_3()==1)&(feld.getField_red_house_4()==1)){ System.out.println("Gewonnen Spieler2"); score.highscorePointsForFinishingGame(g.getSpieler2(), remainingPlayers);}
-		if((feld.getField_green_house_1()==1)&(feld.getField_green_house_2()==1)&(feld.getField_green_house_3()==1)&(feld.getField_green_house_4()==1)){ System.out.println("Gewonnen Spieler3"); score.highscorePointsForFinishingGame(g.getSpieler3(), remainingPlayers);}
-		if((feld.getField_yellow_house_1()==1)&(feld.getField_yellow_house_2()==1)&(feld.getField_yellow_house_3()==1)&(feld.getField_yellow_house_4()==1)){ System.out.println("Gewonnen Spieler4"); score.highscorePointsForFinishingGame(g.getSpieler4(), remainingPlayers);}
+		if((feld.getField_blue_house_1()==1)&(feld.getField_blue_house_2()==1)&(feld.getField_blue_house_3()==1)&(feld.getField_blue_house_4()==1)){
+			System.out.println("Gewonnen Spieler1"); 
+			g.getPlayers().remove(g.getSpieler1().getUserName());
+			g.setSpieler1(null);
+			 remainingPlayers = 3;
+			if(g.getSpieler4()==null) remainingPlayers=-1;
+			if(g.getSpieler3()==null) remainingPlayers=-1;
+			if(g.getSpieler2()==null) remainingPlayers=-1;
+			
+			score.highscorePointsForFinishingGame(g.getSpieler1(), remainingPlayers)
+			;} 
+		if((feld.getField_red_house_1()==1)&(feld.getField_red_house_2()==1)&(feld.getField_red_house_3()==1)&(feld.getField_red_house_4()==1)){
+			System.out.println("Gewonnen Spieler2"); 
+			g.getPlayers().remove(g.getSpieler1().getUserName());
+			g.setSpieler1(null);
+			 remainingPlayers = 3;
+			if(g.getSpieler4()==null) remainingPlayers=-1;
+			if(g.getSpieler3()==null) remainingPlayers=-1;
+			if(g.getSpieler2()==null) remainingPlayers=-1;
+			
+			score.highscorePointsForFinishingGame(g.getSpieler2(), remainingPlayers)
+			;}
+		if((feld.getField_green_house_1()==1)&(feld.getField_green_house_2()==1)&(feld.getField_green_house_3()==1)&(feld.getField_green_house_4()==1)){
+			System.out.println("Gewonnen Spieler3"); 
+			 remainingPlayers = 3;
+			g.getPlayers().remove(g.getSpieler1().getUserName());
+			g.setSpieler1(null);
+			if(g.getSpieler4()==null) remainingPlayers=-1;
+			if(g.getSpieler3()==null) remainingPlayers=-1;
+			if(g.getSpieler2()==null) remainingPlayers=-1;
+			
+			score.highscorePointsForFinishingGame(g.getSpieler3(), remainingPlayers)
+			;}
+		if((feld.getField_yellow_house_1()==1)&(feld.getField_yellow_house_2()==1)&(feld.getField_yellow_house_3()==1)&(feld.getField_yellow_house_4()==1)){
+			System.out.println("Gewonnen Spieler4");
+			 remainingPlayers = 3;
+			g.getPlayers().remove(g.getSpieler1().getUserName());
+			g.setSpieler1(null);
+			if(g.getSpieler4()==null) remainingPlayers=-1;
+			if(g.getSpieler3()==null) remainingPlayers=-1;
+			if(g.getSpieler2()==null) remainingPlayers=-1;
+			score.highscorePointsForFinishingGame(g.getSpieler4(), remainingPlayers);}
 		if(remainingPlayers==1) spielZuEnde(gameid);
 	}
 
