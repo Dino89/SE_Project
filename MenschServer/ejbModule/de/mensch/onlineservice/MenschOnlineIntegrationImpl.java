@@ -598,10 +598,10 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		if(g.getSpieler3()==null) remainingPlayers=-1;
 		if(g.getSpieler2()==null) remainingPlayers=-1;
 
-		if((feld.getField_blue_house_1()==1)&(feld.getField_blue_house_2()==1)&(feld.getField_blue_house_3()==1)&(feld.getField_blue_house_4()==1)) score.highscorePointsForFinishingGame(g.getSpieler1(), remainingPlayers); 
-		if((feld.getField_red_house_1()==1)&(feld.getField_red_house_2()==1)&(feld.getField_red_house_3()==1)&(feld.getField_red_house_4()==1)) score.highscorePointsForFinishingGame(g.getSpieler2(), remainingPlayers);
-		if((feld.getField_green_house_1()==1)&(feld.getField_green_house_2()==1)&(feld.getField_green_house_3()==1)&(feld.getField_green_house_4()==1)) score.highscorePointsForFinishingGame(g.getSpieler3(), remainingPlayers);
-		if((feld.getField_yellow_house_1()==1)&(feld.getField_yellow_house_2()==1)&(feld.getField_yellow_house_3()==1)&(feld.getField_yellow_house_4()==1)) score.highscorePointsForFinishingGame(g.getSpieler4(), remainingPlayers);
+		if((feld.getField_blue_house_1()==1)&(feld.getField_blue_house_2()==1)&(feld.getField_blue_house_3()==1)&(feld.getField_blue_house_4()==1)){ System.out.println("Gewonnen Spieler1"); score.highscorePointsForFinishingGame(g.getSpieler1(), remainingPlayers);} 
+		if((feld.getField_red_house_1()==1)&(feld.getField_red_house_2()==1)&(feld.getField_red_house_3()==1)&(feld.getField_red_house_4()==1)){ System.out.println("Gewonnen Spieler2"); score.highscorePointsForFinishingGame(g.getSpieler2(), remainingPlayers);}
+		if((feld.getField_green_house_1()==1)&(feld.getField_green_house_2()==1)&(feld.getField_green_house_3()==1)&(feld.getField_green_house_4()==1)){ System.out.println("Gewonnen Spieler3"); score.highscorePointsForFinishingGame(g.getSpieler3(), remainingPlayers);}
+		if((feld.getField_yellow_house_1()==1)&(feld.getField_yellow_house_2()==1)&(feld.getField_yellow_house_3()==1)&(feld.getField_yellow_house_4()==1)){ System.out.println("Gewonnen Spieler4"); score.highscorePointsForFinishingGame(g.getSpieler4(), remainingPlayers);}
 		if(remainingPlayers==1) spielZuEnde(gameid);
 	}
 
@@ -727,6 +727,158 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		GameField spielfeld = game.getGameField();
 		
 		if(spielFeldNummer<100) {
+			
+			//häuser
+			
+			//BLAUES HAUS
+			if(spielfeld.getFields().get(spielFeldNummer-1).getState() ==1){
+				if(spielFeldNummer+diceNumber>40){
+					System.out.println("Häusersprung "+(spielFeldNummer+diceNumber));
+					
+					if(spielFeldNummer+diceNumber ==41){
+						if(spielfeld.getField_blue_house_1() == 1)
+							return false;
+						spielfeld.setField_blue_house_1(1);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					if(spielFeldNummer+diceNumber ==42){
+						if(spielfeld.getField_blue_house_2() == 1)
+							return false;
+						spielfeld.setField_blue_house_2(1);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					if(spielFeldNummer+diceNumber ==43){
+						if(spielfeld.getField_blue_house_3() == 1)
+							return false;
+						spielfeld.setField_blue_house_3(1);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					if(spielFeldNummer+diceNumber ==44){
+						if(spielfeld.getField_blue_house_4() == 1)
+							return false;
+						spielfeld.setField_blue_house_4(1);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					
+					if(spielFeldNummer+diceNumber>44){
+						return false;
+					}
+				}
+			}
+			//ROTES HAUS
+			if(spielfeld.getFields().get(spielFeldNummer-1).getState() ==2){
+				if(spielFeldNummer+diceNumber>10 && spielFeldNummer<=10){
+					System.out.println("Häusersprung "+(spielFeldNummer+diceNumber));
+					
+					if(spielFeldNummer+diceNumber ==11){
+						if(spielfeld.getField_red_house_1() == 2)
+							return false;
+						spielfeld.setField_red_house_1(2);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					if(spielFeldNummer+diceNumber ==12){
+						if(spielfeld.getField_red_house_2() == 2)
+							return false;
+						spielfeld.setField_red_house_2(2);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					if(spielFeldNummer+diceNumber ==13){
+						if(spielfeld.getField_red_house_3() == 2)
+							return false;
+						spielfeld.setField_red_house_3(2);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					if(spielFeldNummer+diceNumber ==14){
+						if(spielfeld.getField_red_house_4() == 2)
+							return false;
+						spielfeld.setField_red_house_4(2);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					
+					if(spielFeldNummer+diceNumber>14){
+						return false;
+					}
+				}
+			}
+			
+			//GRÜNES HAUS
+			
+			if(spielfeld.getFields().get(spielFeldNummer-1).getState() ==3){
+				if(spielFeldNummer+diceNumber>20 && spielFeldNummer<=10){
+					System.out.println("Häusersprung "+(spielFeldNummer+diceNumber));
+					
+					if(spielFeldNummer+diceNumber ==21){
+						if(spielfeld.getField_green_house_1() == 3)
+							return false;
+						spielfeld.setField_green_house_1(3);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					if(spielFeldNummer+diceNumber ==22){
+						if(spielfeld.getField_green_house_2() == 3)
+							return false;
+						spielfeld.setField_green_house_2(3);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					if(spielFeldNummer+diceNumber ==23){
+						if(spielfeld.getField_green_house_3() == 3)
+							return false;
+						spielfeld.setField_green_house_3(3);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					if(spielFeldNummer+diceNumber ==24){
+						if(spielfeld.getField_green_house_4() == 3)
+							return false;
+						spielfeld.setField_green_house_4(3);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					
+					if(spielFeldNummer+diceNumber>24){
+						return false;
+					}
+				}
+			}
+			
+			//GELBES HAUS
+			
+			if(spielfeld.getFields().get(spielFeldNummer-1).getState() ==4){
+				if(spielFeldNummer+diceNumber>30 && spielFeldNummer<=10){
+					System.out.println("Häusersprung "+(spielFeldNummer+diceNumber));
+					
+					if(spielFeldNummer+diceNumber ==31){
+						if(spielfeld.getField_yellow_house_1() == 4)
+							return false;
+						spielfeld.setField_yellow_house_1(4);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					if(spielFeldNummer+diceNumber ==32){
+						if(spielfeld.getField_yellow_house_2() == 4)
+							return false;
+						spielfeld.setField_yellow_house_2(4);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					if(spielFeldNummer+diceNumber ==33){
+						if(spielfeld.getField_yellow_house_3() == 4)
+							return false;
+						spielfeld.setField_yellow_house_3(4);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					if(spielFeldNummer+diceNumber ==34){
+						if(spielfeld.getField_yellow_house_4() == 4)
+							return false;
+						spielfeld.setField_yellow_house_4(4);
+						spielfeld.getFields().get(spielFeldNummer-1).setState(0);
+					}
+					
+					if(spielFeldNummer+diceNumber>34){
+						return false;
+					}
+				}
+			}
+			
+			
+			
+			//Normales spielen innerhalb des Feldes außerhalb von Startpositionen oder Häusern
+			
 			int zielFeld = spielFeldNummer+diceNumber-1;
 			if((zielFeld>39)){
 				zielFeld=zielFeld-40;
@@ -791,7 +943,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 			}
 		
 			
-						
+						//ROT-start
 						
 					if(spielFeldNummer<=108&spielFeldNummer>=105) {
 						
@@ -833,7 +985,7 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 						}
 					}
 					
-					
+					//GRÜN-start
 					
 					if(spielFeldNummer<=109&spielFeldNummer>=112) {
 						
@@ -874,6 +1026,11 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 							}
 						}
 					}
+					if(spielFeldNummer<=113&spielFeldNummer>=116) {
+						
+						if(spielfeld.getFields().get(30).getState()==4) { //startfeld hat schon eigenen figur?
+							return false;
+						} else {
 					
 					if(spielfeld.getField_yellow_4() ==4){
 						if(spielfeld.getFields().get(30).getState() !=0){
@@ -906,8 +1063,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 							}	
 						}
 					}
-				
-	
+				}
+			}
 					
 					
 					

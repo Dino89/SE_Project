@@ -523,6 +523,8 @@ public class GameFieldActivity extends Activity {
 		return true;
 	}
 	
+	
+	
 	public class RefreshViewTask extends AsyncTask<String, Void, Boolean> {
 		
 	    @Override
