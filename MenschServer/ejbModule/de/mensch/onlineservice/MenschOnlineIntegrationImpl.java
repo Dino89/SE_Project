@@ -62,72 +62,55 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 	/*
 	 * Diese Methode kümmert (bzw. sollte) sich um das Aufräumen alter Sessions, Spiele und Requests.
 	 */
-//	@Schedule(second="59", minute="*",hour="*", persistent=false)
-//	public void removeOldSessions() {
-//		System.out.println("Removing Sessions...");
-//		ArrayList<MenschSession> sessionList = this.dao.findSessions();
-//		ArrayList<Game> gameList = this.dao.getGameList();
-//		ArrayList<Request> requestList = this.dao.getAllRequests();
-//		
-//		for(MenschSession s : sessionList) {
-//			Date currentTime = new Date();
-//			
-////			System.out.println(currentTime);
-//			String servertime = currentTime.toString();
-//			
-//			String[] serverTimeMinutes = servertime.split(":");
-//			String[] serverTimeHour = serverTimeMinutes[0].split(" ");
-////			System.out.println("server time 1:");
-////			for(String string : serverTimeMinutes) {
-////				System.out.print(string+ " ### ");
-////			}
-////			System.out.println("server time 2:");
-////			for(String string : serverTimeHour) {
-////				System.out.print(string+ " ### ");
-////			}
-//			int currentTimeStamp = Integer.valueOf(serverTimeHour[3]+serverTimeMinutes[1]);
-//			
-////			System.out.println("serverzeit:" +servertime);
-//			
-//			String result = s.getCreationTime().toString();
-//			String[] sessionTimeMinutes = result.split(":");
-//			String[] sessionTimeHour = sessionTimeMinutes[0].split(" ");
-////			System.out.println("Session time 1:");
-////			for(String string : sessionTimeMinutes) {
-////				System.out.print(string+ " ### ");
-////			}
-////			System.out.println("Session time 2:");
-////			for(String string : sessionTimeHour) {
-////				System.out.print(string+ " ### ");
-////			}
-//			
-//			int timestamp = Integer.valueOf(sessionTimeHour[1]+sessionTimeMinutes[1]);
-//			
-//			if(timestamp+1<currentTimeStamp) {
-//				System.out.println("timestamp: "+timestamp +" < "+ currentTimeStamp);
-//				System.out.println("Session removed: "+s.getUsername());
-//				this.dao.closeSession(s.getId());
-//				Customer c = this.dao.findCustomerByName(s.getUsername());
-//				for(Request q : requestList) {
-//					if(q.getUser().equals(c)) this.dao.removeRequest(q.getId());
-//					System.out.println("Request "+q.getId()+" "+q.getUser()+" entfernt");
-//				}
-//
-//			}
-//		}
-//		
-//		for(Game g : gameList) {
-//			String gameOwnerName = g.getOwner().getUserName();
-//			int counter = 0;
-//			for(MenschSession s : sessionList) {
-//				if(gameOwnerName.equals(s.getUsername())) counter++;
-//			}
-//			if(counter==0) {
-//				this.dao.removeGame(g.getId());
-//				System.out.println("Game "+g.getId()+" "+g.getOwner().getUserName()+" removed");
-//			}
-//		}
-//	}
+	@Schedule(second="0", minute="*/2",hour="*", persistent=false)
+	public void removeOldSessions() {
+		System.out.println("Removing Sessions...");
+		ArrayList<MenschSession> sessionList = this.dao.findSessions();
+		ArrayList<Game> gameList = this.dao.getGameList();
+		ArrayList<Request> requestList = this.dao.getAllRequests();
+		
+		for(MenschSession s : sessionList) {
+			Date currentTime = new Date();
+			
+			String servertime = currentTime.toString();
+			
+			String[] serverTimeMinutes = servertime.split(":");
+			String[] serverTimeHour = serverTimeMinutes[0].split(" ");
+
+			int currentTimeStamp = Integer.valueOf(serverTimeHour[3]+serverTimeMinutes[1]);
+						
+			String result = s.getCreationTime().toString();
+			String[] sessionTimeMinutes = result.split(":");
+			String[] sessionTimeHour = sessionTimeMinutes[0].split(" ");
+
+			
+			int timestamp = Integer.valueOf(sessionTimeHour[1]+sessionTimeMinutes[1]);
+			
+			if(timestamp+1<currentTimeStamp) {
+				System.out.println("timestamp: "+timestamp +" < "+ currentTimeStamp);
+				System.out.println("Session removed: "+s.getUsername());
+				this.dao.closeSession(s.getId());
+				Customer c = this.dao.findCustomerByName(s.getUsername());
+				for(Request q : requestList) {
+					if(q.getUser().equals(c)) this.dao.removeRequest(q.getId());
+					System.out.println("Request "+q.getId()+" "+q.getUser()+" entfernt");
+				}
+
+			}
+		}
+		
+		for(Game g : gameList) {
+			String gameOwnerName = g.getOwner().getUserName();
+			int counter = 0;
+			for(MenschSession s : sessionList) {
+				if(gameOwnerName.equals(s.getUsername())) counter++;
+			}
+			if(counter==0) {
+				this.dao.removeGame(g.getId());
+				System.out.println("Game "+g.getId()+" "+g.getOwner().getUserName()+" removed");
+			}
+		}
+	}
 	/**
 	 * EJB zur Erzeugung von DataTransferObjects
 	 */
@@ -154,6 +137,9 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 				int sessionId = dao.createSession(user);
 				System.out.println("Login erfolgreich. Session=" + sessionId);
 				response.setSessionId(sessionId);
+				
+				SendHighscore high = new SendHighscore();
+				high.highscorePoinsForLeavingGame(user);
 				
 			}
 			else {

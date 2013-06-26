@@ -256,8 +256,8 @@ public class MenschSystemStub implements MenschSystem {
 		String METHOD_NAME = "getGames";
 		SoapObject response = executeSoapAction(METHOD_NAME, sessionId);
 
-		Log.d(TAG, METHOD_NAME);
-		Log.d(TAG, response.toString());
+//		Log.d(TAG, METHOD_NAME);
+//		Log.d(TAG, response.toString());
 
 		for (int i=1; i<response.getPropertyCount(); i++) {
 			SoapObject soapGameEntry = (SoapObject) response.getProperty(i);

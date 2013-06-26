@@ -16,6 +16,7 @@ import com.example.menschapp.util.Request;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -40,6 +41,7 @@ public class GameFieldActivity extends Activity {
 	private MenschApplication obsApp;
 	private SpielenTask spielenTask = null;
 	private WuerfelTask wuerfelTask = null;
+	private SoundTask soundTask = null;
 	private RefreshViewTask refreshView = null;
 	private LeaveGameTask leaveGame=null;
 	TextView wuerfelergebnis;
@@ -77,12 +79,13 @@ public class GameFieldActivity extends Activity {
 	private ImageView field_yellow_house_2;
 	private ImageView field_yellow_house_3;
 	private ImageView field_yellow_house_4;
-	
+	private Handler handler = new Handler();
 	final Context context = this;
 	private TextView stateMessage;
-	MediaPlayer mp;
-	
+	MediaPlayer mp = null;
+	private boolean gezogen = false;
 	private boolean gewurfelt;
+	Timer timer3 = new Timer();
 	
 	ArrayList<ImageView> spielfeld = new ArrayList<ImageView>();
 	
@@ -497,7 +500,7 @@ public class GameFieldActivity extends Activity {
 //		spielfeld.get(1).setImageResource(R.drawable.circle_low2_green_filled);
 //		spielfeld.get(2).setImageResource(R.drawable.circle_low2_green_filled);
 //		spielfeld.get(3).setImageResource(R.drawable.circle_low2_green_filled);
-		
+    	   	
 		int delay = 1000; // delay for 1 sec. 
 		int period = 5000; // repeat every 1 sec. 
 		Timer timer = new Timer(); 
@@ -509,8 +512,36 @@ public class GameFieldActivity extends Activity {
 		        	refreshView.execute();  // display the data
 		        } 
 		    }, delay, period);
-	}
+	
 
+	int delay2 = 30000; // delay for 1 sec. 
+	int period2 = 30000; // repeat every 30 sec. 
+	Timer timer2 = new Timer(); 
+	timer2.scheduleAtFixedRate(new TimerTask() 
+	    { 
+	        public void run() 
+	        { 
+	        	if(gezogen==false) {
+	           		soundTask = new SoundTask();
+	           		soundTask.execute();
+	        	}
+	        } 
+	    }, delay2, period2);
+	
+	int delay3 = 60000; // delay for 1 sec. 
+	int period3 = 60000; // repeat every 30 sec.  
+	timer3.scheduleAtFixedRate(new TimerTask() 
+	    { 
+	        public void run() 
+	        { 
+	        	if(gezogen==false) {
+	        		leaveGame = new LeaveGameTask();
+	        		leaveGame.execute();
+	        	}
+	        } 
+	    }, delay3, period3);
+	
+}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -586,8 +617,6 @@ public class GameFieldActivity extends Activity {
 	    	Log.d("SessionID->","SessionID"+GameFieldActivity.this.obsApp.getObsStub().getSessionId());
 	    	
 	    	 ArrayList<Games> gamesArray = GameFieldActivity.this.obsApp.getObsStub().getGames();
-	    	
-	    	
 			
 			for(Games game : gamesArray) {
 				if(game.getId()==gameid) {
@@ -846,6 +875,7 @@ public class GameFieldActivity extends Activity {
 			if(gameDetail.getField_yellow_house_4() ==4){
 				field_yellow_house_4.setImageResource(R.drawable.circle_low2_yellow_filled);
 			}
+			gezogen=false;
 			
 		}
 
@@ -877,6 +907,8 @@ public class GameFieldActivity extends Activity {
 		wuerfelergebnis.setText(diceNumber + " gewürfelt");
 		findViewById(R.id.wuerfeln).setEnabled(true);
 		gewurfelt=true;
+		timer3.cancel();
+		timer3 = new Timer();
 		}
 	
 		@Override
@@ -891,6 +923,7 @@ public class GameFieldActivity extends Activity {
 		protected Boolean doInBackground(String... params) {
 	    	
 	    	if(gewurfelt ==true)
+    		gezogen = true;
 	    	GameFieldActivity.this.obsApp.getObsStub().spielen(gameid, spielfigurfeld);
 	    	
 	        try {
@@ -905,7 +938,20 @@ public class GameFieldActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
-			
+			int delay3 = 60000; // delay for 1 sec. 
+			int period3 = 60000; // repeat every 30 sec.
+//			timer3.
+			timer3.scheduleAtFixedRate(new TimerTask() 
+		    { 
+		        public void run() 
+		        { 
+		        	if(gezogen==false) {
+		           		soundTask = new SoundTask();
+		           		soundTask.execute();
+		           		mp.release();
+		        	}
+		        } 
+		    }, delay3, period3);
 		}
 	
 		@Override
@@ -930,8 +976,42 @@ public class GameFieldActivity extends Activity {
 				}
 		
 				return true;
+			}	
+	}
+	
+	public class SoundTask extends AsyncTask<String, Void, Boolean> {
+		 @Override
+			protected Boolean doInBackground(String... params) {
+			 Log.d("","starte media player");	
+//			 handler.postDelayed(runnable, 20000);
+			  mp = MediaPlayer.create(GameFieldActivity.this, R.raw.beep);
+			  mp.start();
+			return true;
+			}
+		    
+			@Override
+			protected void onPostExecute(final Boolean success) {
+//				mp.release();
+			}
+		
+			@Override
+			protected void onCancelled() {
+		
 			}
 	
-	
 	}
+
+	private Runnable runnable = new Runnable() {
+		   @Override
+		   public void run() {
+		   Log.d("","media player released");
+//		   mp.release();
+			Log.d("","media player gestartet");
+			if(stateMessage.getText().equals("Sie sind dran")) {
+			  mp = MediaPlayer.create(GameFieldActivity.this, R.raw.beep);
+			  mp.start();
+		      handler.postDelayed(this, 30000);
+			}
+		   }
+		};
 }
