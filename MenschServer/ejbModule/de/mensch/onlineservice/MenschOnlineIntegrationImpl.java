@@ -305,6 +305,8 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		MenschSession s = this.dao.findSessionById(sessionId);
 		s.setCurrentGame(null);
 		
+
+		
 		if(g.getOwner().getUserName().equals(s.getUsername())){
 			System.out.println("Spielleiter "+g.getOwner().getUserName()+" schließt sein Spiel");
 			this.closeGame(gameid);
@@ -346,10 +348,12 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 					score.highscorePoinsForLeavingGame(this.dao.findCustomerByName(s.getUsername()));
 				}
 			}
-			
-			
-			
 			g.getPlayers().remove(s.getUsername());
+			if(g.getPlayers().get(g.getAktuellerSpieler()).equals(s.getUsername())){
+				nextPlayer(this.dao.findGameById(gameid));
+			}
+			
+			
 			Map<Integer, MenschSession> z = g.getZuschauer();
 			z.remove(s);
 		}
@@ -560,13 +564,11 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 //		} else {
 //			computerZieht(gameid);
 //		}
-		if(game.getAktuellerSpieler() == game.getPlayers().size()-1){
-			game.setAktuellerSpieler(0);
+		if(game.getPlayers().size() ==1){
+			computerZieht(gameid);
 		}else{
-			game.setAktuellerSpieler(game.getAktuellerSpieler()+1);
+		nextPlayer(game);
 		}
-		
-		
 //		if(game.getSpieler3()!=null) {
 //			if(game.getSpieler4()!=null) {
 //				game.setAktuellerSpieler("spieler4");
@@ -579,34 +581,50 @@ public class MenschOnlineIntegrationImpl implements MenschOnlineIntegration {
 		response.setSuccess(true);
 		return response;
 	}
-
+	private void nextPlayer(Game game){
+		
+		
+		
+		if(game.getAktuellerSpieler() == game.getPlayers().size()-1){
+			game.setAktuellerSpieler(0);
+		}else{
+			game.setAktuellerSpieler(game.getAktuellerSpieler()+1);
+		}
+	}
 	private void computerZieht(int gameid) throws NoSessionException {
 		System.out.println("Der Computer zieht!");
 		Game game = this.dao.findGameById(gameid);
-		int spielfigurenfeld = 0;
+		game.setAktuellerSpieler(1);
+		boolean turnedOnFieled=false;
 		int random = random();
+		game.setDiceNumber(random);
 		System.out.println("Computer hat gewürfelt: "+random);
 		for(int i=0;i<game.getGameField().getFields().size();i++) {
-			if(game.getGameField().getFields().get(i).getState()==2) spielen(gameid, -1, i);			
+			if(game.getGameField().getFields().get(i).getState()==2) {
+				ziehen(gameid, i+1, game.getDiceNumber());
+				turnedOnFieled=true;
+				break;
+			}
 		}
 		
-		if(spielfigurenfeld==0) {
+		if(!turnedOnFieled) {
 			if(game.getGameField().getField_red_4()==2) { 
-				spielen(gameid, -1, game.getGameField().getField_red_4()); 
+				ziehen(gameid, 108, game.getDiceNumber()); 
 			} else {
 				if(game.getGameField().getField_red_3()==2) { 
-					spielen(gameid, -1, game.getGameField().getField_red_3());
+					ziehen(gameid, 107, game.getDiceNumber());
 				} else {
 					if(game.getGameField().getField_red_2()==2) { 
-						spielen(gameid, -1, game.getGameField().getField_red_2());
+						ziehen(gameid, 106, game.getDiceNumber());
 				} else {
 					if(game.getGameField().getField_red_1()==2) { 
-						spielen(gameid, -1, game.getGameField().getField_red_1());
+						ziehen(gameid, 105, game.getDiceNumber());
 					}
 				} 
 			}
 		}
 	}
+		game.setAktuellerSpieler(0);
 	}
 	private void spielZuEnde(int gameid) {
 		Game g = this.dao.findGameById(gameid);
